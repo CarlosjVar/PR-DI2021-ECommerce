@@ -1,0 +1,2 @@
+./cloud_sql_proxy -instances=glassy-keyword-308400:us-east1:diseno-pry-1=tcp:3306 -credential_file=D:/Programming_tools/Google_cloud_proxy/glassy-keyword-308400-c02693e3d1f5.json
+Quesillo2020

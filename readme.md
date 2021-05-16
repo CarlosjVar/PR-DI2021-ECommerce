@@ -11,3 +11,6 @@ El proyecto se dividirá en 5 fases , las cuales son:
 ### I
 
 ### T   
+
+### Comandos Docker
+docker run --name APIContainer -p 3070:3070 -it -v RutaAlRepositorio\PR-DI2021-ECommerce\API\Src:/home/API/Src node:latest bash
