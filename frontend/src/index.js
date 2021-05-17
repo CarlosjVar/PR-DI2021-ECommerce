@@ -5,6 +5,7 @@ import App from './App';
 import store from './store';
 
 import './bootstrap.min.css';
+import '../node_modules/@fortawesome/fontawesome-free/css/all.css';
 import './index.css';
 
 ReactDOM.render(

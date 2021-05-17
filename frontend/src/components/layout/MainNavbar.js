@@ -1,10 +1,14 @@
 import React from 'react';
-import { Navbar } from 'react-bootstrap';
+import { Navbar, Container } from 'react-bootstrap';
 
 const MainNavbar = () => {
   return (
-    <Navbar bg="primary" expand="md">
-      <Navbar.Brand href="#">CompuHardware</Navbar.Brand>
+    <Navbar bg="primary" navbar="dark" expand="md">
+      <Container>
+        <Navbar.Brand className="text-white" href="#">
+          CompuHardware
+        </Navbar.Brand>
+      </Container>
     </Navbar>
   );
 };

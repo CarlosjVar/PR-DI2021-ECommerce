@@ -2,8 +2,8 @@ import React from 'react';
 
 const MainFooter = () => {
   return (
-    <footer>
-      <p>footer</p>
+    <footer id="main-footer">
+      <p>&copy; CompuHardware 2021</p>
     </footer>
   );
 };
