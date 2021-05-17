@@ -41,6 +41,14 @@ h5 {
   color: var(--light-color) !important;
 }
 
+.nav-link {
+  color: var(--light-color) !important;
+}
+
+i {
+  color: inherit;
+}
+
 .navbar-dark {
   color: var(--light-color) !important;
 }
