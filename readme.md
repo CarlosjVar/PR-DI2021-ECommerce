@@ -1,7 +1,9 @@
 #CompuHardware Backend Server
 
 ## Docker Containers
-docker run --name BackendCompuHardware -p 6050:6050 -it -v *ROUTE TO REPO*\PR-DI2021-ECommerce\API\:/home/API/ node:12 bash
+```bash
+$ docker run --name BackendCompuHardware -p 6050:6050 -it -v *ROUTE TO REPO*\PR-DI2021-ECommerce\API\:/home/API/ node:12 bash
+```
 
 ## Installation
 Inside Docker
@@ -19,11 +21,6 @@ $ npm install # Install project dependencies
 $ npx prisma introspect #Introspects Database
 $ npx prisma generate #Generates prismas files
 ```
-
-```bash
-$ npm install # Install project dependencies
-```
-
 
 ## Run application in development mode
 
