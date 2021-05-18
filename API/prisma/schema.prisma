@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native"]
 }
 
 datasource db {
@@ -91,7 +92,7 @@ model Sales {
   id            Int    @id @default(autoincrement())
   orderId       Int    @unique
   paypalOrderId String @db.Char(17)
-  paypalPayerId String @db.Char(15)
+  paypalPayerId String @db.Char(13)
   Orders        Orders @relation(fields: [orderId], references: [id])
 }
 

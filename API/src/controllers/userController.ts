@@ -7,7 +7,10 @@ import { prisma } from '.prisma/client';
 export const getAllUsers = async (req:Request,res:Response) =>{
     try
     {
-        const allUsers = prismaController.users.findMany();
+        console.log("wait users");
+        
+        const allUsers = await prismaController.users.findMany();
+        
         res.status(200).json({users:allUsers})
     }
     catch(err)
