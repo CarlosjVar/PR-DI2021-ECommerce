@@ -1,38 +1,7 @@
-#CompuHardware Backend Server
-
-## Docker Containers
-```bash
-$ docker run --name BackendCompuHardware -p 6050:6050 -it -v *ROUTE TO REPO*\PR-DI2021-ECommerce\API\:/home/API/ node:12 bash
-```
-
-## Installation
-Inside Docker
-
-```bash
-$ cd home
-$ cd API
-```
-
-```bash
-$ npm install # Install project dependencies
-```
-
-```bash
-$ npx prisma introspect #Introspects Database
-$ npx prisma generate #Generates prismas files
-```
-
-## Run application in development mode
-
-```bash
-$ npm start # Runs project on http://localhost:6050
-```
-
-## Application info
-
-### Version
-
-1.0.0
+# CompuHardware Ecommerce Solution
+Proyecto Diseño de Software S1 2021 
+## About the project
+An full implementation of an E-Commerce based on MySql+Prisma as the database, NodeJs+ExpressJs as the Backend and React as the Frontend 
 
 ### Authors
 
