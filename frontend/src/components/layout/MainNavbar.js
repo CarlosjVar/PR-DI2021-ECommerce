@@ -18,17 +18,22 @@ const MainNavbar = () => {
           <Nav className="ml-auto">
             <Nav.Item>
               <Link to="/" className="nav-link">
-                <i className="fa fa-home"></i> Home
+                <i className="fa fa-home"></i> Inicio
               </Link>
             </Nav.Item>
             <Nav.Item>
-              <Link to="/login" className="nav-link">
-                <i className="fa fa-sign-in"></i> Login
+              <Link to="/" className="nav-link">
+                <i className="fas fa-shopping-cart"></i> Carrito
               </Link>
             </Nav.Item>
             <Nav.Item>
               <Link to="/register" className="nav-link">
-                <i className="fa fa-user-add"></i> Register
+                <i className="fas fa-user-plus"></i> Registrarse
+              </Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Link to="/login" className="nav-link">
+                <i className="fas fa-sign-in-alt"></i> Login
               </Link>
             </Nav.Item>
           </Nav>

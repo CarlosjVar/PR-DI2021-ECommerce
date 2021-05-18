@@ -36,13 +36,34 @@ h5 {
   font-weight: bold;
 }
 
+/* Background colors */
 .bg-primary {
   background-color: var(--primary-color) !important;
   color: var(--light-color) !important;
 }
 
+/* Button colors */
+.btn-primary {
+  background-color: var(--primary-color) !important;
+  color: var(--light-color);
+  border: 1px solid var(--primary-color);
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: var(--light-color) !important;
+  color: var(--primary-color) !important;
+}
+
+/* Navigation styles */
 .nav-link {
   color: var(--light-color) !important;
+  transition: 0.3s ease-out;
+}
+
+.nav-link:hover {
+  background-color: var(--light-color);
+  color: var(--primary-color) !important;
 }
 
 i {
