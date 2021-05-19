@@ -23,7 +23,7 @@ const LoginScreen = () => {
   const { email, password } = formData;
   return (
     <Row>
-      <Col md="8" className="mx-auto">
+      <Col md="6" className="mx-auto">
         <Card>
           <Card.Body>
             <h3 className="text-center mt-3 mb-5">
@@ -65,7 +65,7 @@ const LoginScreen = () => {
                 />
               </InputGroup>
               <Button type="submit" bg="primary" className="btn-block">
-                Login
+                <i className="fas fa-sign-in-alt"></i> Login
               </Button>
             </form>
           </Card.Body>

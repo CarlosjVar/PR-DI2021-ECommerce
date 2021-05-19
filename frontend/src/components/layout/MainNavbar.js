@@ -16,22 +16,22 @@ const MainNavbar = () => {
         />
         <Navbar.Collapse id="responsive-navbar">
           <Nav className="ml-auto">
-            <Nav.Item>
+            <Nav.Item className="mx-2">
               <Link to="/" className="nav-link">
                 <i className="fa fa-home"></i> Inicio
               </Link>
             </Nav.Item>
-            <Nav.Item>
+            <Nav.Item className="mx-2">
               <Link to="/" className="nav-link">
                 <i className="fas fa-shopping-cart"></i> Carrito
               </Link>
             </Nav.Item>
-            <Nav.Item>
+            <Nav.Item className="mx-2">
               <Link to="/register" className="nav-link">
                 <i className="fas fa-user-plus"></i> Registrarse
               </Link>
             </Nav.Item>
-            <Nav.Item>
+            <Nav.Item className="mx-2">
               <Link to="/login" className="nav-link">
                 <i className="fas fa-sign-in-alt"></i> Login
               </Link>
