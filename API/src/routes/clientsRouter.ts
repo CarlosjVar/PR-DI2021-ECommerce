@@ -1,14 +1,13 @@
 import express from 'express'
 import expressValidator, { body, validationResult } from 'express-validator';
-import {
-    createUser,
-    getAllUsers} 
-    from '../controllers/userController'
-const usersRouter = express.Router();
+import { createClient } from '../controllers/clientController';
 
-usersRouter.route('/').get(getAllUsers)
+const clientsRouter = express.Router();
 
-usersRouter.route('/create').post(
+clientsRouter.route('/').get((req,res)=>{console.log("Hola"); res.send("Hola");
+})
+
+clientsRouter.route('/create').post(
     [
     body('email').isEmail().withMessage('Please enter a valid email'),
     body('fullname')
@@ -18,5 +17,5 @@ usersRouter.route('/create').post(
     .isStrongPassword()
     .withMessage('Please enter a stronger password')
     ],
-    createUser)
-export default usersRouter
+    createClient)
+export default clientsRouter

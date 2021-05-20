@@ -2,3 +2,5 @@ API/node_modules
 frontend/node_modules/
 
 API/.env
+
+API/dist/
