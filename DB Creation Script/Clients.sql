@@ -1,0 +1,9 @@
+USE CompuHardware;
+CREATE TABLE Clients(
+	id INT NOT NULL AUTO_INCREMENT,
+	userId INT NOT NULL,
+    CONSTRAINT PK_Clients PRIMARY KEY(id),
+    CONSTRAINT UQ_Clients_UserId UNIQUE(userId), 
+    CONSTRAINT FK_Users_Clients FOREIGN KEY(userId) REFERENCES Users(id)
+)
+DROP TABLE Clients

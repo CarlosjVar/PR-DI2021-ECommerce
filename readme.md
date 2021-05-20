@@ -1,13 +1,13 @@
-# Propósito
-Crear un E-Commerce centrado en la venta de componentes de computador con diversas funcionalidades,tales como creación de órdenes, apartado y una pequeña herramienta de creación de computadores.
-## Fases
-El proyecto se dividirá en 5 fases , las cuales son:
-### P
+# CompuHardware Ecommerce Solution
+Proyecto Diseño de Software S1 2021 
+## About the project
+An full implementation of an E-Commerce based on MySql+Prisma as the database, NodeJs+ExpressJs as the Backend and React as the Frontend 
 
-### E
+### Authors
 
-### P
+Andres Aguilar & Carlos Varela
 
-### I
 
-### T   
+
+
+
