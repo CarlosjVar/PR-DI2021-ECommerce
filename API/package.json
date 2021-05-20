@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "tsc -p . & node ./dist/app.js",
-    "dev-deprecated": "nodemon src/app.ts",
+    "dev-deprecated": "nodemon --files src/app.ts",
     "dev": "ts-node-dev --files src/app.ts",
     "build": "tsc -p ."
   },

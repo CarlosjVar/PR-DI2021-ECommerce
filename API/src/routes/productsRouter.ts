@@ -1,5 +1,6 @@
 import express, { Request } from 'express'
 import prismaController from '../config/Database'
+import {findProducts} from '../controllers/productsController'
 
 const productsRouter = express.Router();
 
@@ -14,30 +15,7 @@ productsRouter.route('/create').post(()=>
 
 }
 )
-productsRouter.route('/get').get((req:Request,res:Response)=>
-{
-    const {category, productname} = req.params
+productsRouter.route('/get').get([],findProducts)
 
-    if(category == 'All' && productname != null)
-    {
-        prismaController.products.findMany({
-            where:{
-                    name:productname
-            }
-        })
-    }
-    else if(category != 'All' && productname != null)
-    {
-        prismaController.products.findMany({
-            where:{
-                    name:productname
-            },
-            include:
-            {
-                Categories:true
-            }
-        })
-    }
-    
-})
 export default productsRouter
+
