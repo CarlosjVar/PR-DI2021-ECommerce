@@ -10,12 +10,8 @@ clientsRouter.route('/').get((req,res)=>{console.log("Hola"); res.send("Hola");
 clientsRouter.route('/create').post(
     [
     body('email').isEmail().withMessage('Please enter a valid email'),
-    body('fullname')
-    .isLength({min:10})
-    .withMessage('Please enter a full name with a lenght at least 8 characters long'),
-    body('password')
-    .isStrongPassword()
-    .withMessage('Please enter a stronger password')
+    body('fullname').isLength({min:10}).withMessage('Please enter a full name with a lenght at least 8 characters long'),
+    body('password').isStrongPassword().withMessage('Please enter a stronger password')
     ],
     createClient)
 export default clientsRouter

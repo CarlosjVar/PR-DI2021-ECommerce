@@ -1,6 +1,6 @@
 import prismaController from '../config/Database'
 import { Request, Response } from 'express';
-import expressValidator, { validationResult } from 'express-validator';
+import expressValidator, { Result, ValidationError, validationResult } from 'express-validator';
 import { prisma } from '.prisma/client';
 
 
@@ -76,4 +76,46 @@ export const findProducts = async (req:Request,res:Response)=>{
         res.status(500).json({message:'Internal server error'})
     }
     
+}
+
+export const  createProduct= async (req:Request,res:Response)=>
+{
+    try
+    {
+        const errors:Result= validationResult(req);
+        if(!errors.isEmpty())
+        {
+            res.status(400).json({errors:errors.array()})
+        }
+        const {name,quantity,price,category,specifications} = req.body;
+        const categoryRecord = await prismaController.categories.findFirst({
+            where:{
+                name:category
+            }
+            })
+        const product = await prismaController.products.create({data:{
+            name:name,
+            quantity:quantity,
+            price:price,
+            createdAt:Date(),
+            categoryId:categoryRecord?.id as number
+        }})
+        const specInsertion= await specifications.forEach( async (specification:any) => {
+            let specificationRecord = await prismaController.specifications.findFirst({
+                where:{
+                    name:specification.name as string
+                }
+            })
+            prismaController.productsXSpecifications.create({data:{
+                productId:product.id as number , 
+                specificationId: specificationRecord?.id as number,
+                value:specification.value
+            }})
+        });
+        res.json({msg:'Product added correctly'})
+    }
+    catch(err)
+    {
+        res.status(500).json({msg:[{errors:'Internal server error'}]})
+    }
 }
