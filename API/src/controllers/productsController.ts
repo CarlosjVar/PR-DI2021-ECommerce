@@ -66,7 +66,6 @@ export const findProducts = async (req:Request,res:Response)=>{
         }
         //No category and no name
         else{
-            console.log("NoCat NoName");
             const products = await prismaController.products.findMany({})
             res.json({products:products})
         }
