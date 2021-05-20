@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Redirect, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Col,
   Row,
@@ -8,16 +10,24 @@ import {
   Button,
   Form,
 } from 'react-bootstrap';
+import { registerClient } from '../actions/authActions';
+import { showAlert } from '../actions/alertActions';
 
 const RegisterScreen = () => {
+  const history = useHistory();
+
+  const dispatch = useDispatch();
+
   const [formData, setFormData] = useState({
     email: '',
-    fullName: '',
+    fullname: '',
     password: '',
     passwordConfirmation: '',
   });
   const [acceptTermsAndConditions, setAcceptTermsAndConditions] =
     useState(false);
+
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
   const onInputChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,13 +35,29 @@ const RegisterScreen = () => {
   const onRegisterSubmit = (e) => {
     e.preventDefault();
     if (!acceptTermsAndConditions) {
+      dispatch(
+        showAlert({
+          message: 'Por acepte los términos y condiciones',
+          type: 'danger',
+        })
+      );
     } else if (passwordConfirmation !== password) {
+      dispatch(
+        showAlert({
+          message: 'Ambas contraseñas deben coincidir',
+          type: 'danger',
+        })
+      );
+    } else {
+      dispatch(registerClient(formData, history));
     }
-    console.log(formData);
-    // TODO: Run action
   };
 
-  const { email, fullName, password, passwordConfirmation } = formData;
+  if (isAuthenticated) {
+    return <Redirect to="/" />;
+  }
+
+  const { email, fullname, password, passwordConfirmation } = formData;
 
   return (
     <Row>
@@ -69,10 +95,10 @@ const RegisterScreen = () => {
                 <FormControl
                   placeholder="Nombre y apellidos"
                   type="text"
-                  name="fullName"
-                  value={fullName}
+                  name="fullname"
+                  value={fullname}
                   onChange={onInputChange}
-                  aria-label="fullName"
+                  aria-label="fullname"
                   aria-describedby="fullName-addon"
                 />
               </InputGroup>
