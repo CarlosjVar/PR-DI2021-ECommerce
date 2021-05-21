@@ -13,15 +13,22 @@ export const logoutUser = () => async (dispatch) => {
   dispatch({ type: LOGOUT });
 };
 
+/**
+ * Registers a new client
+ * @param {object} clientData Data of the client to register
+ * @param {object} history React router history
+ * @returns
+ */
 export const registerClient = (clientData, history) => async (dispatch) => {
   try {
-    const { data } = await api.post('/api/clients/create', clientData);
-    console.log(data);
+    await api.post('/api/clients/create', clientData);
     dispatch(
       showAlert({ message: 'Se ha registrado con éxito', type: 'success' })
     );
     history.push('/login');
   } catch (error) {
-    console.log(error.response.data.errors);
+    error.response.data.errors.forEach((error) =>
+      dispatch(showAlert({ message: error.msg, type: 'danger' }))
+    );
   }
 };
