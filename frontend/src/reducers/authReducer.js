@@ -5,6 +5,8 @@ import {
   LOAD_USER_SUCCESS,
   LOAD_USER_FAILURE,
   LOGOUT,
+  REGISTER_CLIENT_FAILURE,
+  REGISTER_CLIENT_SUCCESS,
 } from '../constants/authConstants';
 
 const initialState = {
@@ -47,6 +49,8 @@ const authReducer = (state = initialState, action) => {
         token: null,
         isAuthenticated: false,
       };
+    case REGISTER_CLIENT_SUCCESS:
+    case REGISTER_CLIENT_FAILURE:
     case LOAD_USER_FAILURE:
     case AUTH_USER_FAILURE:
     default:

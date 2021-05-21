@@ -23,4 +23,3 @@ productsRouter.route('/create').post(
 productsRouter.route('/get').get([],findProducts)
 
 export default productsRouter
-
