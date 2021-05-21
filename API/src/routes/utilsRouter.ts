@@ -4,13 +4,13 @@ import {findCategories,findSpecs} from '../controllers/utilsController'
 
 const utilsRouter = express.Router();
 
-// @route   GET - /api/users/test
-// @desc    Test user route
+// @route   GET - /api/utils/specs
+// @desc    Returns all the specifications saved in the database
 // @access  Public
 utilsRouter.route('/specs').get(findSpecs);
 
-// @route   GET - /api/users/test
-// @desc    Test user route
+// @route   GET - /api/utils/categories
+// @desc    Returns all the categories saved in the database
 // @access  Public
 utilsRouter.route('/categories').get(findCategories);
 

@@ -1,3 +1,4 @@
+
 import prismaController from '../config/Database'
 import { Request, Response } from 'express';
 import expressValidator, { validationResult } from 'express-validator';
@@ -10,7 +11,7 @@ export const createAdmin = async (req:Request,res:Response) =>{
         if(!errors.isEmpty())
         {
             console.log("error body");
-            res.status(400).json({errors:errors.array()})
+            return res.status(400).json({errors:errors.array()})
         }
         //Obtain from the body
         const {email,fullname,password} = req.body;
@@ -47,5 +48,32 @@ export const createAdmin = async (req:Request,res:Response) =>{
     {
         res.status(500).json({message:'Internal server error'})
         console.log(err);
+    }
+}
+
+export const getAdmins = async(req:Request,res:Response) => 
+{
+    try{
+        const admins = await prismaController.users.findMany({
+            where:
+            {
+                NOT:
+                {
+                    Admins:null
+                }
+            },
+            select:
+            {
+                email:true,
+                fullName:true,
+                createdAt:true,
+                Admins:true
+            }
+
+        })
+        res.json({admins:admins})
+    }
+    catch(err){
+        res.status(500).json({message:'Internal server error'})
     }
 }

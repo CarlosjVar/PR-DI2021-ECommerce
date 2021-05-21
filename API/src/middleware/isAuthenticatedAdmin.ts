@@ -24,9 +24,13 @@ const isAuthenticatedAdmin = async (req:Request,res:Response,next:NextFunction) 
                 id:decodedToken._id
               }
               ,
-              include:
+              select:
               {
-                  Admins:true
+                id:true,
+                email:true,
+                fullName:true,
+                createdAt:true,
+                Admins:true,
               }
           })
           //Check if both token and users informations sees the user as an administrator

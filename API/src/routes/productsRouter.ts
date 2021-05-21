@@ -5,9 +5,9 @@ import isAuthenticatedAdmin from '../middleware/isAuthenticatedAdmin'
 import expressValidator, { body, validationResult } from 'express-validator';
 const productsRouter = express.Router();
 
-// @route   GET - /api/users/test
-// @desc    Test user route
-// @access  Public
+// @route   POST - /api/products/create
+// @desc    Creates a product in the system
+// @access  Only Admin
 productsRouter.route('/create').post(
     [body('nombre').isEmpty().withMessage('Please enter a name for the product'),
     body('cantidad').isEmpty().withMessage('Please enter the initial quantity'),
@@ -17,8 +17,8 @@ productsRouter.route('/create').post(
     createProduct
 )
 
-// @route   GET - /api/users/test
-// @desc    Test user route
+// @route   GET - /api/products/get
+// @desc    Gets all the products that matches the given parameters
 // @access  Public
 productsRouter.route('/get').get([],findProducts)
 

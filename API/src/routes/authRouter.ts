@@ -6,8 +6,8 @@ import {
     from '../controllers/authenticationController'
 const authRouter = express.Router();
 
-// @route   GET - /api/users/test
-// @desc    Test user route
+// @route   POST - /api/auth/authUser
+// @desc    Authenticates an user
 // @access  Public
 authRouter.route('/authUser').post(
     [

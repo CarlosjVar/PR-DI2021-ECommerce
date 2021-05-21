@@ -7,6 +7,7 @@ import { prisma } from '.prisma/client';
 
 export const findProducts = async (req:Request,res:Response)=>{
     try{
+
         const category = req.query.category as string
         const productName = req.query.productName as string
         
