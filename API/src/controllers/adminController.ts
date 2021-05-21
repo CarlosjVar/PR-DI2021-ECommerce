@@ -41,7 +41,7 @@ export const createAdmin = async (req:Request,res:Response) =>{
             userId:user.id
         }})
 
-        res.json({msg:'Added correctly'})
+        res.json({msg:'Administrator added correctly'})
     }
     catch(err)
     {

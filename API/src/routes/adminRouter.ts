@@ -4,6 +4,9 @@ import isAuthenticatedAdmin from '../middleware/isAuthenticatedAdmin'
 import {createAdmin} from '../controllers/adminController'
 const adminRouter = express.Router();
 
+// @route   GET - /api/users/test
+// @desc    Test user route
+// @access  Public
 adminRouter.route('/create').post(
     [
     body('email').isEmail().withMessage('Please enter a valid email'),

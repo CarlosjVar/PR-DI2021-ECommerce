@@ -6,6 +6,7 @@ CREATE TABLE Products(
     price DECIMAL(10,2) NOT NULL,
     categoryId INT NOT NULL,
     imageFileName NVARCHAR(40),
+    createdAt DATETIME NOT NULL,
     CONSTRAINT PK_Products PRIMARY KEY(id),
     CONSTRAINT FK_Categories_Products FOREIGN KEY(categoryId) REFERENCES Categories(id)
 )

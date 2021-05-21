@@ -1,43 +1,26 @@
 import express, { Request } from 'express'
 import prismaController from '../config/Database'
-
+import {findProducts,createProduct} from '../controllers/productsController'
+import isAuthenticatedAdmin from '../middleware/isAuthenticatedAdmin'
+import expressValidator, { body, validationResult } from 'express-validator';
 const productsRouter = express.Router();
 
-productsRouter.route('/').get(
-    () => 
-    {
-        console.log("Hola products");
-    }
+// @route   GET - /api/users/test
+// @desc    Test user route
+// @access  Public
+productsRouter.route('/create').post(
+    [body('nombre').isEmpty().withMessage('Please enter a name for the product'),
+    body('cantidad').isEmpty().withMessage('Please enter the initial quantity'),
+    body('precio').isEmpty().withMessage('Please enter an initial price'),
+    body('specifications').isLength({min:1}).withMessage('Please enter at least one specification'),
+    isAuthenticatedAdmin],
+    createProduct
 )
-productsRouter.route('/create').post(()=>
-{
 
-}
-)
-productsRouter.route('/get').get((req:Request,res:Response)=>
-{
-    const {category, productname} = req.params
+// @route   GET - /api/users/test
+// @desc    Test user route
+// @access  Public
+productsRouter.route('/get').get([],findProducts)
 
-    if(category == 'All' && productname != null)
-    {
-        prismaController.products.findMany({
-            where:{
-                    name:productname
-            }
-        })
-    }
-    else if(category != 'All' && productname != null)
-    {
-        prismaController.products.findMany({
-            where:{
-                    name:productname
-            },
-            include:
-            {
-                Categories:true
-            }
-        })
-    }
-    
-})
 export default productsRouter
+
