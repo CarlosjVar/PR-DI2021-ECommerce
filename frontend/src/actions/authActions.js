@@ -42,7 +42,10 @@ export const loadUser = () => async (dispatch) => {
   try {
     dispatch({ type: LOAD_USER });
     const { data } = await api.get('/api/users/current');
-    dispatch({ type: LOAD_USER_SUCCESS, payload: data });
+    dispatch({
+      type: LOAD_USER_SUCCESS,
+      payload: { ...data.user, isAdmin: data.isAdmin },
+    });
   } catch (error) {
     dispatch(logoutUser());
   }
@@ -62,10 +65,8 @@ export const authenticateUser = (authData, history) => async (dispatch) => {
       payload: data.token,
     });
     dispatch(loadUser());
-    dispatch(
-      showAlert({ message: 'Se ha registrado con éxito', type: 'success' })
-    );
-    history.push('/');
+    dispatch(showAlert({ message: 'Ha ingresado con éxito', type: 'success' }));
+    history.push('/dashboard');
   } catch (error) {
     error.response.data.errors.forEach((error) =>
       dispatch(showAlert({ message: error.msg, type: 'danger' }))
