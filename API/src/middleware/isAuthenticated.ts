@@ -20,9 +20,14 @@ const isAuthenticated = async (req:Request,res:Response,next:NextFunction) =>
               where:
               {
                 id:decodedToken._id
-              }
+              },
+              include:{
+                Clients: true,
+                Admins: true
+            }
           })
-          req.user = user
+          req.user= user;
+          req.isAdmin = user.Clients? false:true
           next();
         } catch (err) {
           res.status(401).json({ message: 'Not authorized, token failed' });

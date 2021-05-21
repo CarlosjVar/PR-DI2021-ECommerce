@@ -4,6 +4,9 @@ import ordersRouter from './ordersRouter'
 import authRouter from './authRouter'
 import clientsRouter from './clientsRouter'
 import adminRouter from './adminRouter'
+import utilsRouter from './utilsRouter'
+import userRouter from './usersRouter'
+
 const router = express()
 
 router.use('/products',productsRouter);
@@ -15,5 +18,9 @@ router.use('/orders',ordersRouter);
 router.use('/clients',clientsRouter)
 
 router.use('/admins',adminRouter)
+
+router.use('/utils',utilsRouter)
+
+router.use('/users',userRouter)
 
 export default router

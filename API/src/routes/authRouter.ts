@@ -6,6 +6,9 @@ import {
     from '../controllers/authenticationController'
 const authRouter = express.Router();
 
+// @route   GET - /api/users/test
+// @desc    Test user route
+// @access  Public
 authRouter.route('/authUser').post(
     [
     body('email').isEmail().withMessage('Please enter an email'),

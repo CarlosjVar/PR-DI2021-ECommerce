@@ -41,7 +41,7 @@ export const createClient = async (req:Request,res:Response) =>{
             userId:user.id
         }})
 
-        res.json({msg:'Added correctly'})
+        res.json({msg:'Client added correctly'})
     }
     catch(err)
     {
