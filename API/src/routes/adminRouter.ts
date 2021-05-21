@@ -1,12 +1,12 @@
 import express from 'express'
 import expressValidator, { body, validationResult } from 'express-validator';
 import isAuthenticatedAdmin from '../middleware/isAuthenticatedAdmin'
-import {createAdmin} from '../controllers/adminController'
+import {createAdmin, getAdmins} from '../controllers/adminController'
 const adminRouter = express.Router();
 
-// @route   GET - /api/users/test
-// @desc    Test user route
-// @access  Public
+// @route   POST - /api/admins/create
+// @desc    Creates a user in the system
+// @access  Only Admin
 adminRouter.route('/create').post(
     [
     body('email').isEmail().withMessage('Please enter a valid email'),
@@ -16,5 +16,10 @@ adminRouter.route('/create').post(
     ],
     createAdmin)
 
+
+adminRouter.route('/get').get([isAuthenticatedAdmin],getAdmins)
+
+
+adminRouter.route('/test').get(getAdmins)
 
 export default adminRouter

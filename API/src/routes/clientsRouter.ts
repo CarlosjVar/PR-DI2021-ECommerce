@@ -4,14 +4,9 @@ import { createClient } from '../controllers/clientController';
 
 const clientsRouter = express.Router();
 
-// @route   GET - /api/users/test
-// @desc    Test user route
-// @access  Public
-clientsRouter.route('/').get((req,res)=>{console.log("Hola"); res.send("Hola");
-})
 
-// @route   GET - /api/users/test
-// @desc    Test user route
+// @route   POST - /api/clients/create
+// @desc    Creates a client in the system
 // @access  Public
 clientsRouter.route('/create').post(
     [
