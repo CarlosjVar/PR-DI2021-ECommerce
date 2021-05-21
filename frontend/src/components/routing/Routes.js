@@ -5,6 +5,8 @@ import { Container } from 'react-bootstrap';
 import HomeScreen from '../../screens/HomeScreen';
 import LoginScreen from '../../screens/LoginScreen';
 import RegisterScreen from '../../screens/RegisterScreen';
+import OrdersScreen from '../../screens/OrdersScreen';
+import ShoppingCartScreen from '../../screens/ShoppingCartScreen';
 import Alert from '../layout/Alert';
 
 const Routes = () => {
@@ -16,6 +18,8 @@ const Routes = () => {
         <Switch>
           <Route path="/login" component={LoginScreen} exact />
           <Route path="/register" component={RegisterScreen} exact />
+          <Route path="/cart" component={ShoppingCartScreen} exact />
+          <Route path="/my-orders" component={OrdersScreen} exact />
         </Switch>
       </Container>
     </>
