@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect, Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Col,
@@ -39,7 +39,7 @@ const LoginScreen = () => {
       <Col md="6" className="mx-auto">
         <Card>
           <Card.Body>
-            <h3 className="text-center mt-3 mb-5">
+            <h3 className="text-center mt-3 mb-4">
               <i className="fas fa-sign-in-alt"></i> Login
             </h3>
             <form onSubmit={onLoginSubmit}>
@@ -61,7 +61,7 @@ const LoginScreen = () => {
                 />
               </InputGroup>
               {/* Password input */}
-              <InputGroup className="mb-3">
+              <InputGroup>
                 <InputGroup.Prepend>
                   <InputGroup.Text id="password-addon">
                     <i className="fa fa-asterisk"></i>
@@ -77,6 +77,13 @@ const LoginScreen = () => {
                   aria-describedby="password-addon"
                 />
               </InputGroup>
+
+              <div className="link-wrapper">
+                <Link id="register-link" to="/register">
+                  Registrarme
+                </Link>
+              </div>
+
               <Button type="submit" bg="primary" className="btn-block">
                 <i className="fas fa-sign-in-alt"></i> Login
               </Button>

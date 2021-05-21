@@ -55,6 +55,17 @@ h5 {
   color: var(--primary-color) !important;
 }
 
+button:disabled {
+  background-color: var(--dark-color) !important;
+  border: 1px solid var(--dark-color) !important;
+  color: var(--light-color) !important;
+}
+
+button:disabled:hover {
+  background-color: var(--light-color) !important;
+  color: var(--dark-color) !important;
+}
+
 /* Navigation styles */
 .nav-link {
   color: var(--light-color) !important;
@@ -72,6 +83,45 @@ i {
 
 .navbar-dark {
   color: var(--light-color) !important;
+}
+
+button.navbar-toggler {
+  border: 1px solid var(--light-color) !important;
+}
+
+/* Cards */
+.card {
+  border: 1px solid var(--dark-grey);
+  border-radius: 1px;
+}
+
+/* Link */
+.link-wrapper {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.link-wrapper a#register-link {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+.link-wrapper a#register-link:hover {
+  text-decoration: none;
+  color: var(--dark-grey);
+}
+
+/* Inputs */
+input.form-control {
+  border: 1px solid var(--dark-grey);
+}
+
+.input-group .input-group-prepend span.input-group-text {
+  color: var(--dark-color) !important;
+  border: 1px solid var(--dark-grey) !important;
+  background-color: var(--light-grey) !important;
 }
 
 /* Main footer */
