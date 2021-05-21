@@ -10,7 +10,7 @@ export const createAdmin = async (req:Request,res:Response) =>{
         if(!errors.isEmpty())
         {
             console.log("error body");
-            res.status(400).json({errors:errors.array()})
+            return res.status(400).json({errors:errors.array()})
         }
         //Obtain from the body
         const {email,fullname,password} = req.body;
