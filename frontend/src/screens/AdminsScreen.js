@@ -34,7 +34,7 @@ const AdminsScreen = () => {
           {loading ? <Spinner /> : <AdminsTable admins={adminList} />}
         </Col>
         <Col md="3">
-          <Link to="/" className="btn btn-secondary btn-block">
+          <Link to="/admins/add" className="btn btn-secondary btn-block">
             <i className="fa fa-plus"></i> Agregar administrador
           </Link>
         </Col>
