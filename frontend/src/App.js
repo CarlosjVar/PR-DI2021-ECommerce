@@ -12,8 +12,8 @@ const App = () => {
   useEffect(() => {
     if (localStorage.token) {
       setAuthenticationToken(localStorage.token);
-      store.dispatch(loadUser());
     }
+    store.dispatch(loadUser());
     window.addEventListener('storage', () => {
       if (!localStorage.token) {
         store.dispatch(logoutUser());

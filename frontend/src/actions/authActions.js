@@ -44,11 +44,9 @@ export const loadUser = () => async (dispatch) => {
     const { data } = await api.get('/api/users/current');
     dispatch({
       type: LOAD_USER_SUCCESS,
-      payload: { ...data.user, isAdmin: data.isAdmin },
+      payload: data,
     });
-  } catch (error) {
-    dispatch(logoutUser());
-  }
+  } catch (error) {}
 };
 
 /**
@@ -66,7 +64,8 @@ export const authenticateUser = (authData, history) => async (dispatch) => {
     });
     dispatch(loadUser());
     dispatch(showAlert({ message: 'Ha ingresado con éxito', type: 'success' }));
-    history.push('/dashboard');
+
+    history.push('/');
   } catch (error) {
     error.response.data.errors.forEach((error) =>
       dispatch(showAlert({ message: error.msg, type: 'danger' }))

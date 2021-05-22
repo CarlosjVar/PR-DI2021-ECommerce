@@ -48,7 +48,7 @@ const MainNavbar = () => {
         </Link>
       </Nav.Item>
       <Nav.Item className="mx-2">
-        <Link to="/" className="nav-link">
+        <Link to="/dashboard" className="nav-link">
           <i className="fas fa-shopping-cart"></i> Carrito
         </Link>
       </Nav.Item>
@@ -66,7 +66,7 @@ const MainNavbar = () => {
   );
 
   return (
-    <Navbar bg="primary" className="navbar-dark" expand="md">
+    <Navbar className="bg-primary navbar-dark" fixed="top" expand="lg">
       <Container>
         <LinkContainer to="/">
           <Navbar.Brand className="text-white">CompuHardware</Navbar.Brand>
