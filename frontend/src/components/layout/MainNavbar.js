@@ -8,7 +8,7 @@ import { logoutUser } from '../../actions/authActions';
 const MainNavbar = () => {
   const dispatch = useDispatch();
 
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated, isAdmin } = useSelector((state) => state.auth);
 
   const onLogoutClick = (e) => {
     e.preventDefault();
@@ -40,7 +40,7 @@ const MainNavbar = () => {
     </>
   );
 
-  const clientLinks = (
+  const authLinks = !isAdmin ? (
     <>
       <Nav.Item className="mx-2">
         <Link to="/" className="nav-link">
@@ -50,6 +50,29 @@ const MainNavbar = () => {
       <Nav.Item className="mx-2">
         <Link to="/dashboard" className="nav-link">
           <i className="fas fa-shopping-cart"></i> Carrito
+        </Link>
+      </Nav.Item>
+      <Nav.Item className="mx-2">
+        <Link to="/" className="nav-link">
+          <i className="fas fa-clipboard-list"></i> Órdenes
+        </Link>
+      </Nav.Item>
+      <Nav.Item className="mx-2">
+        <Link to="/" onClick={onLogoutClick} className="nav-link">
+          <i className="fas fa-sign-out-alt"></i> Logout
+        </Link>
+      </Nav.Item>
+    </>
+  ) : (
+    <>
+      <Nav.Item className="mx-2">
+        <Link to="/dashboard" className="nav-link">
+          <i className="fa fa-cog"></i> Dashboard
+        </Link>
+      </Nav.Item>
+      <Nav.Item className="mx-2">
+        <Link to="/admins" className="nav-link">
+          <i className="fas fa-users"></i> Usuarios
         </Link>
       </Nav.Item>
       <Nav.Item className="mx-2">
@@ -77,7 +100,7 @@ const MainNavbar = () => {
         />
         <Navbar.Collapse id="responsive-navbar">
           <Nav className="ml-auto">
-            {isAuthenticated ? clientLinks : guestLinks}
+            {isAuthenticated ? authLinks : guestLinks}
           </Nav>
         </Navbar.Collapse>
       </Container>

@@ -5,10 +5,12 @@ import setAuthenticationToken from './utils/setAuthenticationToken';
 
 import authReducer from './reducers/authReducer';
 import alertReducer from './reducers/alertReducer';
+import adminReducer from './reducers/adminReducer';
 
 const reducer = combineReducers({
   auth: authReducer,
   alert: alertReducer,
+  admin: adminReducer,
 });
 
 const initialState = {};

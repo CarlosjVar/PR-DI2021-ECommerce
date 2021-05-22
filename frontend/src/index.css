@@ -36,6 +36,11 @@ h5 {
   font-weight: bold;
 }
 
+.container {
+  padding-left: 0;
+  padding-right: 0;
+}
+
 /* Background colors */
 .bg-primary {
   background-color: var(--primary-color) !important;
@@ -122,6 +127,33 @@ input.form-control {
   color: var(--dark-color) !important;
   border: 1px solid var(--dark-grey) !important;
   background-color: var(--light-grey) !important;
+}
+
+/* Tables */
+table.table {
+  border: 1px solid var(--dark-grey);
+}
+
+table.table thead.thead-dark th {
+  background-color: var(--dark-grey) !important;
+  color: var(--light-color) !important;
+  padding: 1.3rem 0;
+}
+
+table.table thead th {
+  text-align: center;
+  font-weight: normal;
+}
+
+table.table tbody tr td {
+  text-align: center;
+  border-top: 1px solid var(--dark-grey);
+  border-bottom: 1px solid var(--dark-grey);
+  padding: 1.3rem 0;
+}
+
+table.table tbody tr:nth-child(even) {
+  background-color: var(--light-grey);
 }
 
 /* Main footer */
