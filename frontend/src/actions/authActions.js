@@ -3,6 +3,7 @@ import {
   LOGOUT,
   LOAD_USER,
   LOAD_USER_SUCCESS,
+  AUTH_USER_SUCCESS,
 } from '../constants/authConstants';
 import { showAlert } from './alertActions';
 
@@ -13,15 +14,61 @@ export const logoutUser = () => async (dispatch) => {
   dispatch({ type: LOGOUT });
 };
 
+/**
+ * Registers a new client
+ * @param {object} clientData Data of the client to register
+ * @param {object} history React router history
+ * @returns
+ */
 export const registerClient = (clientData, history) => async (dispatch) => {
   try {
-    const { data } = await api.post('/api/clients/create', clientData);
-    console.log(data);
+    await api.post('/api/clients/create', clientData);
     dispatch(
       showAlert({ message: 'Se ha registrado con éxito', type: 'success' })
     );
     history.push('/login');
   } catch (error) {
-    console.log(error.response.data.errors);
+    error.response.data.errors.forEach((error) =>
+      dispatch(showAlert({ message: error.msg, type: 'danger' }))
+    );
+  }
+};
+
+/**
+ * Loads a user data
+ * @returns
+ */
+export const loadUser = () => async (dispatch) => {
+  try {
+    dispatch({ type: LOAD_USER });
+    const { data } = await api.get('/api/users/current');
+    dispatch({
+      type: LOAD_USER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {}
+};
+
+/**
+ * Authenticates a user
+ * @param {object} authData Authentication data
+ * @param {object} history React router history
+ * @returns
+ */
+export const authenticateUser = (authData, history) => async (dispatch) => {
+  try {
+    const { data } = await api.post('/api/auth/authUser', authData);
+    dispatch({
+      type: AUTH_USER_SUCCESS,
+      payload: data.token,
+    });
+    dispatch(loadUser());
+    dispatch(showAlert({ message: 'Ha ingresado con éxito', type: 'success' }));
+
+    history.push('/');
+  } catch (error) {
+    error.response.data.errors.forEach((error) =>
+      dispatch(showAlert({ message: error.msg, type: 'danger' }))
+    );
   }
 };

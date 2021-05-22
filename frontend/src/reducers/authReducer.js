@@ -13,6 +13,7 @@ const initialState = {
   isAuthenticated: false,
   loading: true,
   user: null,
+  isAdmin: false,
   token: localStorage.getItem('token'),
 };
 
@@ -39,8 +40,10 @@ const authReducer = (state = initialState, action) => {
     case LOAD_USER_SUCCESS:
       return {
         ...state,
-        user: payload,
+        user: payload.user,
+        isAuthenticated: true,
         loading: false,
+        isAdmin: payload.isAdmin,
       };
     case LOGOUT:
       return {
@@ -48,6 +51,7 @@ const authReducer = (state = initialState, action) => {
         user: null,
         token: null,
         isAuthenticated: false,
+        isAdmin: false,
       };
     case REGISTER_CLIENT_SUCCESS:
     case REGISTER_CLIENT_FAILURE:
