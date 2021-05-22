@@ -7,6 +7,8 @@
   --light-grey: #e3e3e3;
   --dark-grey: #424242;
   --dark-color: #000;
+  --danger-color: #85001e;
+  --success-color: #215f0c;
 }
 
 /* Core styles */
@@ -41,6 +43,19 @@ h5 {
   padding-right: 0;
 }
 
+/* Alerts */
+.alert.alert-danger {
+  background-color: var(--danger-color) !important;
+  color: var(--light-color) !important;
+  border: 1px solid var(--danger-color) !important;
+}
+
+.alert.alert-success {
+  background-color: var(--success-color) !important;
+  color: var(--light-color) !important;
+  border: 1px solid var(--success-color) !important;
+}
+
 /* Background colors */
 .bg-primary {
   background-color: var(--primary-color) !important;
@@ -58,6 +73,18 @@ h5 {
 .btn-primary:hover {
   background-color: var(--light-color) !important;
   color: var(--primary-color) !important;
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color) !important;
+  color: var(--light-color);
+  border: 1px solid var(--secondary-color);
+  transition: 0.3s;
+}
+
+.btn-secondary:hover {
+  background-color: var(--light-color) !important;
+  color: var(--secondary-color) !important;
 }
 
 button:disabled {

@@ -24,8 +24,6 @@ const AdminsScreen = () => {
     }
   }, [history, isAdmin, isAuthenticated, dispatch]);
 
-  console.log(adminList);
-
   return (
     <>
       <h3>
@@ -36,7 +34,7 @@ const AdminsScreen = () => {
           {loading ? <Spinner /> : <AdminsTable admins={adminList} />}
         </Col>
         <Col md="3">
-          <Link to="/" className="btn btn-primary btn-block">
+          <Link to="/" className="btn btn-secondary btn-block">
             <i className="fa fa-plus"></i> Agregar administrador
           </Link>
         </Col>

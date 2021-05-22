@@ -1,33 +1,24 @@
 import React from 'react';
+import AdminsTableItem from './AdminsTableItem';
 
 const AdminsTable = ({ admins }) => {
+  const adminItems = admins.map((admin) => (
+    <AdminsTableItem key={admin.email} admin={admin} />
+  ));
+
   return (
-    <table className="table">
-      <thead className="thead-dark">
-        <tr>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">Handle</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr>
-      </tbody>
-    </table>
+    <div className="table-responsive">
+      <table className="table">
+        <thead className="thead-dark">
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Email</th>
+            <th scope="col">Fecha de registro</th>
+          </tr>
+        </thead>
+        <tbody>{adminItems}</tbody>
+      </table>
+    </div>
   );
 };
 
