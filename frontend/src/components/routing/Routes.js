@@ -2,6 +2,9 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 
+import AdminRoute from './AdminRoute';
+import ClientRoute from './ClientRoute';
+
 import HomeScreen from '../../screens/HomeScreen';
 import LoginScreen from '../../screens/LoginScreen';
 import RegisterScreen from '../../screens/RegisterScreen';
@@ -23,11 +26,15 @@ const Routes = () => {
         <Switch>
           <Route path="/login" component={LoginScreen} exact />
           <Route path="/register" component={RegisterScreen} exact />
-          <Route path="/cart" component={ShoppingCartScreen} exact />
-          <Route path="/my-orders" component={OrdersScreen} exact />
-          <Route path="/dashboard" component={DashboardScreen} exact />
-          <Route path="/admins" component={AdminsScreen} exact />
-          <Route path="/admins/add" component={RegisterAdminScreen} exact />
+          <ClientRoute path="/cart" component={ShoppingCartScreen} exact />
+          <ClientRoute path="/my-orders" component={OrdersScreen} exact />
+          <AdminRoute path="/dashboard" component={DashboardScreen} exact />
+          <AdminRoute path="/admins" component={AdminsScreen} exact />
+          <AdminRoute
+            path="/admins/add"
+            component={RegisterAdminScreen}
+            exact
+          />
         </Switch>
       </Container>
     </>
