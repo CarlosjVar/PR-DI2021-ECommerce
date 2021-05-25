@@ -36,13 +36,17 @@ export const createAdmin = async (req: Request, res: Response) => {
       },
     });
     //Creates a Client in the database based on the id of the user registered before
-    await prismaController.admins.create({
+    const admin = await prismaController.admins.create({
       data: {
         userId: user.id,
       },
     });
 
-    res.json({ msg: "Administrador añadido correctamente" });
+    res.json({
+      msg: "Administrador añadido correctamente",
+      userInfo: user,
+      admInfo: admin,
+    });
   } catch (err) {
     res.status(500).json({ message: "Internal server error" });
     console.log(err);

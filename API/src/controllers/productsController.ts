@@ -107,7 +107,7 @@ export const createProduct = async (req: Request, res: Response) => {
         });
       }
     );
-    res.json({ msg: "Producto añadido correctamente" });
+    res.json({ msg: "Producto añadido correctamente", productInfo: product });
   } catch (err) {
     res.status(500).json({ msg: [{ errors: "Internal server error" }] });
   }
@@ -132,7 +132,7 @@ export const deleteProducts = async (req: Request, res: Response) => {
       },
     });
     res.json({
-      msg: [{ errors: "El producto se ha eliminado correctamente" }],
+      msg: "El producto se ha eliminado correctamente",
     });
   } catch (err) {
     res.status(500).json({ msg: [{ errors: "Internal server error" }] });

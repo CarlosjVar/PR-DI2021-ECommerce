@@ -37,13 +37,17 @@ export const createClient = async (req: Request, res: Response) => {
       },
     });
     //Creates a Client in the database based on the id of the user registered before
-    await prismaController.clients.create({
+    const client = await prismaController.clients.create({
       data: {
         userId: user.id,
       },
     });
 
-    res.json({ msg: "Cliente añadido correctamente" });
+    res.json({
+      msg: "Cliente añadido correctamente",
+      userInfo: user,
+      clientInfo: client,
+    });
   } catch (err) {
     res.status(500).json({ message: "Internal server error" });
     console.log(err);
