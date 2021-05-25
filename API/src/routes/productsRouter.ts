@@ -1,6 +1,10 @@
 import express, { Request } from "express";
 import prismaController from "../config/Database";
-import { findProducts, createProduct } from "../controllers/productsController";
+import {
+  findProducts,
+  createProduct,
+  deleteProducts,
+} from "../controllers/productsController";
 import isAuthenticatedAdmin from "../middleware/isAuthenticatedAdmin";
 import expressValidator, { body, validationResult } from "express-validator";
 const productsRouter = express.Router();
@@ -34,5 +38,5 @@ productsRouter
 // @access  Public
 productsRouter.route("/get").get([], findProducts);
 
-productsRouter.route("/delete").delete([isAuthenticatedAdmin]);
+productsRouter.route("/delete").delete([isAuthenticatedAdmin], deleteProducts);
 export default productsRouter;
