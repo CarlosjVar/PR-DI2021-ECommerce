@@ -121,18 +121,26 @@ export const deleteProducts = async (req: Request, res: Response) => {
       res.status(400).json({ msg: [{ errors: "No se encontró el producto" }] });
     }
 
-    prismaController.productsXSpecifications.deleteMany({
+    await prismaController.productsXSpecifications.deleteMany({
       where: {
         id: prodId as unknown as number,
       },
     });
-    prismaController.products.delete({
+
+    const product = await prismaController.products.findUnique({
+      where: {
+        id: prodId as unknown as number,
+      },
+    });
+
+    await prismaController.products.delete({
       where: {
         id: prodId as unknown as number,
       },
     });
     res.json({
       msg: "El producto se ha eliminado correctamente",
+      productInfo: product,
     });
   } catch (err) {
     res.status(500).json({ msg: [{ errors: "Internal server error" }] });
