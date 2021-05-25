@@ -17,12 +17,6 @@ const initialState = {
   token: localStorage.getItem('token'),
 };
 
-/**
- * Reducer for authentication state
- * @param {object} state The initial state of authentication
- * @param {object} action The action data
- * @returns The new authentication state
- */
 const authReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {

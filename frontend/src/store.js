@@ -6,11 +6,13 @@ import setAuthenticationToken from './utils/setAuthenticationToken';
 import authReducer from './reducers/authReducer';
 import alertReducer from './reducers/alertReducer';
 import adminReducer from './reducers/adminReducer';
+import productReducer from './reducers/productReducer';
 
 const reducer = combineReducers({
   auth: authReducer,
   alert: alertReducer,
   admin: adminReducer,
+  product: productReducer,
 });
 
 const initialState = {};
