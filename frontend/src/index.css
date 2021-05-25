@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
 :root {
   --light-color: #fff;
   --primary-color: #003469;
@@ -35,7 +34,7 @@ h2,
 h3,
 h4,
 h5 {
-  font-weight: bold;
+  font-weight: 700 !important;
 }
 
 .container {
@@ -164,7 +163,7 @@ table.table {
 table.table thead.thead-dark th {
   background-color: var(--dark-grey) !important;
   color: var(--light-color) !important;
-  padding: 1.3rem 0;
+  padding: 1.1rem 0;
 }
 
 table.table thead th {
@@ -176,7 +175,7 @@ table.table tbody tr td {
   text-align: center;
   border-top: 1px solid var(--dark-grey);
   border-bottom: 1px solid var(--dark-grey);
-  padding: 1.3rem 0;
+  padding: 1.1rem 0;
 }
 
 table.table tbody tr:nth-child(even) {

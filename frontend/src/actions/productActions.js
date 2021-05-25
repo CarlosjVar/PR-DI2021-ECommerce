@@ -7,7 +7,7 @@ import {
 /**
  * Gets all of the current products
  */
-export const getProducts = () => (dispatch) => {
+export const getProducts = () => async (dispatch) => {
   try {
     dispatch({ type: SET_PRODUCT_LOADING });
     const { data } = await api.get('/api/products/get');
