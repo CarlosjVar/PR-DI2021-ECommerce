@@ -8,6 +8,7 @@ import alertReducer from './reducers/alertReducer';
 import adminReducer from './reducers/adminReducer';
 import productReducer from './reducers/productReducer';
 import categoryReducer from './reducers/categoryReducer';
+import specificationReducer from './reducers/specificationReducer';
 
 const reducer = combineReducers({
   auth: authReducer,
@@ -15,6 +16,7 @@ const reducer = combineReducers({
   admin: adminReducer,
   product: productReducer,
   category: categoryReducer,
+  specification: specificationReducer,
 });
 
 const initialState = {};
