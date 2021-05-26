@@ -4,6 +4,7 @@ import {
   findProducts,
   createProduct,
   deleteProducts,
+  updateProduct,
 } from "../controllers/productsController";
 import isAuthenticatedAdmin from "../middleware/isAuthenticatedAdmin";
 import expressValidator, { body, validationResult } from "express-validator";
@@ -16,14 +17,17 @@ productsRouter
   .route("/create")
   .post(
     [
-      body("nombre")
-        .isEmpty()
+      body("name")
+        .notEmpty()
         .withMessage("Por favor ingrese un nombre para el producto"),
-      body("cantidad")
-        .isEmpty()
-        .withMessage("Please enter the initial quantity"),
-      body("precio")
-        .isEmpty()
+      body("quantity")
+        .notEmpty()
+        .withMessage("Por favor ingrese la cantidad en stock"),
+      body("category")
+        .notEmpty()
+        .withMessage("Por favor ingrese una categoría"),
+      body("price")
+        .notEmpty()
         .withMessage("Por favor ingrese un precio inicial"),
       body("specifications")
         .isLength({ min: 1 })
@@ -38,5 +42,33 @@ productsRouter
 // @access  Public
 productsRouter.route("/get").get([], findProducts);
 
+// @route   DELETE - /api/products/delete
+// @desc    Deletes a product based on an id sent
+// @access  Public
 productsRouter.route("/delete").delete([isAuthenticatedAdmin], deleteProducts);
+
+productsRouter
+  .route("/update")
+  .put(
+    [
+      body("name")
+        .notEmpty()
+        .withMessage("Por favor ingrese un nombre para el producto"),
+      body("quantity")
+        .notEmpty()
+        .withMessage("Por favor ingrese la cantidad en stock"),
+      body("category")
+        .notEmpty()
+        .withMessage("Por favor ingrese una categoría"),
+      body("price")
+        .notEmpty()
+        .withMessage("Por favor ingrese un precio inicial"),
+      body("specifications")
+        .isLength({ min: 1 })
+        .withMessage("Por favor ingrese al menos una especificación"),
+      isAuthenticatedAdmin,
+    ],
+    updateProduct
+  );
+
 export default productsRouter;
