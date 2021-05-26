@@ -6,6 +6,7 @@ import expressValidator, {
   validationResult,
 } from "express-validator";
 import { prisma } from ".prisma/client";
+import { Decimal } from "@prisma/client/runtime";
 
 export const findProducts = async (req: Request, res: Response) => {
   try {
@@ -72,68 +73,56 @@ export const createProduct = async (req: Request, res: Response) => {
   try {
     const errors: Result = validationResult(req);
     if (!errors.isEmpty()) {
-      res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ errors: errors.array() });
     }
     const { name, quantity, price, category, specifications } = req.body;
-    const categoryRecord = await prismaController.categories.findFirst({
-      where: {
-        name: category,
-      },
-    });
+
     const product = await prismaController.products.create({
       data: {
         name: name,
         quantity: quantity,
         price: price,
-        createdAt: Date(),
-        categoryId: categoryRecord?.id as number,
+        createdAt: new Date(),
+        categoryId: category as number,
       },
     });
-    const specInsertion = await specifications.forEach(
-      async (specification: any) => {
-        let specificationRecord =
-          await prismaController.specifications.findFirst({
-            where: {
-              name: specification.name as string,
-            },
-          });
+    await specifications.forEach(async (specification: any) => {
+      prismaController.productsXSpecifications.create({
+        data: {
+          productId: product.id as number,
+          specificationId: specifications.id as number,
+          value: specification.value,
+        },
+      });
+    });
 
-        prismaController.productsXSpecifications.create({
-          data: {
-            productId: product.id as number,
-            specificationId: specificationRecord?.id as number,
-            value: specification.value,
-          },
-        });
-      }
-    );
-    res.json({ msg: "Producto añadido correctamente", productInfo: product });
+    product.price = price as Decimal;
+    return res.json({
+      msg: "Producto añadido correctamente",
+      productInfo: product,
+    });
   } catch (err) {
-    res.status(500).json({ msg: [{ errors: "Internal server error" }] });
+    return res.status(500).json({ msg: [{ errors: "Internal server error" }] });
   }
 };
 
 export const deleteProducts = async (req: Request, res: Response) => {
   try {
-    const prodId = req.query.id;
+    const prodId = parseInt(req.query.prodId as string);
 
     if (prodId == null) {
-      res.status(400).json({ msg: [{ errors: "No se encontró el producto" }] });
+      return res
+        .status(400)
+        .json({ msg: [{ errors: "No se encontró el producto" }] });
     }
 
     await prismaController.productsXSpecifications.deleteMany({
       where: {
-        id: prodId as unknown as number,
+        productId: prodId as unknown as number,
       },
     });
 
-    const product = await prismaController.products.findUnique({
-      where: {
-        id: prodId as unknown as number,
-      },
-    });
-
-    await prismaController.products.delete({
+    const product = await prismaController.products.delete({
       where: {
         id: prodId as unknown as number,
       },
@@ -144,5 +133,61 @@ export const deleteProducts = async (req: Request, res: Response) => {
     });
   } catch (err) {
     res.status(500).json({ msg: [{ errors: "Internal server error" }] });
+  }
+};
+
+export const updateProduct = async (req: Request, res: Response) => {
+  try {
+    const errors: Result = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const prodId = parseInt(req.query.productId as string);
+    if (!prodId) {
+      return res
+        .status(400)
+        .json({ msg: [{ errors: "Error en el id del producto" }] });
+    }
+    const { name, quantity, price, category, specifications } = req.body;
+
+    //Find new category id
+
+    const product = await prismaController.products.update({
+      where: {
+        id: prodId as number,
+      },
+      data: {
+        name: name,
+        quantity: quantity,
+        price: price,
+        createdAt: new Date(),
+        categoryId: category as number,
+      },
+    });
+    //Delete all current relationships with specifications
+    await prismaController.productsXSpecifications.deleteMany({
+      where: {
+        productId: prodId,
+      },
+    });
+
+    //Insert the new specifications
+    await specifications.forEach(async (specification: any) => {
+      let specificationRecord = await prismaController.specifications.findFirst(
+        {
+          where: {
+            name: specification.name as string,
+          },
+        }
+      );
+    });
+
+    return res.json({
+      msg: "Se ha actualizado el producto correctamente",
+      productInfo: product,
+    });
+  } catch (err) {
+    console.log(err);
+    res.json({ msg: [{ errors: "Internal server error" }] });
   }
 };

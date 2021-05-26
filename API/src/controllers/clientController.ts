@@ -8,7 +8,6 @@ export const createClient = async (req: Request, res: Response) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      console.log("error body");
       return res.status(400).json({ errors: errors.array() });
     }
     //Obtain from the body
