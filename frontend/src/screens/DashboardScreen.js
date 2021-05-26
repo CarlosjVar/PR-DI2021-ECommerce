@@ -25,7 +25,7 @@ const DashboardScreen = () => {
       </h2>
       {loading ? <Spinner /> : <ProductsTable products={productList} />}
       <Row>
-        <Col md="4">
+        <Col md="3">
           <Link to="/products/add" className="btn btn-block btn-secondary">
             <i className="fa fa-plus"></i> Agregar producto nuevo
           </Link>

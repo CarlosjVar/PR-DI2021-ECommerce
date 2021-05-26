@@ -4,6 +4,7 @@ import {
   SET_PRODUCT_LOADING,
   ADD_PRODUCT_FAILURE,
   ADD_PRODUCT_SUCCESS,
+  DELETE_PRODUCT,
 } from '../constants/productConstants';
 import { showAlert } from './alertActions';
 
@@ -40,5 +41,21 @@ export const addProduct = (productData, history) => async (dispatch) => {
     error.response.data.errors.forEach((error) =>
       dispatch(showAlert({ message: error.msg, type: 'danger' }))
     );
+  }
+};
+
+/**
+ * Deletes a product
+ * @param {number} productId The product id
+ */
+export const deleteProduct = (productId) => async (dispatch) => {
+  try {
+    dispatch({ type: SET_PRODUCT_LOADING });
+    await api.delete(`/api/products/delete?prodId=${productId}`);
+    dispatch({ type: DELETE_PRODUCT, payload: productId });
+    dispatch({ type: SET_PRODUCT_LOADING });
+    dispatch(showAlert({ message: 'Producto eliminado', type: 'success' }));
+  } catch (error) {
+    console.error(error);
   }
 };

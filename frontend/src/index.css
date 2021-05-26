@@ -80,6 +80,18 @@ h5 {
   color: var(--secondary-color) !important;
 }
 
+.btn-danger {
+  background-color: var(--danger-color) !important;
+  color: var(--light-color);
+  border: 1px solid var(--danger-color);
+  transition: 0.3s;
+}
+
+.btn-danger:hover {
+  background-color: var(--light-color) !important;
+  color: var(--danger-color) !important;
+}
+
 button:disabled {
   background-color: var(--dark-color) !important;
   border: 1px solid var(--dark-color) !important;
@@ -189,7 +201,7 @@ table.table tbody tr td {
   text-align: center;
   border-top: 1px solid var(--dark-grey);
   border-bottom: 1px solid var(--dark-grey);
-  padding: 1.1rem 0;
+  padding: 0.8rem 0;
 }
 
 table.table tbody tr:nth-child(even) {

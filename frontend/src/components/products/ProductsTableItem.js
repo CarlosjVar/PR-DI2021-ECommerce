@@ -1,9 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { deleteProduct } from '../../actions/productActions';
 import NumberFormat from 'react-number-format';
 
 const ProductsTableItem = ({ product }) => {
-  const { name, quantity, price } = product;
+  const { id, name, quantity, price } = product;
+
+  const dispatch = useDispatch();
+
+  const onDeleteClick = () => {
+    if (window.confirm('¿Desea eliminar el producto?')) {
+      dispatch(deleteProduct(id));
+    }
+  };
 
   return (
     <tr>
@@ -25,7 +36,15 @@ const ProductsTableItem = ({ product }) => {
       <td>
         <Link to="/">Editar</Link>
       </td>
-      <td>Eliminar</td>
+      <td>
+        <Button
+          onClick={onDeleteClick}
+          style={{ margin: '0' }}
+          className="btn-danger"
+        >
+          Eliminar
+        </Button>
+      </td>
     </tr>
   );
 };

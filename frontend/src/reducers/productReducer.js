@@ -4,6 +4,7 @@ import {
   GET_PRODUCTS,
   GET_PRODUCT_DETAILS,
   SET_PRODUCT_LOADING,
+  DELETE_PRODUCT,
 } from '../constants/productConstants';
 
 const initialState = {
@@ -34,6 +35,13 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         productList: [payload, ...state.productList],
+      };
+    case DELETE_PRODUCT:
+      return {
+        ...state,
+        productList: state.productList.filter(
+          (product) => product.id !== payload
+        ),
       };
     case ADD_PRODUCT_FAILURE:
     default:
