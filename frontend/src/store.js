@@ -7,12 +7,14 @@ import authReducer from './reducers/authReducer';
 import alertReducer from './reducers/alertReducer';
 import adminReducer from './reducers/adminReducer';
 import productReducer from './reducers/productReducer';
+import categoryReducer from './reducers/categoryReducer';
 
 const reducer = combineReducers({
   auth: authReducer,
   alert: alertReducer,
   admin: adminReducer,
   product: productReducer,
+  category: categoryReducer,
 });
 
 const initialState = {};

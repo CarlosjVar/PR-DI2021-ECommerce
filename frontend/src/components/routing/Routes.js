@@ -13,6 +13,7 @@ import ShoppingCartScreen from '../../screens/ShoppingCartScreen';
 import DashboardScreen from '../../screens/DashboardScreen';
 import AdminsScreen from '../../screens/AdminsScreen';
 import RegisterAdminScreen from '../../screens/RegisterAdminScreen';
+import AddProductScreen from '../../screens/AddProductScreen';
 import Alert from '../layout/Alert';
 
 const Routes = () => {
@@ -35,6 +36,7 @@ const Routes = () => {
             component={RegisterAdminScreen}
             exact
           />
+          <AdminRoute path="/products/add" component={AddProductScreen} exact />
         </Switch>
       </Container>
     </>

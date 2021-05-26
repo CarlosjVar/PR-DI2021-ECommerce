@@ -67,7 +67,7 @@ const MainNavbar = () => {
     <>
       <Nav.Item className="mx-2">
         <Link to="/dashboard" className="nav-link">
-          <i className="fa fa-cog"></i> Dashboard
+          <i className="fa fa-cogs"></i> Dashboard
         </Link>
       </Nav.Item>
       <Nav.Item className="mx-2">
