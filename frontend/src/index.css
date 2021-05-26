@@ -149,6 +149,19 @@ input.form-control {
   background-color: var(--light-grey) !important;
 }
 
+select.form-control {
+  border: 1px solid var(--dark-grey);
+}
+
+input[type='file']::file-selector-button {
+  background-color: var(--secondary-color) !important;
+  color: var(--light-color) !important;
+  border: none;
+  padding: 0.5rem 1.8rem;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
 /* Tables */
 table.table {
   border: 1px solid var(--dark-grey);
