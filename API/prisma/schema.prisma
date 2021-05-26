@@ -68,8 +68,8 @@ model Products {
   quantity                Int
   price                   Decimal                   @db.Decimal(10, 2)
   categoryId              Int
-  imageFileName           String?                   @db.VarChar(40)
-  createdAt               DateTime?                 @db.DateTime(0)
+  imageFileName           String?                   @default("default_img") @db.VarChar(40)
+  createdAt               DateTime?                 @default(now()) @db.DateTime(0)
   Categories              Categories                @relation(fields: [categoryId], references: [id])
   OrderDetails            OrderDetails[]
   ProductsXSpecifications ProductsXSpecifications[]
