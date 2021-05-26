@@ -2,7 +2,10 @@ import api from '../utils/api';
 import {
   GET_PRODUCTS,
   SET_PRODUCT_LOADING,
+  ADD_PRODUCT_FAILURE,
+  ADD_PRODUCT_SUCCESS,
 } from '../constants/productConstants';
+import { showAlert } from './alertActions';
 
 /**
  * Gets all of the current products
@@ -16,5 +19,26 @@ export const getProducts = () => async (dispatch) => {
     dispatch({ type: SET_PRODUCT_LOADING });
   } catch (error) {
     console.error(error);
+  }
+};
+
+/**
+ * Add a new product
+ * @param {object} productData Product data
+ * @param {object} history History object
+ */
+export const addProduct = (productData, history) => async (dispatch) => {
+  try {
+    const { data } = await api.post('/api/products/create', productData);
+    const { productInfo } = data;
+
+    dispatch({ type: ADD_PRODUCT_SUCCESS, payload: productInfo });
+    dispatch(showAlert({ message: 'Producto agregado', type: 'success' }));
+    history.push('/dashboard');
+  } catch (error) {
+    dispatch({ type: ADD_PRODUCT_FAILURE });
+    error.response.data.errors.forEach((error) =>
+      dispatch(showAlert({ message: error.msg, type: 'danger' }))
+    );
   }
 };

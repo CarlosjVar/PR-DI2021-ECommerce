@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Row, Card, Button, Form } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getCategories } from '../actions/categoryActions';
 import { getSpecifications } from '../actions/specifcationActions';
+import { addProduct } from '../actions/productActions';
 
 import AddProductSpecificationForm from '../components/products/AddProductSpecificationForm';
 import Spinner from '../components/layout/Spinner';
 
 const AddProductScreen = () => {
+  const history = useHistory();
+
   const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
@@ -56,7 +60,19 @@ const AddProductScreen = () => {
 
   const onFormSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    const { name, price, quantity, category, specifications } = formData;
+    dispatch(
+      addProduct(
+        {
+          name,
+          price: parseFloat(price),
+          quantity: parseInt(quantity),
+          category: parseInt(category),
+          specifications,
+        },
+        history
+      )
+    );
   };
 
   const { name, price, quantity, category, specifications } = formData;

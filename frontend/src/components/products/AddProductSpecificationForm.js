@@ -34,6 +34,7 @@ const AddProductSpecificationForm = ({
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSpecificationSubmit = () => {
+    setFormData({ ...formData, value: '' });
     addSpecification({ value: formData.value, id: parseInt(formData.id) });
   };
 
@@ -82,6 +83,7 @@ const AddProductSpecificationForm = ({
         )}
       </Form.Group>
       <Button
+        disabled={value === '' || value === undefined}
         onClick={onSpecificationSubmit}
         className="btn-block btn-secondary"
       >
