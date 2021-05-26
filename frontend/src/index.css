@@ -36,12 +36,6 @@ h4,
 h5 {
   font-weight: 700 !important;
 }
-
-.container {
-  padding-left: 0;
-  padding-right: 0;
-}
-
 /* Alerts */
 .alert.alert-danger {
   background-color: var(--danger-color) !important;
