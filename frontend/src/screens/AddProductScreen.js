@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getCategories } from '../actions/categoryActions';
 import { getSpecifications } from '../actions/specifcationActions';
 
+import AddProductSpecificationForm from '../components/products/AddProductSpecificationForm';
+
 const AddProductScreen = () => {
   const dispatch = useDispatch();
 
@@ -62,6 +64,11 @@ const AddProductScreen = () => {
               <Form.Group>
                 <Form.File name="imageFileName" label="Imagen" />
               </Form.Group>
+              {/* Specifications */}
+              <AddProductSpecificationForm
+                productSpecifications={[]}
+                specifications={specificationList}
+              />
             </form>
           </Card.Body>
         </Card>
