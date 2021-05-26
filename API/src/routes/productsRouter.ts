@@ -5,6 +5,7 @@ import {
   createProduct,
   deleteProducts,
   updateProduct,
+  findProduct,
 } from "../controllers/productsController";
 import isAuthenticatedAdmin from "../middleware/isAuthenticatedAdmin";
 import expressValidator, { body, validationResult } from "express-validator";
@@ -40,7 +41,7 @@ productsRouter
 // @route   GET - /api/products/get
 // @desc    Gets all the products that matches the given parameters
 // @access  Public
-productsRouter.route("/get").get([], findProducts);
+productsRouter.route("/getAll").get([], findProducts);
 
 // @route   DELETE - /api/products/delete
 // @desc    Deletes a product based on an id sent
@@ -70,5 +71,7 @@ productsRouter
     ],
     updateProduct
   );
+
+productsRouter.route("/get/:id").get([], findProduct);
 
 export default productsRouter;

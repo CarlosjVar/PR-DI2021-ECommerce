@@ -7,6 +7,7 @@ import expressValidator, {
 } from "express-validator";
 import { prisma } from ".prisma/client";
 import { Decimal } from "@prisma/client/runtime";
+import { constants } from "buffer";
 
 export const findProducts = async (req: Request, res: Response) => {
   try {
@@ -71,6 +72,8 @@ export const findProducts = async (req: Request, res: Response) => {
 
 export const createProduct = async (req: Request, res: Response) => {
   try {
+    console.log("Llegó");
+
     const errors: Result = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -87,11 +90,13 @@ export const createProduct = async (req: Request, res: Response) => {
       },
     });
     await specifications.forEach(async (specification: any) => {
-      prismaController.productsXSpecifications.create({
+      console.log(specification);
+
+      await prismaController.productsXSpecifications.create({
         data: {
           productId: product.id as number,
-          specificationId: specifications.id as number,
-          value: specification.value,
+          specificationId: specification.id as number,
+          value: specification.value as string,
         },
       });
     });
@@ -102,6 +107,8 @@ export const createProduct = async (req: Request, res: Response) => {
       productInfo: product,
     });
   } catch (err) {
+    console.log(err);
+
     return res.status(500).json({ msg: [{ errors: "Internal server error" }] });
   }
 };
@@ -173,13 +180,13 @@ export const updateProduct = async (req: Request, res: Response) => {
 
     //Insert the new specifications
     await specifications.forEach(async (specification: any) => {
-      let specificationRecord = await prismaController.specifications.findFirst(
-        {
-          where: {
-            name: specification.name as string,
-          },
-        }
-      );
+      await prismaController.productsXSpecifications.create({
+        data: {
+          productId: product.id as number,
+          specificationId: specification.id as number,
+          value: specification.value as string,
+        },
+      });
     });
 
     return res.json({
@@ -188,6 +195,38 @@ export const updateProduct = async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.log(err);
+
+    res.json({ msg: [{ errors: "Internal server error" }] });
+  }
+};
+
+export const findProduct = async (req: Request, res: Response) => {
+  try {
+    const productId = parseInt(req.params.id);
+    if (!productId) {
+      return res
+        .status(400)
+        .json({ msg: [{ errors: "Error en el id del producto" }] });
+    }
+
+    const product = await prismaController.products.findFirst({
+      where: {
+        id: productId,
+      },
+      include: {
+        ProductsXSpecifications: true,
+      },
+    });
+
+    const categoria = await prismaController.categories.findMany({
+      where: {
+        id: product.categoryId,
+      },
+    });
+    return res.json({ product: product, categoria: categoria });
+  } catch (err) {
+    console.log(err);
+
     res.json({ msg: [{ errors: "Internal server error" }] });
   }
 };
