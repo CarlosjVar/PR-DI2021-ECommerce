@@ -138,6 +138,13 @@ button.navbar-toggler {
   color: var(--dark-grey);
 }
 
+/* Lists */
+.list-group .spec-form-item.list-group-item:hover {
+  background-color: var(--danger-color) !important;
+  color: var(--light-color) !important;
+  cursor: pointer;
+}
+
 /* Inputs */
 input.form-control {
   border: 1px solid var(--dark-grey);
