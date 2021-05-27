@@ -1,4 +1,3 @@
-const PORT = process.env.PORT||6050
+const PORT = process.env.PORT || 6050;
 
-
-export {PORT}
+export { PORT };
