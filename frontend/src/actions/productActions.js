@@ -15,7 +15,7 @@ import { showAlert } from './alertActions';
 export const getProducts = () => async (dispatch) => {
   try {
     dispatch({ type: SET_PRODUCT_LOADING });
-    const { data } = await api.get('/api/products/get');
+    const { data } = await api.get('/api/products/getAll');
     const { products } = data;
     dispatch({ type: GET_PRODUCTS, payload: products });
     dispatch({ type: SET_PRODUCT_LOADING });
