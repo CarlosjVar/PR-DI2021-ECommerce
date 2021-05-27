@@ -1,6 +1,5 @@
 import prismaController from "../config/Database";
 import { Request, Response } from "express";
-import { FILE_HOSTING_URL } from "../config/constants";
 import fs, { PathLike } from "fs";
 import path from "path";
 import axios from "axios";
