@@ -1,24 +1,37 @@
 import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Col, Row } from 'react-bootstrap';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { getProducts } from '../actions/productActions';
+
+import ProductsTable from '../components/products/ProductsTable';
+import Spinner from '../components/layout/Spinner';
 
 const DashboardScreen = () => {
-  const history = useHistory();
+  const dispatch = useDispatch();
 
-  const auth = useSelector((state) => state.auth);
-  const { isAuthenticated, isAdmin } = auth;
+  const { productList, loading } = useSelector((state) => state.product);
+
+  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (!isAuthenticated || !isAdmin) {
-      history.push('/');
-    } else {
-    }
-  }, [history, isAdmin, isAuthenticated]);
+    dispatch(getProducts());
+  }, [dispatch]);
 
   return (
-    <div>
-      <h4>Dashboard screen</h4>
-    </div>
+    <>
+      <h2 className="mb-4">
+        <i className="fa fa-cog"></i> Dashboard (Sesión de {user.fullName})
+      </h2>
+      {loading ? <Spinner /> : <ProductsTable products={productList} />}
+      <Row>
+        <Col md="3">
+          <Link to="/products/add" className="btn btn-block btn-secondary">
+            <i className="fa fa-plus"></i> Agregar producto nuevo
+          </Link>
+        </Col>
+      </Row>
+    </>
   );
 };
 

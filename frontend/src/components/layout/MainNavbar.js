@@ -48,12 +48,12 @@ const MainNavbar = () => {
         </Link>
       </Nav.Item>
       <Nav.Item className="mx-2">
-        <Link to="/dashboard" className="nav-link">
+        <Link to="/cart" className="nav-link">
           <i className="fas fa-shopping-cart"></i> Carrito
         </Link>
       </Nav.Item>
       <Nav.Item className="mx-2">
-        <Link to="/" className="nav-link">
+        <Link to="/my-orders" className="nav-link">
           <i className="fas fa-clipboard-list"></i> Órdenes
         </Link>
       </Nav.Item>
@@ -67,7 +67,7 @@ const MainNavbar = () => {
     <>
       <Nav.Item className="mx-2">
         <Link to="/dashboard" className="nav-link">
-          <i className="fa fa-cog"></i> Dashboard
+          <i className="fa fa-cogs"></i> Dashboard
         </Link>
       </Nav.Item>
       <Nav.Item className="mx-2">
