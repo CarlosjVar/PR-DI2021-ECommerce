@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Image } from 'react-bootstrap';
+import { Row, Col, Image, ListGroup } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { getProductDetails } from '../actions/productActions';
 import { getCategories } from '../actions/categoryActions';
+import { getSpecifications } from '../actions/specifcationActions';
 
 import NumberFormat from 'react-number-format';
 import Spinner from '../components/layout/Spinner';
@@ -17,23 +18,38 @@ const AdminProductDetailsScreen = () => {
 
   const { categoryList } = useSelector((state) => state.category);
 
+  const { specificationList } = useSelector((state) => state.specification);
+
   useEffect(() => {
+    dispatch(getSpecifications());
     dispatch(getCategories());
     dispatch(getProductDetails(id));
   }, [dispatch, id]);
 
   const getCategoryName = (id) => {
     for (let category of categoryList) {
-      console.log('x');
       if (category.id === id) {
         return category.name;
       }
     }
   };
 
-  console.log(productDetails);
+  const getSpecificationName = (id) => {
+    for (let specification of specificationList) {
+      if (specification.id === id) {
+        return specification.name;
+      }
+    }
+  };
 
-  const { name, price, quantity, imageFileName, categoryId } = productDetails;
+  const {
+    name,
+    price,
+    quantity,
+    imageFileName,
+    categoryId,
+    ProductsXSpecifications: productSpecifications,
+  } = productDetails;
 
   if (loading) {
     return <Spinner />;
@@ -74,7 +90,14 @@ const AdminProductDetailsScreen = () => {
           <hr />
         </Col>
       </Row>
-      <h4></h4>
+      <h4>Especificaciones del producto</h4>
+      <ListGroup>
+        {productSpecifications.map((spec) => (
+          <ListGroup.Item>
+            {getSpecificationName(spec.specificationId)}: {spec.value}
+          </ListGroup.Item>
+        ))}
+      </ListGroup>
     </>
   );
 };
