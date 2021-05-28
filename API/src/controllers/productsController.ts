@@ -72,13 +72,11 @@ export const findProducts = async (req: Request, res: Response) => {
 
 export const createProduct = async (req: Request, res: Response) => {
   try {
-    console.log("Llegó");
-
     const errors: Result = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { name, quantity, price, category, specifications } = req.body;
+    const { name, quantity, price, category, specifications,imageName } = req.body;
 
     const product = await prismaController.products.create({
       data: {
@@ -87,6 +85,7 @@ export const createProduct = async (req: Request, res: Response) => {
         price: price,
         createdAt: new Date(),
         categoryId: category as number,
+        imageFileName:imageName
       },
     });
     await specifications.forEach(async (specification: any) => {
