@@ -31,10 +31,14 @@ const ProductsTableItem = ({ product }) => {
       </td>
       <td>{quantity}</td>
       <td>
-        <Link to="/">Detalles</Link>
+        <Link className="link" to={`/products/${id}`}>
+          Detalles
+        </Link>
       </td>
       <td>
-        <Link to="/">Editar</Link>
+        <Link className="link" to={`/products/${id}/edit`}>
+          Editar
+        </Link>
       </td>
       <td>
         <Button

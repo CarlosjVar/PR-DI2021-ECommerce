@@ -1,18 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Row, Card, Button, Form } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams, useHistory } from 'react-router-dom';
+import { getProductDetails, editProduct } from '../actions/productActions';
 import { getCategories } from '../actions/categoryActions';
 import { getSpecifications } from '../actions/specifcationActions';
-import { addProduct } from '../actions/productActions';
 
 import ProductSpecificationManager from '../components/products/ProductSpecificationManager';
 import Spinner from '../components/layout/Spinner';
 
-const AddProductScreen = () => {
+const EditProductScreen = () => {
   const history = useHistory();
 
   const dispatch = useDispatch();
+
+  const { id } = useParams();
+
+  const { productDetails, loading } = useSelector((state) => state.product);
+
+  const { categoryList } = useSelector((state) => state.category);
+
+  const { specificationList } = useSelector((state) => state.specification);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -22,21 +30,38 @@ const AddProductScreen = () => {
     specifications: [],
   });
 
-  const { categoryList } = useSelector((state) => state.category);
-
-  const { specificationList } = useSelector((state) => state.specification);
-
   useEffect(() => {
-    dispatch(getCategories());
     dispatch(getSpecifications());
-  }, [dispatch]);
+    dispatch(getCategories());
+    dispatch(getProductDetails(id));
+  }, [dispatch, id]);
 
   useEffect(() => {
-    // Update default category when fetching category list
-    if (categoryList.length > 0) {
-      setFormData((f) => ({ ...f, category: categoryList[0].id }));
+    const {
+      name,
+      imageFileName,
+      price,
+      quantity,
+      categoryId,
+      ProductsXSpecifications: productSpecifications,
+    } = productDetails;
+    // Map product specifications
+    let specifications = [];
+    if (productSpecifications) {
+      specifications = productSpecifications.map((spec) => ({
+        id: spec.specificationId,
+        value: spec.value,
+      }));
     }
-  }, [categoryList]);
+    setFormData({
+      name,
+      imageFileName,
+      price: parseInt(price),
+      category: categoryId,
+      quantity,
+      specifications,
+    });
+  }, [productDetails]);
 
   const onInputChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -62,7 +87,7 @@ const AddProductScreen = () => {
     e.preventDefault();
     const { name, price, quantity, category, specifications } = formData;
     dispatch(
-      addProduct(
+      editProduct(
         {
           name,
           price: parseFloat(price),
@@ -70,20 +95,27 @@ const AddProductScreen = () => {
           category: parseInt(category),
           specifications,
         },
+        id,
         history
       )
     );
   };
 
+  if (loading) {
+    return <Spinner />;
+  }
+
   const { name, price, quantity, category, specifications } = formData;
 
-  return (
+  return loading ? (
+    <Spinner />
+  ) : (
     <Row>
       <Col md="6" className="mx-auto">
         <Card>
           <Card.Body>
             <h4 className="text-center mt-3 mb-4">
-              <i className="fa fa-plus"></i> Crear producto nuevo
+              <i className="fa fa-pen"></i> Editar producto
             </h4>
             <form onSubmit={onFormSubmit}>
               {/* Name */}
@@ -151,7 +183,7 @@ const AddProductScreen = () => {
                 />
               )}
               <Button className="btn-block btn-primary mt-4" type="submit">
-                <i className="fa fa-plus"></i> Crear producto
+                <i className="fa fa-pencil"></i> Editar producto
               </Button>
             </form>
           </Card.Body>
@@ -161,4 +193,4 @@ const AddProductScreen = () => {
   );
 };
 
-export default AddProductScreen;
+export default EditProductScreen;

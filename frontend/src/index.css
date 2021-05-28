@@ -27,6 +27,7 @@ body {
 
 main {
   margin-top: 54.38px;
+  padding-bottom: 3rem;
 }
 
 h1,
@@ -36,6 +37,11 @@ h4,
 h5 {
   font-weight: 700 !important;
 }
+
+hr {
+  background-color: var(--dark-grey) !important;
+}
+
 /* Alerts */
 .alert.alert-danger {
   background-color: var(--danger-color) !important;
@@ -53,6 +59,14 @@ h5 {
 .bg-primary {
   background-color: var(--primary-color) !important;
   color: var(--light-color) !important;
+}
+
+/* Images */
+.image-container {
+  text-align: center;
+  padding: 3rem;
+  background-color: var(--light-grey);
+  border: 1px solid var(--dark-grey);
 }
 
 /* Button colors */
@@ -133,6 +147,17 @@ button.navbar-toggler {
 }
 
 /* Link */
+
+a.link {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+a.link:hover {
+  text-decoration: none;
+  color: var(--dark-grey);
+}
+
 .link-wrapper {
   display: block;
   width: 100%;
@@ -151,6 +176,16 @@ button.navbar-toggler {
 }
 
 /* Lists */
+.list-group .list-group-item {
+  border-top: 1px solid var(--dark-grey) !important;
+  border-left: 1px solid var(--dark-grey) !important;
+  border-right: 1px solid var(--dark-grey) !important;
+}
+
+.list-group .list-group-item:last-child {
+  border: 1px solid var(--dark-grey) !important;
+}
+
 .list-group .spec-form-item.list-group-item:hover {
   background-color: var(--danger-color) !important;
   color: var(--light-color) !important;
@@ -216,6 +251,7 @@ footer#main-footer {
   position: absolute;
   bottom: 0;
   width: 100%;
+  margin-top: 5rem;
 }
 
 footer#main-footer p {

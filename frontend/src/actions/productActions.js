@@ -5,6 +5,9 @@ import {
   ADD_PRODUCT_FAILURE,
   ADD_PRODUCT_SUCCESS,
   DELETE_PRODUCT,
+  GET_PRODUCT_DETAILS,
+  EDIT_PRODUCT_SUCCESS,
+  EDIT_PRODUCT_FAILURE,
 } from '../constants/productConstants';
 import { showAlert } from './alertActions';
 
@@ -14,7 +17,7 @@ import { showAlert } from './alertActions';
 export const getProducts = () => async (dispatch) => {
   try {
     dispatch({ type: SET_PRODUCT_LOADING });
-    const { data } = await api.get('/api/products/get');
+    const { data } = await api.get('/api/products/getAll');
     const { products } = data;
     dispatch({ type: GET_PRODUCTS, payload: products });
     dispatch({ type: SET_PRODUCT_LOADING });
@@ -59,3 +62,44 @@ export const deleteProduct = (productId) => async (dispatch) => {
     console.error(error);
   }
 };
+
+/**
+ * Gets a single product
+ * @param {number} productId The product id
+ */
+export const getProductDetails = (productId) => async (dispatch) => {
+  try {
+    dispatch({ type: SET_PRODUCT_LOADING });
+    const { data } = await api.get(`/api/products/get/${productId}`);
+    const { product } = data;
+    dispatch({ type: GET_PRODUCT_DETAILS, payload: product });
+    dispatch({ type: SET_PRODUCT_LOADING });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+/**
+ * Edits a single product
+ * @param {object} productData The new product data
+ * @param {object} history The react history
+ */
+export const editProduct =
+  (productData, productId, history) => async (dispatch) => {
+    try {
+      const { data } = await api.put(
+        `/api/products/update?productId=${productId}`,
+        productData
+      );
+      const { productInfo } = data;
+      dispatch({ type: EDIT_PRODUCT_SUCCESS, payload: productInfo });
+      dispatch(showAlert({ message: 'Producto editado', type: 'success' }));
+      history.push('/dashboard');
+    } catch (error) {
+      dispatch({ type: EDIT_PRODUCT_FAILURE });
+      console.log(error.response.data);
+      error.response.data.errors.forEach((error) =>
+        dispatch(showAlert({ message: error.msg, type: 'danger' }))
+      );
+    }
+  };
