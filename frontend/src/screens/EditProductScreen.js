@@ -5,7 +5,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { getProductDetails, editProduct } from '../actions/productActions';
 import { getCategories } from '../actions/categoryActions';
 import { getSpecifications } from '../actions/specifcationActions';
-import axios from 'axios';
+import uploadImageFile from '../utils/uploadImageFile';
 
 import ProductSpecificationManager from '../components/products/ProductSpecificationManager';
 import Spinner from '../components/layout/Spinner';
@@ -87,27 +87,14 @@ const EditProductScreen = () => {
   };
 
   const uploadFileHandler = async (e) => {
-    // Get image
-    const file = e.target.files[0];
-    const requestFormData = new FormData();
-    requestFormData.append('imageFile', file);
-    setImageUploading(true);
     try {
-      // Upload image
-      const { data } = await axios.post(
-        '/api/utils/image/upload',
-        requestFormData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-        }
-      );
-      setFormData({ ...formData, imageFileName: data.imageName });
+      const file = e.target.files[0];
+      setImageUploading(true);
+      // Upload image file
+      const imageFileName = await uploadImageFile(file);
+      setFormData({ ...formData, imageFileName });
       setImageUploading(false);
     } catch (error) {
-      console.error(error);
       setImageUploading(false);
     }
   };
