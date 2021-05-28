@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getCategories } from '../actions/categoryActions';
 import { getSpecifications } from '../actions/specifcationActions';
 import { addProduct } from '../actions/productActions';
+import axios from 'axios';
 
 import ProductSpecificationManager from '../components/products/ProductSpecificationManager';
 import Spinner from '../components/layout/Spinner';
@@ -21,6 +22,8 @@ const AddProductScreen = () => {
     category: undefined,
     specifications: [],
   });
+
+  const [imageUploading, setImageUploading] = useState(false);
 
   const { categoryList } = useSelector((state) => state.category);
 
@@ -58,9 +61,34 @@ const AddProductScreen = () => {
     });
   };
 
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0];
+    const requestFormData = new FormData();
+    requestFormData.append('imageFile', file);
+    setImageUploading(true);
+    try {
+      const { data } = await axios.post(
+        '/api/utils/image/upload',
+        requestFormData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        }
+      );
+      setFormData({ ...formData, imageFileName: data.imageName });
+      setImageUploading(false);
+    } catch (error) {
+      console.error(error);
+      setImageUploading(false);
+    }
+  };
+
   const onFormSubmit = (e) => {
     e.preventDefault();
-    const { name, price, quantity, category, specifications } = formData;
+    const { name, price, quantity, category, specifications, imageFileName } =
+      formData;
     dispatch(
       addProduct(
         {
@@ -69,6 +97,7 @@ const AddProductScreen = () => {
           quantity: parseInt(quantity),
           category: parseInt(category),
           specifications,
+          imageName: imageFileName,
         },
         history
       )
@@ -137,7 +166,12 @@ const AddProductScreen = () => {
               </Form.Group>
               {/* Image */}
               <Form.Group>
-                <Form.File name="imageFileName" label="Imagen" />
+                <Form.File
+                  onChange={uploadFileHandler}
+                  id="image-file"
+                  name="imageFileName"
+                  label="Imagen"
+                />
               </Form.Group>
               {/* Specifications */}
               {specificationList.length < 1 ? (
@@ -150,7 +184,11 @@ const AddProductScreen = () => {
                   specifications={specificationList}
                 />
               )}
-              <Button className="btn-block btn-primary mt-4" type="submit">
+              <Button
+                disabled={imageUploading}
+                className="btn-block btn-primary mt-4"
+                type="submit"
+              >
                 <i className="fa fa-plus"></i> Crear producto
               </Button>
             </form>
