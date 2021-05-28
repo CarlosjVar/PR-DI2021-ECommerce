@@ -6,7 +6,8 @@ import {
   ADD_PRODUCT_SUCCESS,
   DELETE_PRODUCT,
   GET_PRODUCT_DETAILS,
-  CLEAR_PRODUCT_DETAILS,
+  EDIT_PRODUCT_SUCCESS,
+  EDIT_PRODUCT_FAILURE,
 } from '../constants/productConstants';
 import { showAlert } from './alertActions';
 
@@ -75,5 +76,25 @@ export const getProductDetails = (productId) => async (dispatch) => {
     dispatch({ type: SET_PRODUCT_LOADING });
   } catch (error) {
     console.error(error);
+  }
+};
+
+/**
+ * Edits a single product
+ * @param {object} productData The new product data
+ * @param {object} history The react history
+ */
+export const editProduct = (productData, history) => async (dispatch) => {
+  try {
+    const { data } = await api.put('/api/products/update', productData);
+    const { productInfo } = data;
+    dispatch({ type: EDIT_PRODUCT_SUCCESS, payload: productInfo });
+    dispatch(showAlert({ message: 'Producto editado', type: 'success' }));
+    history.push('/dashboard');
+  } catch (error) {
+    dispatch({ type: EDIT_PRODUCT_FAILURE });
+    error.response.data.errors.forEach((error) =>
+      dispatch(showAlert({ message: error.msg, type: 'danger' }))
+    );
   }
 };
