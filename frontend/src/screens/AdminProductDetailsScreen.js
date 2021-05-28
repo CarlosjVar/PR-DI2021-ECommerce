@@ -58,7 +58,7 @@ const AdminProductDetailsScreen = () => {
       <Row>
         <Col md="8">
           <div className="image-container mb-4">
-            {imageFileName === 'default_img' ? (
+            {imageFileName === 'default_img' || !imageFileName ? (
               <i className="fas fa-question fa-9x"></i>
             ) : (
               <Image

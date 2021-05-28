@@ -1,13 +1,13 @@
-import prismaController from "../config/Database";
-import { Request, Response } from "express";
+import prismaController from '../config/Database';
+import { Request, Response } from 'express';
 import expressValidator, {
   Result,
   ValidationError,
   validationResult,
-} from "express-validator";
-import { prisma } from ".prisma/client";
-import { Decimal } from "@prisma/client/runtime";
-import { constants } from "buffer";
+} from 'express-validator';
+import { prisma } from '.prisma/client';
+import { Decimal } from '@prisma/client/runtime';
+import { constants } from 'buffer';
 
 export const findProducts = async (req: Request, res: Response) => {
   try {
@@ -15,7 +15,7 @@ export const findProducts = async (req: Request, res: Response) => {
     const productName = req.query.productName as string;
 
     //No category but has name
-    if (category == "All" && productName != null) {
+    if (category == 'All' && productName != null) {
       const products = await prismaController.products.findMany({
         where: {
           name: {
@@ -26,7 +26,7 @@ export const findProducts = async (req: Request, res: Response) => {
       res.json({ products: products });
     }
     //Has Category and has name
-    else if (category != "All" && productName != null) {
+    else if (category != 'All' && productName != null) {
       const products = await prismaController.products.findMany({
         where: {
           name: {
@@ -45,7 +45,7 @@ export const findProducts = async (req: Request, res: Response) => {
       res.json({ products: products });
     }
     // Has cateogry but does not has name
-    else if (category != "All" && productName == null) {
+    else if (category != 'All' && productName == null) {
       const products = await prismaController.products.findMany({
         where: {
           Categories: {
@@ -66,7 +66,7 @@ export const findProducts = async (req: Request, res: Response) => {
       res.json({ products: products });
     }
   } catch (err) {
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
 
@@ -76,7 +76,8 @@ export const createProduct = async (req: Request, res: Response) => {
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { name, quantity, price, category, specifications,imageName } = req.body;
+    const { name, quantity, price, category, specifications, imageName } =
+      req.body;
 
     const product = await prismaController.products.create({
       data: {
@@ -85,7 +86,7 @@ export const createProduct = async (req: Request, res: Response) => {
         price: price,
         createdAt: new Date(),
         categoryId: category as number,
-        imageFileName:imageName
+        imageFileName: imageName,
       },
     });
     await specifications.forEach(async (specification: any) => {
@@ -102,13 +103,13 @@ export const createProduct = async (req: Request, res: Response) => {
 
     product.price = price as Decimal;
     return res.json({
-      msg: "Producto añadido correctamente",
+      msg: 'Producto añadido correctamente',
       productInfo: product,
     });
   } catch (err) {
     console.log(err);
 
-    return res.status(500).json({ msg: [{ errors: "Internal server error" }] });
+    return res.status(500).json({ msg: [{ errors: 'Internal server error' }] });
   }
 };
 
@@ -119,7 +120,7 @@ export const deleteProducts = async (req: Request, res: Response) => {
     if (prodId == null) {
       return res
         .status(400)
-        .json({ msg: [{ errors: "No se encontró el producto" }] });
+        .json({ msg: [{ errors: 'No se encontró el producto' }] });
     }
 
     await prismaController.productsXSpecifications.deleteMany({
@@ -134,11 +135,11 @@ export const deleteProducts = async (req: Request, res: Response) => {
       },
     });
     res.json({
-      msg: "El producto se ha eliminado correctamente",
+      msg: 'El producto se ha eliminado correctamente',
       productInfo: product,
     });
   } catch (err) {
-    res.status(500).json({ msg: [{ errors: "Internal server error" }] });
+    res.status(500).json({ msg: [{ errors: 'Internal server error' }] });
   }
 };
 
@@ -152,9 +153,10 @@ export const updateProduct = async (req: Request, res: Response) => {
     if (!prodId) {
       return res
         .status(400)
-        .json({ msg: [{ errors: "Error en el id del producto" }] });
+        .json({ msg: [{ errors: 'Error en el id del producto' }] });
     }
-    const { name, quantity, price, category, specifications } = req.body;
+    const { name, quantity, price, category, specifications, imageName } =
+      req.body;
 
     //Find new category id
 
@@ -167,6 +169,7 @@ export const updateProduct = async (req: Request, res: Response) => {
         quantity: quantity,
         price: price,
         createdAt: new Date(),
+        imageFileName: imageName,
         categoryId: category as number,
       },
     });
@@ -189,13 +192,13 @@ export const updateProduct = async (req: Request, res: Response) => {
     });
 
     return res.json({
-      msg: "Se ha actualizado el producto correctamente",
+      msg: 'Se ha actualizado el producto correctamente',
       productInfo: product,
     });
   } catch (err) {
     console.log(err);
 
-    res.json({ msg: [{ errors: "Internal server error" }] });
+    res.json({ msg: [{ errors: 'Internal server error' }] });
   }
 };
 
@@ -205,7 +208,7 @@ export const findProduct = async (req: Request, res: Response) => {
     if (!productId) {
       return res
         .status(400)
-        .json({ msg: [{ errors: "Error en el id del producto" }] });
+        .json({ msg: [{ errors: 'Error en el id del producto' }] });
     }
 
     const product = await prismaController.products.findFirst({
@@ -226,6 +229,6 @@ export const findProduct = async (req: Request, res: Response) => {
   } catch (err) {
     console.log(err);
 
-    res.json({ msg: [{ errors: "Internal server error" }] });
+    res.json({ msg: [{ errors: 'Internal server error' }] });
   }
 };

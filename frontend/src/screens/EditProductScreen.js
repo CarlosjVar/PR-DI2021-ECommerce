@@ -5,6 +5,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { getProductDetails, editProduct } from '../actions/productActions';
 import { getCategories } from '../actions/categoryActions';
 import { getSpecifications } from '../actions/specifcationActions';
+import axios from 'axios';
 
 import ProductSpecificationManager from '../components/products/ProductSpecificationManager';
 import Spinner from '../components/layout/Spinner';
@@ -29,6 +30,7 @@ const EditProductScreen = () => {
     category: undefined,
     specifications: [],
   });
+  const [imageUploading, setImageUploading] = useState(false);
 
   useEffect(() => {
     dispatch(getSpecifications());
@@ -60,6 +62,7 @@ const EditProductScreen = () => {
       category: categoryId,
       quantity,
       specifications,
+      imageName: imageFileName,
     });
   }, [productDetails]);
 
@@ -83,9 +86,36 @@ const EditProductScreen = () => {
     });
   };
 
+  const uploadFileHandler = async (e) => {
+    // Get image
+    const file = e.target.files[0];
+    const requestFormData = new FormData();
+    requestFormData.append('imageFile', file);
+    setImageUploading(true);
+    try {
+      // Upload image
+      const { data } = await axios.post(
+        '/api/utils/image/upload',
+        requestFormData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        }
+      );
+      setFormData({ ...formData, imageFileName: data.imageName });
+      setImageUploading(false);
+    } catch (error) {
+      console.error(error);
+      setImageUploading(false);
+    }
+  };
+
   const onFormSubmit = (e) => {
     e.preventDefault();
-    const { name, price, quantity, category, specifications } = formData;
+    const { name, price, quantity, category, specifications, imageFileName } =
+      formData;
     dispatch(
       editProduct(
         {
@@ -94,16 +124,13 @@ const EditProductScreen = () => {
           quantity: parseInt(quantity),
           category: parseInt(category),
           specifications,
+          imageName: imageFileName,
         },
         id,
         history
       )
     );
   };
-
-  if (loading) {
-    return <Spinner />;
-  }
 
   const { name, price, quantity, category, specifications } = formData;
 
@@ -169,7 +196,12 @@ const EditProductScreen = () => {
               </Form.Group>
               {/* Image */}
               <Form.Group>
-                <Form.File name="imageFileName" label="Imagen" />
+                <Form.File
+                  onChange={uploadFileHandler}
+                  id="image-file"
+                  name="imageFileName"
+                  label="Imagen"
+                />
               </Form.Group>
               {/* Specifications */}
               {specificationList.length < 1 ? (
@@ -182,7 +214,11 @@ const EditProductScreen = () => {
                   specifications={specificationList}
                 />
               )}
-              <Button className="btn-block btn-primary mt-4" type="submit">
+              <Button
+                disabled={imageUploading}
+                className="btn-block btn-primary mt-4"
+                type="submit"
+              >
                 <i className="fa fa-pencil"></i> Editar producto
               </Button>
             </form>
