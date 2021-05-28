@@ -182,7 +182,7 @@ const EditProductScreen = () => {
                   specifications={specificationList}
                 />
               )}
-              <Button className="btn-block btn-primary" type="submit">
+              <Button className="btn-block btn-primary mt-4" type="submit">
                 <i className="fa fa-pencil"></i> Editar producto
               </Button>
             </form>

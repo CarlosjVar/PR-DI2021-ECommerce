@@ -147,6 +147,17 @@ button.navbar-toggler {
 }
 
 /* Link */
+
+a.link {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+a.link:hover {
+  text-decoration: none;
+  color: var(--dark-grey);
+}
+
 .link-wrapper {
   display: block;
   width: 100%;

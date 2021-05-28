@@ -34,8 +34,6 @@ const AdminProductDetailsScreen = () => {
     }
   };
 
-  console.log(productDetails);
-
   const getSpecificationName = (id) => {
     for (let specification of specificationList) {
       if (specification.id === id) {
@@ -59,7 +57,7 @@ const AdminProductDetailsScreen = () => {
     <>
       <Row>
         <Col md="8">
-          <div className="image-container">
+          <div className="image-container mb-4">
             {imageFileName === 'default_img' && (
               <i className="fas fa-question fa-9x"></i>
             )}
@@ -92,7 +90,7 @@ const AdminProductDetailsScreen = () => {
       </Row>
       {ProductsXSpecifications && (
         <>
-          <h4 className="mt-5">Especificaciones del producto</h4>
+          <h4 className="mt-5 mb-4">Especificaciones del producto</h4>
           <ListGroup className="mb-5">
             {ProductsXSpecifications.map((spec) => (
               <ListGroup.Item key={spec.id}>
