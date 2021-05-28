@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Col, Row, Card, Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
-import { getProductDetails } from '../actions/productActions';
+import { getProductDetails, editProduct } from '../actions/productActions';
 import { getCategories } from '../actions/categoryActions';
 import { getSpecifications } from '../actions/specifcationActions';
 
-import AddProductSpecificationForm from '../components/products/AddProductSpecificationForm';
+import ProductSpecificationManager from '../components/products/ProductSpecificationManager';
 import Spinner from '../components/layout/Spinner';
 
 const EditProductScreen = () => {
@@ -85,6 +85,20 @@ const EditProductScreen = () => {
 
   const onFormSubmit = (e) => {
     e.preventDefault();
+    const { name, price, quantity, category, specifications } = formData;
+    dispatch(
+      editProduct(
+        {
+          name,
+          price: parseFloat(price),
+          quantity: parseInt(quantity),
+          category: parseInt(category),
+          specifications,
+        },
+        id,
+        history
+      )
+    );
   };
 
   if (loading) {
@@ -93,9 +107,9 @@ const EditProductScreen = () => {
 
   const { name, price, quantity, category, specifications } = formData;
 
-  console.log(formData);
-
-  return (
+  return loading ? (
+    <Spinner />
+  ) : (
     <Row>
       <Col md="6" className="mx-auto">
         <Card>
@@ -161,7 +175,7 @@ const EditProductScreen = () => {
               {specificationList.length < 1 ? (
                 <Spinner />
               ) : (
-                <AddProductSpecificationForm
+                <ProductSpecificationManager
                   productSpecifications={specifications}
                   addSpecification={addSpecification}
                   removeSpecification={removeSpecification}
@@ -169,7 +183,7 @@ const EditProductScreen = () => {
                 />
               )}
               <Button className="btn-block btn-primary" type="submit">
-                <i className="fa fa-plus"></i> Crear producto
+                <i className="fa fa-pencil"></i> Editar producto
               </Button>
             </form>
           </Card.Body>

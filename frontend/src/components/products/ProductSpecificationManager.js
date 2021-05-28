@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ListGroup, Form, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-const AddProductSpecificationForm = ({
+const ProductSpecificationManager = ({
   specifications,
   productSpecifications,
   addSpecification,
@@ -15,8 +15,10 @@ const AddProductSpecificationForm = ({
   });
 
   useEffect(() => {
+    // Set specifications
     specifications.forEach((spec) => {
       if (spec.id === parseInt(formData.id)) {
+        // Update spec info
         setFormData((f) => ({ ...f, isNumeric: spec.isNumeric }));
       }
     });
@@ -93,10 +95,11 @@ const AddProductSpecificationForm = ({
   );
 };
 
-AddProductSpecificationForm.propTypes = {
+ProductSpecificationManager.propTypes = {
   specifications: PropTypes.array.isRequired,
+  productSpecifications: PropTypes.array.isRequired,
   addSpecification: PropTypes.func.isRequired,
   removeSpecification: PropTypes.func.isRequired,
 };
 
-export default AddProductSpecificationForm;
+export default ProductSpecificationManager;

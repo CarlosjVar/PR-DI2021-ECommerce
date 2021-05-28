@@ -6,7 +6,7 @@ import { getCategories } from '../actions/categoryActions';
 import { getSpecifications } from '../actions/specifcationActions';
 import { addProduct } from '../actions/productActions';
 
-import AddProductSpecificationForm from '../components/products/AddProductSpecificationForm';
+import ProductSpecificationManager from '../components/products/ProductSpecificationManager';
 import Spinner from '../components/layout/Spinner';
 
 const AddProductScreen = () => {
@@ -143,7 +143,7 @@ const AddProductScreen = () => {
               {specificationList.length < 1 ? (
                 <Spinner />
               ) : (
-                <AddProductSpecificationForm
+                <ProductSpecificationManager
                   productSpecifications={specifications}
                   addSpecification={addSpecification}
                   removeSpecification={removeSpecification}

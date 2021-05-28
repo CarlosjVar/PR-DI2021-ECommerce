@@ -44,10 +44,6 @@ const AdminProductDetailsScreen = () => {
     }
   };
 
-  if (loading) {
-    return <Spinner />;
-  }
-
   const {
     name,
     price,
@@ -57,7 +53,9 @@ const AdminProductDetailsScreen = () => {
     ProductsXSpecifications,
   } = productDetails;
 
-  return (
+  return loading ? (
+    <Spinner />
+  ) : (
     <>
       <Row>
         <Col md="8">

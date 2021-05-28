@@ -7,7 +7,6 @@ import {
   DELETE_PRODUCT,
   EDIT_PRODUCT_SUCCESS,
   EDIT_PRODUCT_FAILURE,
-  CLEAR_PRODUCT_DETAILS,
 } from '../constants/productConstants';
 
 const initialState = {
@@ -33,11 +32,6 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         productDetails: payload,
-      };
-    case CLEAR_PRODUCT_DETAILS:
-      return {
-        ...state,
-        productDetails: {},
       };
     case ADD_PRODUCT_SUCCESS:
       return {

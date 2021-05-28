@@ -84,17 +84,22 @@ export const getProductDetails = (productId) => async (dispatch) => {
  * @param {object} productData The new product data
  * @param {object} history The react history
  */
-export const editProduct = (productData, history) => async (dispatch) => {
-  try {
-    const { data } = await api.put('/api/products/update', productData);
-    const { productInfo } = data;
-    dispatch({ type: EDIT_PRODUCT_SUCCESS, payload: productInfo });
-    dispatch(showAlert({ message: 'Producto editado', type: 'success' }));
-    history.push('/dashboard');
-  } catch (error) {
-    dispatch({ type: EDIT_PRODUCT_FAILURE });
-    error.response.data.errors.forEach((error) =>
-      dispatch(showAlert({ message: error.msg, type: 'danger' }))
-    );
-  }
-};
+export const editProduct =
+  (productData, productId, history) => async (dispatch) => {
+    try {
+      const { data } = await api.put(
+        `/api/products/update?productId=${productId}`,
+        productData
+      );
+      const { productInfo } = data;
+      dispatch({ type: EDIT_PRODUCT_SUCCESS, payload: productInfo });
+      dispatch(showAlert({ message: 'Producto editado', type: 'success' }));
+      history.push('/dashboard');
+    } catch (error) {
+      dispatch({ type: EDIT_PRODUCT_FAILURE });
+      console.log(error.response.data);
+      error.response.data.errors.forEach((error) =>
+        dispatch(showAlert({ message: error.msg, type: 'danger' }))
+      );
+    }
+  };
