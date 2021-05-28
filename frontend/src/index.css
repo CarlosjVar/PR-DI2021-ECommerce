@@ -1,0 +1,260 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
+:root {
+  --light-color: #fff;
+  --primary-color: #003469;
+  --secondary-color: #006969;
+  --light-grey: #e3e3e3;
+  --dark-grey: #424242;
+  --dark-color: #000;
+  --danger-color: #85001e;
+  --success-color: #215f0c;
+}
+
+/* Core styles */
+* {
+  font-family: 'Montserrat', sans-serif;
+  color: #000;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 118px;
+}
+
+main {
+  margin-top: 54.38px;
+  padding-bottom: 3rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-weight: 700 !important;
+}
+
+hr {
+  background-color: var(--dark-grey) !important;
+}
+
+/* Alerts */
+.alert.alert-danger {
+  background-color: var(--danger-color) !important;
+  color: var(--light-color) !important;
+  border: 1px solid var(--danger-color) !important;
+}
+
+.alert.alert-success {
+  background-color: var(--success-color) !important;
+  color: var(--light-color) !important;
+  border: 1px solid var(--success-color) !important;
+}
+
+/* Background colors */
+.bg-primary {
+  background-color: var(--primary-color) !important;
+  color: var(--light-color) !important;
+}
+
+/* Images */
+.image-container {
+  text-align: center;
+  padding: 3rem;
+  background-color: var(--light-grey);
+  border: 1px solid var(--dark-grey);
+}
+
+/* Button colors */
+.btn-primary {
+  background-color: var(--primary-color) !important;
+  color: var(--light-color);
+  border: 1px solid var(--primary-color);
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: var(--light-color) !important;
+  color: var(--primary-color) !important;
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color) !important;
+  color: var(--light-color);
+  border: 1px solid var(--secondary-color);
+  transition: 0.3s;
+}
+
+.btn-secondary:hover {
+  background-color: var(--light-color) !important;
+  color: var(--secondary-color) !important;
+}
+
+.btn-danger {
+  background-color: var(--danger-color) !important;
+  color: var(--light-color);
+  border: 1px solid var(--danger-color);
+  transition: 0.3s;
+}
+
+.btn-danger:hover {
+  background-color: var(--light-color) !important;
+  color: var(--danger-color) !important;
+}
+
+button:disabled {
+  background-color: var(--dark-color) !important;
+  border: 1px solid var(--dark-color) !important;
+  color: var(--light-color) !important;
+}
+
+button:disabled:hover {
+  background-color: var(--light-color) !important;
+  color: var(--dark-color) !important;
+}
+
+/* Navigation styles */
+.nav-link {
+  color: var(--light-color) !important;
+  transition: 0.3s ease-out;
+}
+
+.nav-link:hover {
+  background-color: var(--light-color);
+  color: var(--primary-color) !important;
+}
+
+i {
+  color: inherit;
+}
+
+.navbar-dark {
+  color: var(--light-color) !important;
+}
+
+button.navbar-toggler {
+  border: 1px solid var(--light-color) !important;
+}
+
+/* Cards */
+.card {
+  border: 1px solid var(--dark-grey);
+  border-radius: 1px;
+}
+
+/* Link */
+
+a.link {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+a.link:hover {
+  text-decoration: none;
+  color: var(--dark-grey);
+}
+
+.link-wrapper {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.link-wrapper a#register-link {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+.link-wrapper a#register-link:hover {
+  text-decoration: none;
+  color: var(--dark-grey);
+}
+
+/* Lists */
+.list-group .list-group-item {
+  border-top: 1px solid var(--dark-grey) !important;
+  border-left: 1px solid var(--dark-grey) !important;
+  border-right: 1px solid var(--dark-grey) !important;
+}
+
+.list-group .list-group-item:last-child {
+  border: 1px solid var(--dark-grey) !important;
+}
+
+.list-group .spec-form-item.list-group-item:hover {
+  background-color: var(--danger-color) !important;
+  color: var(--light-color) !important;
+  cursor: pointer;
+}
+
+/* Inputs */
+input.form-control {
+  border: 1px solid var(--dark-grey);
+}
+
+.input-group .input-group-prepend span.input-group-text {
+  color: var(--dark-color) !important;
+  border: 1px solid var(--dark-grey) !important;
+  background-color: var(--light-grey) !important;
+}
+
+select.form-control {
+  border: 1px solid var(--dark-grey);
+}
+
+input[type='file']::file-selector-button {
+  background-color: var(--secondary-color) !important;
+  color: var(--light-color) !important;
+  border: none;
+  padding: 0.5rem 1.8rem;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
+/* Tables */
+table.table {
+  border: 1px solid var(--dark-grey);
+}
+
+table.table thead.thead-dark th {
+  background-color: var(--dark-grey) !important;
+  color: var(--light-color) !important;
+  padding: 1.1rem 0;
+}
+
+table.table thead th {
+  text-align: center;
+  font-weight: normal;
+}
+
+table.table tbody tr td {
+  text-align: center;
+  border-top: 1px solid var(--dark-grey);
+  border-bottom: 1px solid var(--dark-grey);
+  padding: 0.8rem 0;
+}
+
+table.table tbody tr:nth-child(even) {
+  background-color: var(--light-grey);
+}
+
+/* Main footer */
+footer#main-footer {
+  background-color: #424242;
+  text-align: center;
+  padding: 3rem 0;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  margin-top: 5rem;
+}
+
+footer#main-footer p {
+  color: #fff;
+  margin: 0;
+}
