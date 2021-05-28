@@ -1,6 +1,14 @@
 import express, { Request } from "express";
+import isAuthenticatedAdmin from "../middleware/isAuthenticatedAdmin";
 import prismaController from "../config/Database";
-import { findCategories, findSpecs } from "../controllers/utilsController";
+import {
+  findCategories,
+  findSpecs,
+  getImage,
+  uploadImage,
+} from "../controllers/utilsController";
+
+import { upload } from "../middleware/multer";
 
 const utilsRouter = express.Router();
 
@@ -14,5 +22,12 @@ utilsRouter.route("/specs").get(findSpecs);
 // @access  Public
 utilsRouter.route("/categories").get(findCategories);
 
-utilsRouter.route("/image/upload").post();
+// @route   POST - /api/utils/image/upload
+// @desc    Returns all the categories saved in the database
+// @access  Public
+utilsRouter
+  .route("/image/upload")
+  .post([upload.single("imageFile"), isAuthenticatedAdmin], uploadImage);
 export default utilsRouter;
+
+utilsRouter.route("/image/:image").get(getImage);

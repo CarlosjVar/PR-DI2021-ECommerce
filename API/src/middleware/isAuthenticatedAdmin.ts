@@ -41,7 +41,7 @@ const isAuthenticatedAdmin = async (
       req.user = user;
       next();
     } catch (err) {
-      res.status(500).json({ message: "Internal server error" });
+      return res.status(500).json({ message: "No autorizado" });
     }
   }
 };
