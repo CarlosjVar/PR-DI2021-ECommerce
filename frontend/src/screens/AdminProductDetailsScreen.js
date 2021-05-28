@@ -34,6 +34,8 @@ const AdminProductDetailsScreen = () => {
     }
   };
 
+  console.log(productDetails);
+
   const getSpecificationName = (id) => {
     for (let specification of specificationList) {
       if (specification.id === id) {
@@ -42,18 +44,18 @@ const AdminProductDetailsScreen = () => {
     }
   };
 
+  if (loading) {
+    return <Spinner />;
+  }
+
   const {
     name,
     price,
     quantity,
     imageFileName,
     categoryId,
-    ProductsXSpecifications: productSpecifications,
+    ProductsXSpecifications,
   } = productDetails;
-
-  if (loading) {
-    return <Spinner />;
-  }
 
   return (
     <>
@@ -90,14 +92,18 @@ const AdminProductDetailsScreen = () => {
           <hr />
         </Col>
       </Row>
-      <h4>Especificaciones del producto</h4>
-      <ListGroup>
-        {productSpecifications.map((spec) => (
-          <ListGroup.Item>
-            {getSpecificationName(spec.specificationId)}: {spec.value}
-          </ListGroup.Item>
-        ))}
-      </ListGroup>
+      {ProductsXSpecifications && (
+        <>
+          <h4 className="mt-5">Especificaciones del producto</h4>
+          <ListGroup className="mb-5">
+            {ProductsXSpecifications.map((spec) => (
+              <ListGroup.Item key={spec.id}>
+                {getSpecificationName(spec.specificationId)}: {spec.value}
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+        </>
+      )}
     </>
   );
 };

@@ -6,6 +6,7 @@ import {
   ADD_PRODUCT_SUCCESS,
   DELETE_PRODUCT,
   GET_PRODUCT_DETAILS,
+  CLEAR_PRODUCT_DETAILS,
 } from '../constants/productConstants';
 import { showAlert } from './alertActions';
 

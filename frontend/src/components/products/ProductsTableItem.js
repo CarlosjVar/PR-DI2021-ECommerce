@@ -34,7 +34,7 @@ const ProductsTableItem = ({ product }) => {
         <Link to={`/products/${id}`}>Detalles</Link>
       </td>
       <td>
-        <Link to="/">Editar</Link>
+        <Link to={`/products/${id}/edit`}>Editar</Link>
       </td>
       <td>
         <Button

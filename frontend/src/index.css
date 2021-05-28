@@ -27,6 +27,7 @@ body {
 
 main {
   margin-top: 54.38px;
+  padding-bottom: 3rem;
 }
 
 h1,
@@ -164,6 +165,16 @@ button.navbar-toggler {
 }
 
 /* Lists */
+.list-group .list-group-item {
+  border-top: 1px solid var(--dark-grey) !important;
+  border-left: 1px solid var(--dark-grey) !important;
+  border-right: 1px solid var(--dark-grey) !important;
+}
+
+.list-group .list-group-item:last-child {
+  border: 1px solid var(--dark-grey) !important;
+}
+
 .list-group .spec-form-item.list-group-item:hover {
   background-color: var(--danger-color) !important;
   color: var(--light-color) !important;
@@ -229,6 +240,7 @@ footer#main-footer {
   position: absolute;
   bottom: 0;
   width: 100%;
+  margin-top: 5rem;
 }
 
 footer#main-footer p {
