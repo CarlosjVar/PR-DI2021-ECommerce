@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Redirect, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Col,
@@ -8,11 +8,12 @@ import {
   InputGroup,
   FormControl,
   Button,
+  Form,
 } from 'react-bootstrap';
-import { showAlert } from '../actions/alertActions';
-import { registerAdmin } from '../actions/adminActions';
+import { registerClient } from '../../actions/authActions';
+import { showAlert } from '../../actions/alertActions';
 
-const RegisterAdminScreen = () => {
+const RegisterScreen = () => {
   const history = useHistory();
 
   const dispatch = useDispatch();
@@ -23,33 +24,40 @@ const RegisterAdminScreen = () => {
     password: '',
     passwordConfirmation: '',
   });
+  const [acceptTermsAndConditions, setAcceptTermsAndConditions] =
+    useState(false);
 
-  const { email, fullname, password, passwordConfirmation } = formData;
-
-  const { isAuthenticated, isAdmin } = useSelector((state) => state.auth);
-
-  useEffect(() => {
-    if (!isAuthenticated || !isAdmin) {
-      history.push('/');
-    }
-  }, [history, isAdmin, isAuthenticated, dispatch]);
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
   const onInputChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onRegisterSubmit = (e) => {
     e.preventDefault();
-    if (password !== passwordConfirmation) {
+    if (!acceptTermsAndConditions) {
       dispatch(
         showAlert({
+          message: 'Por acepte los términos y condiciones',
           type: 'danger',
+        })
+      );
+    } else if (passwordConfirmation !== password) {
+      dispatch(
+        showAlert({
           message: 'Ambas contraseñas deben coincidir',
+          type: 'danger',
         })
       );
     } else {
-      dispatch(registerAdmin(formData, history));
+      dispatch(registerClient(formData, history));
     }
   };
+
+  if (isAuthenticated) {
+    return <Redirect to="/" />;
+  }
+
+  const { email, fullname, password, passwordConfirmation } = formData;
 
   return (
     <Row>
@@ -57,7 +65,7 @@ const RegisterAdminScreen = () => {
         <Card>
           <Card.Body>
             <h4 className="text-center mt-3 mb-4">
-              <i className="fa fa-plus"></i> Crear Administrador
+              <i className="fas fa-user-plus"></i> Registrarse
             </h4>
             <form onSubmit={onRegisterSubmit}>
               {/* Email Input */}
@@ -128,9 +136,24 @@ const RegisterAdminScreen = () => {
                   aria-describedby="passwordConfirmation-addon"
                 />
               </InputGroup>
-
-              <Button type="submit" bg="primary" className="btn-block">
-                <i className="fa fa-user-plus"></i> Crear administrador
+              {/* Accept terms and conditions */}
+              <Form.Group controlId="acceptTermsAndConditions">
+                <Form.Check
+                  type="checkbox"
+                  label="Acepto los terminos y condiciones"
+                  className="text-center my-4"
+                  onChange={() =>
+                    setAcceptTermsAndConditions(!acceptTermsAndConditions)
+                  }
+                />
+              </Form.Group>
+              <Button
+                disabled={!acceptTermsAndConditions}
+                type="submit"
+                bg="primary"
+                className="btn-block"
+              >
+                <i className="fa fa-user-plus"></i> Registrarse
               </Button>
             </form>
           </Card.Body>
@@ -140,4 +163,4 @@ const RegisterAdminScreen = () => {
   );
 };
 
-export default RegisterAdminScreen;
+export default RegisterScreen;

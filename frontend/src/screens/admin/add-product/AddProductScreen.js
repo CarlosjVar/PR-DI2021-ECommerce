@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Col, Row, Card, Button, Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { getCategories } from '../actions/categoryActions';
-import { getSpecifications } from '../actions/specifcationActions';
-import { addProduct } from '../actions/productActions';
-import uploadImageFile from '../utils/uploadImageFile';
+import { getCategories } from '../../../actions/categoryActions';
+import { getSpecifications } from '../../../actions/specifcationActions';
+import { addProduct } from '../../../actions/productActions';
+import uploadImageFile from '../../../utils/uploadImageFile';
 
-import ProductSpecificationManager from '../components/products/ProductSpecificationManager';
-import Spinner from '../components/layout/Spinner';
+import ProductSpecificationManager from '../../../components/products/ProductSpecificationManager';
+import Spinner from '../../../components/layout/Spinner';
 
 const AddProductScreen = () => {
   const history = useHistory();

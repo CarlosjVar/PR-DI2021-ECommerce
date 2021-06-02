@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Image, ListGroup } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import { getProductDetails } from '../actions/productActions';
-import { getCategories } from '../actions/categoryActions';
-import { getSpecifications } from '../actions/specifcationActions';
+import { getProductDetails } from '../../../actions/productActions';
+import { getCategories } from '../../../actions/categoryActions';
+import { getSpecifications } from '../../../actions/specifcationActions';
 
 import NumberFormat from 'react-number-format';
-import Spinner from '../components/layout/Spinner';
+import Spinner from '../../../components/layout/Spinner';
 
 const AdminProductDetailsScreen = () => {
   const dispatch = useDispatch();

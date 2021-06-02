@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Col, Row } from 'react-bootstrap';
-import { getAdmins } from '../actions/adminActions';
+import { getAdmins } from '../../../actions/adminActions';
 
-import AdminsTable from '../components/admins/AdminsTable';
-import Spinner from '../components/layout/Spinner';
+import AdminsTable from '../../../components/admins/AdminsTable';
+import Spinner from '../../../components/layout/Spinner';
 
 const AdminsScreen = () => {
   const dispatch = useDispatch();

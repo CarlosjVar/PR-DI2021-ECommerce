@@ -9,7 +9,7 @@ import {
   FormControl,
   Button,
 } from 'react-bootstrap';
-import { authenticateUser } from '../actions/authActions';
+import { authenticateUser } from '../../actions/authActions';
 
 const LoginScreen = () => {
   const dispatch = useDispatch();
