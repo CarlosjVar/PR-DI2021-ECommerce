@@ -27,7 +27,7 @@ body {
 
 main {
   margin-top: 54.38px;
-  padding-bottom: 3rem;
+  /* margin-top: 100px; */
 }
 
 h1,
@@ -59,6 +59,10 @@ hr {
 .bg-primary {
   background-color: var(--primary-color) !important;
   color: var(--light-color) !important;
+}
+
+.bg-dark-grey {
+  background-color: var(--light-grey);
 }
 
 /* Images */
@@ -146,8 +150,16 @@ button.navbar-toggler {
   border-radius: 1px;
 }
 
-/* Link */
+.card .img-product-link {
+  transition: 0.3s;
+  border: 1px solid var(--dark-grey);
+}
 
+.card .img-product-link:hover {
+  background-color: var(--secondary-color);
+}
+
+/* Link */
 a.link {
   color: var(--primary-color);
   text-decoration: underline;
@@ -241,6 +253,87 @@ table.table tbody tr td {
 
 table.table tbody tr:nth-child(even) {
   background-color: var(--light-grey);
+}
+
+/* Carousel */
+.carousel-item-next,
+.carousel-item-prev,
+.carousel-item.active {
+  display: flex;
+}
+.carousel-caption {
+  position: absolute;
+  top: 0;
+  padding-bottom: 3rem;
+}
+
+.carousel-caption h4 {
+  color: #000;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.carousel ol.carousel-indicators {
+  margin-bottom: 2.5rem;
+}
+
+.carousel ol.carousel-indicators li {
+  background-color: #fff;
+  border: 1px solid #000;
+  border-radius: 100%;
+  height: 15px;
+  width: 15px;
+  margin-right: 1.5rem;
+}
+
+.carousel ol.carousel-indicators li.active {
+  background-color: #424242;
+}
+
+.carousel.slide {
+  padding-bottom: 3rem;
+}
+
+.carousel img {
+  height: 300px;
+  padding: 30px;
+  margin: 40px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.carousel a {
+  margin: 0 auto;
+}
+
+/* Sections */
+section.section {
+  background-color: var(--light-color);
+  padding: 2.5rem 0;
+}
+
+/* About section */
+section.section#about-section h2 {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--secondary-color);
+  display: inline-block;
+  margin-bottom: 1.6rem;
+}
+
+/* PC Builder section */
+section.section#pc-build-section {
+  background-color: var(--light-grey);
+}
+
+section.section#pc-build-section h3 {
+  margin-bottom: 1.5rem;
+}
+
+section.section#search-products-section {
+  background-color: var(--light-grey);
+}
+
+section.section#search-products-section h3 {
+  margin-bottom: 1.3rem;
 }
 
 /* Main footer */

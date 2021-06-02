@@ -22,6 +22,9 @@ export const findProducts = async (req: Request, res: Response) => {
             contains: productName,
           },
         },
+        orderBy: {
+          createdAt: 'asc',
+        },
       });
       res.json({ products: products });
     }
