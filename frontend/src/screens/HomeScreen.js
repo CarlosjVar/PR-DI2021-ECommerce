@@ -6,6 +6,7 @@ import { getProducts } from '../actions/productActions';
 
 import ProductCarousel from '../components/products/ProductCarousel';
 import SearchProducts from '../components/products/SearchProducts';
+import ShowcaseProductList from '../components/products/ShowcaseProductList';
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -18,7 +19,11 @@ const HomeScreen = () => {
 
   return (
     <>
-      <ProductCarousel products={productList} />
+      <ProductCarousel
+        products={
+          productList.length > 5 ? productList.slice(0, 5) : productList
+        }
+      />
       <section className="section" id="about-section">
         <Container>
           <h2>¿Quiénes somos?</h2>
@@ -44,6 +49,16 @@ const HomeScreen = () => {
         </Container>
       </section>
       <SearchProducts />
+      <section className="section" id="most-selled-section">
+        <Container>
+          <h2>Productos más nuevos</h2>
+          <ShowcaseProductList
+            products={
+              productList.length > 3 ? productList.slice(0, 3) : productList
+            }
+          />
+        </Container>
+      </section>
     </>
   );
 };

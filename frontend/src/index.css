@@ -61,6 +61,10 @@ hr {
   color: var(--light-color) !important;
 }
 
+.bg-dark-grey {
+  background-color: var(--light-grey);
+}
+
 /* Images */
 .image-container {
   text-align: center;
@@ -146,8 +150,16 @@ button.navbar-toggler {
   border-radius: 1px;
 }
 
-/* Link */
+.card .img-product-link {
+  transition: 0.3s;
+  border: 1px solid var(--dark-grey);
+}
 
+.card .img-product-link:hover {
+  background-color: var(--secondary-color);
+}
+
+/* Link */
 a.link {
   color: var(--primary-color);
   text-decoration: underline;

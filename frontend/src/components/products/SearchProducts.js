@@ -31,7 +31,9 @@ const SearchProducts = () => {
                 as="select"
               >
                 {categoryList.map((category) => (
-                  <option value={category.id}>{category.name}</option>
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
                 ))}
               </Form.Control>
             </Form.Group>
