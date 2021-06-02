@@ -17,7 +17,7 @@ const HomeScreen = () => {
   return (
     <>
       <ProductCarousel products={productList} />
-      <section id="about-section">
+      <section className="section" id="about-section">
         <Container>
           <h2>Quienes somos?</h2>
           <p>

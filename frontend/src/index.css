@@ -294,6 +294,17 @@ table.table tbody tr:nth-child(even) {
 }
 
 /* Sections */
+section.section {
+  background-color: var(--light-color);
+  padding: 2.3rem 0;
+}
+
+section.section#about-section h2 {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--secondary-color);
+  display: inline-block;
+  margin-bottom: 1.6rem;
+}
 
 /* Main footer */
 footer#main-footer {
