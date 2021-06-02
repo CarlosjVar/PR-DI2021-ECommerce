@@ -316,6 +316,14 @@ section.section#pc-build-section h3 {
   margin-bottom: 1.5rem;
 }
 
+section.section#search-products-section {
+  background-color: var(--light-grey);
+}
+
+section.section#search-products-section h3 {
+  margin-bottom: 1.3rem;
+}
+
 /* Main footer */
 footer#main-footer {
   background-color: #424242;

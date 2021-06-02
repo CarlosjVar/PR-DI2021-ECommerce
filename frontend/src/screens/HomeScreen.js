@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getProducts } from '../actions/productActions';
 
 import ProductCarousel from '../components/products/ProductCarousel';
+import SearchProducts from '../components/products/SearchProducts';
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ const HomeScreen = () => {
           </Link>
         </Container>
       </section>
+      <SearchProducts />
     </>
   );
 };
