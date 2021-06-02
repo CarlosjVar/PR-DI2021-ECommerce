@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Col, Row } from 'react-bootstrap';
 import { getAdmins } from '../../../actions/adminActions';
 
-import AdminsTable from '../../../components/admins/AdminsTable';
+import AdminsTable from './components/AdminsTable';
 import Spinner from '../../../components/layout/Spinner';
 
 const AdminsScreen = () => {

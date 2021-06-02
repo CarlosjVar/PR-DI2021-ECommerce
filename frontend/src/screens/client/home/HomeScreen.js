@@ -4,7 +4,7 @@ import { Container } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProducts } from '../../../actions/productActions';
 
-import ProductCarousel from '../../../components/products/ProductCarousel';
+import ProductCarousel from './components/ProductCarousel';
 import SearchProducts from '../../../components/products/SearchProducts';
 import ShowcaseProductList from '../../../components/products/ShowcaseProductList';
 

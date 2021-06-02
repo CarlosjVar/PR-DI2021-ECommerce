@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getProducts } from '../../../actions/productActions';
 
-import ProductsTable from '../../../components/products/ProductsTable';
+import ProductsTable from './components/ProductsTable';
 import Spinner from '../../../components/layout/Spinner';
 
 const DashboardScreen = () => {
