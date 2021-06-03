@@ -15,12 +15,14 @@ import RegisterAdminScreen from '../../screens/admin/register-admin/RegisterAdmi
 import AddProductScreen from '../../screens/admin/add-product/AddProductScreen';
 import AdminProductDetailsScreen from '../../screens/admin/admin-product-details/AdminProductDetailsScreen';
 import EditProductScreen from '../../screens/admin/edit-product/EditProductScreen';
+import SearchProductsResultsScreen from '../../screens/client/search-products-results/SearchProductsResultsScreen';
 
 const Routes = () => {
   return (
     <>
       <Switch>
         <Route exact path="/" component={HomeScreen} />
+        <Route path="/products" component={SearchProductsResultsScreen} exact />
         <Route path="/login" component={LoginScreen} exact />
         <Route path="/register" component={RegisterScreen} exact />
         <ClientRoute path="/cart" component={ShoppingCartScreen} exact />

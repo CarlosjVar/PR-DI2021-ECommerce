@@ -8,6 +8,7 @@ import {
   GET_PRODUCT_DETAILS,
   EDIT_PRODUCT_SUCCESS,
   EDIT_PRODUCT_FAILURE,
+  CLEAR_PRODUCT_LIST,
 } from '../constants/productConstants';
 import { showAlert } from './alertActions';
 
@@ -25,6 +26,27 @@ export const getProducts = () => async (dispatch) => {
     console.error(error);
   }
 };
+
+/**
+ * Gets products by name and category
+ * @param {string} name The name of the product
+ * @param {string} category The category of the product
+ */
+export const getProductsByNameAndCategory =
+  (name, category) => async (dispatch) => {
+    try {
+      dispatch({ type: CLEAR_PRODUCT_LIST });
+      dispatch({ type: SET_PRODUCT_LOADING });
+      const { data } = await api.get(
+        `/api/products/getAll?category=${category}&productName=${name}`
+      );
+      const { products } = data;
+      dispatch({ type: GET_PRODUCTS, payload: products });
+      dispatch({ type: SET_PRODUCT_LOADING });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
 /**
  * Add a new product

@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Row, Col, Form, Container, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategories } from '../../actions/categoryActions';
+import { getProductsByNameAndCategory } from '../../actions/productActions';
 
 const SearchProducts = () => {
   const dispatch = useDispatch();
 
+  const history = useHistory();
+
   const [searchedName, setSearchedName] = useState('');
-  const [searchedCategory, setSearchedCategory] = useState(undefined);
+  const [searchedCategory, setSearchedCategory] = useState('All');
 
   const { categoryList } = useSelector((state) => state.category);
 
@@ -15,7 +19,27 @@ const SearchProducts = () => {
     dispatch(getCategories());
   }, [dispatch]);
 
-  // TODO: Implement search functionality
+  const getCategoryNameById = (id) => {
+    if (id === 'All') {
+      return id;
+    }
+    for (let category of categoryList) {
+      if (category.id === parseInt(id)) {
+        return category.name;
+      }
+    }
+  };
+
+  const searchProducts = () => {
+    console.log(searchedName, getCategoryNameById(searchedCategory));
+    dispatch(
+      getProductsByNameAndCategory(
+        searchedName,
+        getCategoryNameById(searchedCategory)
+      )
+    );
+    history.push('/products');
+  };
 
   return (
     <section className="section" id="search-products-section">
@@ -30,6 +54,7 @@ const SearchProducts = () => {
                 value={searchedCategory}
                 as="select"
               >
+                <option value="All">Todas las categorías</option>
                 {categoryList.map((category) => (
                   <option key={category.id} value={category.id}>
                     {category.name}
@@ -48,7 +73,12 @@ const SearchProducts = () => {
             </Form.Group>
           </Col>
           <Col md="2">
-            <Button className="btn-secondary btn-block">BUSCAR</Button>
+            <Button
+              onClick={searchProducts}
+              className="btn-secondary btn-block"
+            >
+              BUSCAR
+            </Button>
           </Col>
         </Row>
       </Container>

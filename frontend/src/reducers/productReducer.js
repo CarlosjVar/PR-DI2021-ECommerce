@@ -7,6 +7,7 @@ import {
   DELETE_PRODUCT,
   EDIT_PRODUCT_SUCCESS,
   EDIT_PRODUCT_FAILURE,
+  CLEAR_PRODUCT_LIST,
 } from '../constants/productConstants';
 
 const initialState = {
@@ -22,6 +23,11 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: !state.loading,
+      };
+    case CLEAR_PRODUCT_LIST:
+      return {
+        ...state,
+        productList: [],
       };
     case GET_PRODUCTS:
       return {
