@@ -16,6 +16,7 @@ import AddProductScreen from '../../screens/admin/add-product/AddProductScreen';
 import AdminProductDetailsScreen from '../../screens/admin/admin-product-details/AdminProductDetailsScreen';
 import EditProductScreen from '../../screens/admin/edit-product/EditProductScreen';
 import SearchProductsResultsScreen from '../../screens/client/search-products-results/SearchProductsResultsScreen';
+import ClientProductDetailsScreen from '../../screens/client/client-product-details/ProductDetailsScreen';
 
 const Routes = () => {
   return (
@@ -25,6 +26,11 @@ const Routes = () => {
         <Route path="/products" component={SearchProductsResultsScreen} exact />
         <Route path="/login" component={LoginScreen} exact />
         <Route path="/register" component={RegisterScreen} exact />
+        <Route
+          path="/products/:id"
+          component={ClientProductDetailsScreen}
+          exact
+        />
         <ClientRoute path="/cart" component={ShoppingCartScreen} exact />
         <ClientRoute path="/my-orders" component={OrdersScreen} exact />
         <AdminRoute path="/dashboard" component={DashboardScreen} exact />
@@ -32,7 +38,7 @@ const Routes = () => {
         <AdminRoute path="/admins/add" component={RegisterAdminScreen} exact />
         <AdminRoute path="/products/add" component={AddProductScreen} exact />
         <AdminRoute
-          path="/products/:id"
+          path="/admin/products/:id"
           component={AdminProductDetailsScreen}
           exact
         />

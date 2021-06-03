@@ -13,7 +13,7 @@ const ProductCarousel = ({ products }) => {
     >
       {products.map((product) => (
         <Carousel.Item key={product.id}>
-          <Link to="/">
+          <Link to={`/products/${product.id}`}>
             {/* TODO: Meter imagen placeholder */}
             {product.imageFileName === 'default_img' ? (
               <i className="fa fa-home"></i>

@@ -57,7 +57,9 @@ const SearchProductsResultsScreen = () => {
                       />
                     </p>
                     <p style={{ marginBottom: '0' }}>
-                      <Link to="/">Informacion del producto</Link>
+                      <Link to={`/products/${product.id}`}>
+                        Informacion del producto
+                      </Link>
                     </p>
                   </Col>
                 </Row>

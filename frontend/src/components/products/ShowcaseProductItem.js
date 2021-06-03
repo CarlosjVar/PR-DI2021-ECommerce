@@ -6,11 +6,14 @@ import PropTypes from 'prop-types';
 import NumberFormat from 'react-number-format';
 
 const ShowcaseProductItem = ({ productInfo }) => {
-  const { imageFileName, name, price } = productInfo;
+  const { imageFileName, name, price, id } = productInfo;
 
   return (
     <Card className="my-3 p-4">
-      <Link className="img-product-link bg-dark-grey p-3" to="/">
+      <Link
+        className="img-product-link bg-dark-grey p-3"
+        to={`/products/${id}`}
+      >
         <Card.Img src={`/api/utils/image/${imageFileName}`} variant="top" />
       </Link>
       <Card.Body style={{ padding: '0' }}>
