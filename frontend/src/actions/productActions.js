@@ -9,6 +9,8 @@ import {
   EDIT_PRODUCT_SUCCESS,
   EDIT_PRODUCT_FAILURE,
   CLEAR_PRODUCT_LIST,
+  SET_SEARCHED_PRODUCT_NAME,
+  SET_SEARCHED_PRODUCT_CATEGORY,
 } from '../constants/productConstants';
 import { showAlert } from './alertActions';
 
@@ -34,6 +36,9 @@ export const getProducts = () => async (dispatch) => {
  */
 export const getProductsByNameAndCategory =
   (name, category) => async (dispatch) => {
+    dispatch({ type: SET_SEARCHED_PRODUCT_NAME, payload: name });
+    dispatch({ type: SET_SEARCHED_PRODUCT_CATEGORY, payload: category });
+
     try {
       dispatch({ type: CLEAR_PRODUCT_LIST });
       dispatch({ type: SET_PRODUCT_LOADING });

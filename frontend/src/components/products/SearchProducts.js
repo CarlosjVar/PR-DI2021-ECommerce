@@ -31,14 +31,20 @@ const SearchProducts = () => {
   };
 
   const searchProducts = () => {
-    console.log(searchedName, getCategoryNameById(searchedCategory));
     dispatch(
       getProductsByNameAndCategory(
         searchedName,
         getCategoryNameById(searchedCategory)
       )
     );
-    history.push('/products');
+    console.log(history.location);
+    if (history.location.pathname === '/') {
+      history.push(
+        `/products?name=${searchedName}&category=${getCategoryNameById(
+          searchedCategory
+        )}`
+      );
+    }
   };
 
   return (

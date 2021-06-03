@@ -8,10 +8,14 @@ import {
   EDIT_PRODUCT_SUCCESS,
   EDIT_PRODUCT_FAILURE,
   CLEAR_PRODUCT_LIST,
+  SET_SEARCHED_PRODUCT_NAME,
+  SET_SEARCHED_PRODUCT_CATEGORY,
 } from '../constants/productConstants';
 
 const initialState = {
   productList: [],
+  searchedProductName: '',
+  searchedCategoryName: 'All',
   productDetails: {},
   loading: false,
 };
@@ -58,6 +62,16 @@ const productReducer = (state = initialState, action) => {
         productList: state.productList.filter(
           (product) => product.id !== payload
         ),
+      };
+    case SET_SEARCHED_PRODUCT_NAME:
+      return {
+        ...state,
+        searchedProductName: payload,
+      };
+    case SET_SEARCHED_PRODUCT_CATEGORY:
+      return {
+        ...state,
+        searchedCategoryName: payload,
       };
     case EDIT_PRODUCT_FAILURE:
     case ADD_PRODUCT_FAILURE:
