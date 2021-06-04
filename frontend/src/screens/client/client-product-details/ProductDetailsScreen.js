@@ -1,23 +1,63 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, Row, Col, Image } from 'react-bootstrap';
+import { Container, Row, Col, Image, ListGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProductDetails } from '../../../actions/productActions';
+import {
+  getProductDetails,
+  getProductsByCategory,
+} from '../../../actions/productActions';
+import { getCategories } from '../../../actions/categoryActions';
+import { getSpecifications } from '../../../actions/specifcationActions';
 import NumberFormat from 'react-number-format';
 
 import Spinner from '../../../components/layout/Spinner';
 import AddToCart from './components/AddToCart';
+import ShowcaseProductList from '../../../components/products/ShowcaseProductList';
 
 const ProductDetailsScreen = () => {
   const dispatch = useDispatch();
 
   const { id } = useParams();
 
-  const { productDetails, loading } = useSelector((state) => state.product);
+  const { productList, productDetails, loading } = useSelector(
+    (state) => state.product
+  );
+
+  const { categoryList } = useSelector((state) => state.category);
+
+  const { specificationList } = useSelector((state) => state.specification);
+
+  // Gets the specification name
+  const getSpecificationName = (id) => {
+    for (let specification of specificationList) {
+      if (specification.id === id) {
+        return specification.name;
+      }
+    }
+  };
+
+  // Gets the category name
+  const getCategoryName = useCallback(
+    (id) => {
+      for (let category of categoryList) {
+        if (category.id === id) {
+          return category.name;
+        }
+      }
+    },
+    [categoryList]
+  );
 
   useEffect(() => {
     dispatch(getProductDetails(id));
+    dispatch(getCategories());
+    dispatch(getSpecifications());
   }, [dispatch, id]);
+
+  useEffect(() => {
+    // Get related products by category
+    dispatch(getProductsByCategory(getCategoryName(productDetails.categoryId)));
+  }, [dispatch, getCategoryName, productDetails]);
 
   if (loading) {
     return (
@@ -27,7 +67,8 @@ const ProductDetailsScreen = () => {
     );
   }
 
-  const { name, price, imageFileName } = productDetails;
+  const { name, price, imageFileName, ProductsXSpecifications } =
+    productDetails;
 
   return (
     <Container className="pt-4">
@@ -61,6 +102,20 @@ const ProductDetailsScreen = () => {
           <AddToCart productInfo={productDetails} />
         </Col>
       </Row>
+      {ProductsXSpecifications && (
+        <>
+          <h4 className="mt-5 mb-4">Especificaciones del producto</h4>
+          <ListGroup className="mb-5">
+            {ProductsXSpecifications.map((spec) => (
+              <ListGroup.Item key={spec.id}>
+                {getSpecificationName(spec.specificationId)}: {spec.value}
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+        </>
+      )}
+      <h3>Productos relacionados</h3>
+      {loading ? <Spinner /> : <ShowcaseProductList products={productList} />}
     </Container>
   );
 };

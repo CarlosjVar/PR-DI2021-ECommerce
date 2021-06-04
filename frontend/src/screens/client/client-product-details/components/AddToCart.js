@@ -22,11 +22,11 @@ const AddToCart = ({ productInfo }) => {
     );
   }
 
-  const estimatedPrice = parseInt(productQuantity) * parseFloat(price);
-
   const onAddToCartClick = () => {
     console.log('adding to cart...');
   };
+
+  const estimatedPrice = parseInt(productQuantity) * parseFloat(price);
 
   return (
     <ListGroup>

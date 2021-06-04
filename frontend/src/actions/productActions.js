@@ -35,23 +35,41 @@ export const getProducts = () => async (dispatch) => {
  * @param {string} category The category of the product
  */
 export const getProductsByNameAndCategory =
-  (name, category) => async (dispatch) => {
+  (name, categoryName) => async (dispatch) => {
     dispatch({ type: SET_SEARCHED_PRODUCT_NAME, payload: name });
-    dispatch({ type: SET_SEARCHED_PRODUCT_CATEGORY, payload: category });
-
+    dispatch({ type: SET_SEARCHED_PRODUCT_CATEGORY, payload: categoryName });
     try {
-      dispatch({ type: CLEAR_PRODUCT_LIST });
       dispatch({ type: SET_PRODUCT_LOADING });
       const { data } = await api.get(
-        `/api/products/getAll?category=${category}&productName=${name}`
+        `/api/products/getAll?category=${categoryName}&productName=${name}`
       );
       const { products } = data;
+      console.log(products);
       dispatch({ type: GET_PRODUCTS, payload: products });
       dispatch({ type: SET_PRODUCT_LOADING });
     } catch (error) {
       console.error(error);
     }
   };
+
+/**
+ * Gets products by name and category
+ * @param {string} categoryName The category of the product
+ */
+export const getProductsByCategory = (categoryName) => async (dispatch) => {
+  try {
+    dispatch({ type: CLEAR_PRODUCT_LIST });
+    dispatch({ type: SET_PRODUCT_LOADING });
+    const { data } = await api.get(
+      `/api/products/getAll?category=${categoryName}`
+    );
+    const { products } = data;
+    dispatch({ type: GET_PRODUCTS, payload: products });
+    dispatch({ type: SET_PRODUCT_LOADING });
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 /**
  * Add a new product
