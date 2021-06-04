@@ -1,13 +1,17 @@
 import api from '../utils/api';
 import {
   GET_PRODUCTS,
-  SET_PRODUCT_LOADING,
+  SET_PRODUCT_DETAILS_LOADING,
+  SET_PRODUCT_LIST_LOADING,
   ADD_PRODUCT_FAILURE,
   ADD_PRODUCT_SUCCESS,
   DELETE_PRODUCT,
   GET_PRODUCT_DETAILS,
   EDIT_PRODUCT_SUCCESS,
   EDIT_PRODUCT_FAILURE,
+  CLEAR_PRODUCT_LIST,
+  SET_SEARCHED_PRODUCT_NAME,
+  SET_SEARCHED_PRODUCT_CATEGORY,
 } from '../constants/productConstants';
 import { showAlert } from './alertActions';
 
@@ -16,11 +20,53 @@ import { showAlert } from './alertActions';
  */
 export const getProducts = () => async (dispatch) => {
   try {
-    dispatch({ type: SET_PRODUCT_LOADING });
+    dispatch({ type: SET_PRODUCT_LIST_LOADING });
     const { data } = await api.get('/api/products/getAll');
     const { products } = data;
     dispatch({ type: GET_PRODUCTS, payload: products });
-    dispatch({ type: SET_PRODUCT_LOADING });
+    dispatch({ type: SET_PRODUCT_LIST_LOADING });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+/**
+ * Gets products by name and category
+ * @param {string} name The name of the product
+ * @param {string} category The category of the product
+ */
+export const getProductsByNameAndCategory =
+  (name, categoryName) => async (dispatch) => {
+    dispatch({ type: SET_SEARCHED_PRODUCT_NAME, payload: name });
+    dispatch({ type: SET_SEARCHED_PRODUCT_CATEGORY, payload: categoryName });
+    try {
+      dispatch({ type: SET_PRODUCT_LIST_LOADING });
+      const { data } = await api.get(
+        `/api/products/getAll?category=${categoryName}&productName=${name}`
+      );
+      const { products } = data;
+      console.log(products);
+      dispatch({ type: GET_PRODUCTS, payload: products });
+      dispatch({ type: SET_PRODUCT_LIST_LOADING });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+/**
+ * Gets products by name and category
+ * @param {string} categoryName The category of the product
+ */
+export const getProductsByCategory = (categoryName) => async (dispatch) => {
+  try {
+    dispatch({ type: CLEAR_PRODUCT_LIST });
+    dispatch({ type: SET_PRODUCT_LIST_LOADING });
+    const { data } = await api.get(
+      `/api/products/getAll?category=${categoryName}`
+    );
+    const { products } = data;
+    dispatch({ type: GET_PRODUCTS, payload: products });
+    dispatch({ type: SET_PRODUCT_LIST_LOADING });
   } catch (error) {
     console.error(error);
   }
@@ -53,10 +99,10 @@ export const addProduct = (productData, history) => async (dispatch) => {
  */
 export const deleteProduct = (productId) => async (dispatch) => {
   try {
-    dispatch({ type: SET_PRODUCT_LOADING });
+    dispatch({ type: SET_PRODUCT_LIST_LOADING });
     await api.delete(`/api/products/delete?prodId=${productId}`);
     dispatch({ type: DELETE_PRODUCT, payload: productId });
-    dispatch({ type: SET_PRODUCT_LOADING });
+    dispatch({ type: SET_PRODUCT_LIST_LOADING });
     dispatch(showAlert({ message: 'Producto eliminado', type: 'success' }));
   } catch (error) {
     console.error(error);
@@ -69,11 +115,11 @@ export const deleteProduct = (productId) => async (dispatch) => {
  */
 export const getProductDetails = (productId) => async (dispatch) => {
   try {
-    dispatch({ type: SET_PRODUCT_LOADING });
+    dispatch({ type: SET_PRODUCT_DETAILS_LOADING });
     const { data } = await api.get(`/api/products/get/${productId}`);
     const { product } = data;
     dispatch({ type: GET_PRODUCT_DETAILS, payload: product });
-    dispatch({ type: SET_PRODUCT_LOADING });
+    dispatch({ type: SET_PRODUCT_DETAILS_LOADING });
   } catch (error) {
     console.error(error);
   }

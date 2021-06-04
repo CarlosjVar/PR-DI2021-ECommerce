@@ -2,19 +2,21 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Image, ListGroup } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import { getProductDetails } from '../actions/productActions';
-import { getCategories } from '../actions/categoryActions';
-import { getSpecifications } from '../actions/specifcationActions';
+import { getProductDetails } from '../../../actions/productActions';
+import { getCategories } from '../../../actions/categoryActions';
+import { getSpecifications } from '../../../actions/specifcationActions';
 
 import NumberFormat from 'react-number-format';
-import Spinner from '../components/layout/Spinner';
+import Spinner from '../../../components/layout/Spinner';
 
 const AdminProductDetailsScreen = () => {
   const dispatch = useDispatch();
 
   const { id } = useParams();
 
-  const { productDetails, loading } = useSelector((state) => state.product);
+  const { productDetails, productDetailsLoading } = useSelector(
+    (state) => state.product
+  );
 
   const { categoryList } = useSelector((state) => state.category);
 
@@ -51,15 +53,21 @@ const AdminProductDetailsScreen = () => {
     ProductsXSpecifications,
   } = productDetails;
 
-  return loading ? (
+  return productDetailsLoading ? (
     <Spinner />
   ) : (
     <>
       <Row>
         <Col md="8">
           <div className="image-container mb-4">
-            {imageFileName === 'default_img' && (
+            {imageFileName === 'default_img' || !imageFileName ? (
               <i className="fas fa-question fa-9x"></i>
+            ) : (
+              <Image
+                style={{ maxHeight: '380px' }}
+                src={`/api/utils/image/${imageFileName}`}
+                fluid
+              />
             )}
           </div>
         </Col>

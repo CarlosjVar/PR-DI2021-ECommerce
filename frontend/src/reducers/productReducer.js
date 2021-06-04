@@ -3,25 +3,42 @@ import {
   ADD_PRODUCT_FAILURE,
   GET_PRODUCTS,
   GET_PRODUCT_DETAILS,
-  SET_PRODUCT_LOADING,
+  SET_PRODUCT_DETAILS_LOADING,
+  SET_PRODUCT_LIST_LOADING,
   DELETE_PRODUCT,
   EDIT_PRODUCT_SUCCESS,
   EDIT_PRODUCT_FAILURE,
+  CLEAR_PRODUCT_LIST,
+  SET_SEARCHED_PRODUCT_NAME,
+  SET_SEARCHED_PRODUCT_CATEGORY,
 } from '../constants/productConstants';
 
 const initialState = {
   productList: [],
+  searchedProductName: '',
+  searchedCategoryName: 'All',
   productDetails: {},
-  loading: false,
+  productListLoading: false,
+  productDetailsLoading: false,
 };
 
 const productReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
-    case SET_PRODUCT_LOADING:
+    case SET_PRODUCT_DETAILS_LOADING:
       return {
         ...state,
-        loading: !state.loading,
+        productDetailsLoading: !state.productDetailsLoading,
+      };
+    case SET_PRODUCT_LIST_LOADING:
+      return {
+        ...state,
+        productListLoading: !state.productListLoading,
+      };
+    case CLEAR_PRODUCT_LIST:
+      return {
+        ...state,
+        productList: [],
       };
     case GET_PRODUCTS:
       return {
@@ -52,6 +69,16 @@ const productReducer = (state = initialState, action) => {
         productList: state.productList.filter(
           (product) => product.id !== payload
         ),
+      };
+    case SET_SEARCHED_PRODUCT_NAME:
+      return {
+        ...state,
+        searchedProductName: payload,
+      };
+    case SET_SEARCHED_PRODUCT_CATEGORY:
+      return {
+        ...state,
+        searchedCategoryName: payload,
       };
     case EDIT_PRODUCT_FAILURE:
     case ADD_PRODUCT_FAILURE:
