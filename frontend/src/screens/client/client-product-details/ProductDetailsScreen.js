@@ -1,19 +1,12 @@
 import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import {
-  Container,
-  Row,
-  Col,
-  Image,
-  ListGroup,
-  Form,
-  Button,
-} from 'react-bootstrap';
+import { Container, Row, Col, Image } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductDetails } from '../../../actions/productActions';
 import NumberFormat from 'react-number-format';
 
 import Spinner from '../../../components/layout/Spinner';
+import AddToCart from './components/AddToCart';
 
 const ProductDetailsScreen = () => {
   const dispatch = useDispatch();
@@ -65,29 +58,7 @@ const ProductDetailsScreen = () => {
             </strong>
           </p>
           <hr />
-          <ListGroup>
-            <ListGroup.Item>Precio: {price}</ListGroup.Item>
-            <ListGroup.Item>Estado: En stock</ListGroup.Item>
-            <ListGroup.Item style={{ paddingBottom: '0.01rem' }}>
-              <Form.Group as={Row} controlId="quantity">
-                <Form.Label column sm={3}>
-                  Cantidad:
-                </Form.Label>
-                <Col sm={9}>
-                  <Form.Control name="quantity" as="select">
-                    <option value="1">1</option>
-                    <option value="2">1</option>
-                    <option value="3">1</option>
-                  </Form.Control>
-                </Col>
-              </Form.Group>
-            </ListGroup.Item>
-            <ListGroup.Item>
-              <Button className="btn-secondary btn-block">
-                <i className="fas fa-cart-plus"></i> Agregar al carrito
-              </Button>
-            </ListGroup.Item>
-          </ListGroup>
+          <AddToCart productInfo={productDetails} />
         </Col>
       </Row>
     </Container>
