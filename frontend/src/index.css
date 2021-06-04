@@ -68,7 +68,7 @@ hr {
 /* Images */
 .image-container {
   text-align: center;
-  padding: 3rem;
+  padding: 2rem;
   background-color: var(--light-grey);
   border: 1px solid var(--dark-grey);
 }
