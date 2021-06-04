@@ -27,14 +27,7 @@ const SearchProductsResultsScreen = () => {
               <Card.Body>
                 <Row>
                   <Col md="2">
-                    <div
-                      className="px-1 py-2"
-                      style={{
-                        border: '1px solid #000',
-                        backgroundColor: '#333',
-                        textAlign: 'center',
-                      }}
-                    >
+                    <div className="product-card-img-container">
                       <Image
                         style={{ maxHeight: '128px', maxWidth: '128px' }}
                         src={`/api/utils/image/${product.imageFileName}`}
@@ -57,7 +50,7 @@ const SearchProductsResultsScreen = () => {
                       />
                     </p>
                     <p style={{ marginBottom: '0' }}>
-                      <Link to={`/products/${product.id}`}>
+                      <Link className="link" to={`/products/${product.id}`}>
                         Informacion del producto
                       </Link>
                     </p>

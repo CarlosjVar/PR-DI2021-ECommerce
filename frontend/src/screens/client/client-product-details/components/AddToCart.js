@@ -29,7 +29,7 @@ const AddToCart = ({ productInfo }) => {
   const estimatedPrice = parseInt(productQuantity) * parseFloat(price);
 
   return (
-    <ListGroup>
+    <ListGroup className="mt-4">
       <ListGroup.Item>
         Precio:{' '}
         <NumberFormat

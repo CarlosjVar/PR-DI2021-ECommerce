@@ -64,7 +64,7 @@ const ProductDetailsScreen = () => {
 
   if (productDetailsLoading) {
     return (
-      <Container className="pt-4">
+      <Container className="py-4">
         <Spinner />
       </Container>
     );
@@ -74,7 +74,7 @@ const ProductDetailsScreen = () => {
     productDetails;
 
   return (
-    <Container className="pt-4">
+    <Container className="py-4">
       <Row>
         <Col md="8">
           <div className="image-container">
