@@ -19,9 +19,12 @@ const ProductDetailsScreen = () => {
 
   const { id } = useParams();
 
-  const { productList, productDetails, loading } = useSelector(
-    (state) => state.product
-  );
+  const {
+    productList,
+    productDetails,
+    productDetailsLoading,
+    productListLoading,
+  } = useSelector((state) => state.product);
 
   const { categoryList } = useSelector((state) => state.category);
 
@@ -59,7 +62,7 @@ const ProductDetailsScreen = () => {
     dispatch(getProductsByCategory(getCategoryName(productDetails.categoryId)));
   }, [dispatch, getCategoryName, productDetails]);
 
-  if (loading) {
+  if (productDetailsLoading) {
     return (
       <Container className="pt-4">
         <Spinner />
@@ -115,7 +118,11 @@ const ProductDetailsScreen = () => {
         </>
       )}
       <h3>Productos relacionados</h3>
-      {loading ? <Spinner /> : <ShowcaseProductList products={productList} />}
+      {productListLoading ? (
+        <Spinner />
+      ) : (
+        <ShowcaseProductList products={productList} />
+      )}
     </Container>
   );
 };

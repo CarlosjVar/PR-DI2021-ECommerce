@@ -14,7 +14,9 @@ const AdminProductDetailsScreen = () => {
 
   const { id } = useParams();
 
-  const { productDetails, loading } = useSelector((state) => state.product);
+  const { productDetails, productDetailsLoading } = useSelector(
+    (state) => state.product
+  );
 
   const { categoryList } = useSelector((state) => state.category);
 
@@ -51,7 +53,7 @@ const AdminProductDetailsScreen = () => {
     ProductsXSpecifications,
   } = productDetails;
 
-  return loading ? (
+  return productDetailsLoading ? (
     <Spinner />
   ) : (
     <>

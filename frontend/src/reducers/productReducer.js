@@ -3,7 +3,8 @@ import {
   ADD_PRODUCT_FAILURE,
   GET_PRODUCTS,
   GET_PRODUCT_DETAILS,
-  SET_PRODUCT_LOADING,
+  SET_PRODUCT_DETAILS_LOADING,
+  SET_PRODUCT_LIST_LOADING,
   DELETE_PRODUCT,
   EDIT_PRODUCT_SUCCESS,
   EDIT_PRODUCT_FAILURE,
@@ -17,16 +18,22 @@ const initialState = {
   searchedProductName: '',
   searchedCategoryName: 'All',
   productDetails: {},
-  loading: false,
+  productListLoading: false,
+  productDetailsLoading: false,
 };
 
 const productReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
-    case SET_PRODUCT_LOADING:
+    case SET_PRODUCT_DETAILS_LOADING:
       return {
         ...state,
-        loading: !state.loading,
+        productDetailsLoading: !state.productDetailsLoading,
+      };
+    case SET_PRODUCT_LIST_LOADING:
+      return {
+        ...state,
+        productListLoading: !state.productListLoading,
       };
     case CLEAR_PRODUCT_LIST:
       return {

@@ -37,7 +37,6 @@ const SearchProducts = () => {
         getCategoryNameById(searchedCategory)
       )
     );
-    console.log(history.location);
     if (history.location.pathname === '/') {
       history.push(
         `/products?name=${searchedName}&category=${getCategoryNameById(

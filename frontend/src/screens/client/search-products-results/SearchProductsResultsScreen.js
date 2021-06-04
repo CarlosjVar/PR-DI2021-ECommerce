@@ -10,7 +10,7 @@ import Spinner from '../../../components/layout/Spinner';
 const SearchProductsResultsScreen = () => {
   useEffect(() => {}, []);
 
-  const { productList, searchedProductName, loading } = useSelector(
+  const { productList, searchedProductName, productListLoading } = useSelector(
     (state) => state.product
   );
 
@@ -19,7 +19,7 @@ const SearchProductsResultsScreen = () => {
       <SearchProducts />
       <Container>
         <h2 className="my-5">Resultados para "{searchedProductName}"</h2>
-        {loading ? (
+        {productListLoading ? (
           <Spinner />
         ) : (
           productList.map((product) => (

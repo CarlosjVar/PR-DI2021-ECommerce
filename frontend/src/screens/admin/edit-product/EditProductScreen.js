@@ -20,7 +20,9 @@ const EditProductScreen = () => {
 
   const { id } = useParams();
 
-  const { productDetails, loading } = useSelector((state) => state.product);
+  const { productDetails, productDetailsLoading } = useSelector(
+    (state) => state.product
+  );
 
   const { categoryList } = useSelector((state) => state.category);
 
@@ -124,7 +126,7 @@ const EditProductScreen = () => {
 
   const { name, price, quantity, category, specifications } = formData;
 
-  return loading ? (
+  return productDetailsLoading ? (
     <Spinner />
   ) : (
     <Row>
