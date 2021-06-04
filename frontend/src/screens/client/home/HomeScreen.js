@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import { getProducts } from '../actions/productActions';
+import { getProducts } from '../../../actions/productActions';
 
-import ProductCarousel from '../components/products/ProductCarousel';
-import SearchProducts from '../components/products/SearchProducts';
-import ShowcaseProductList from '../components/products/ShowcaseProductList';
+import ProductCarousel from './components/ProductCarousel';
+import SearchProducts from '../../../components/products/SearchProducts';
+import ShowcaseProductList from '../../../components/products/ShowcaseProductList';
 
 const HomeScreen = () => {
   const dispatch = useDispatch();

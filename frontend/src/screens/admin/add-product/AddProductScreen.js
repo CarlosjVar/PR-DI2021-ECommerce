@@ -1,27 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Row, Card, Button, Form } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useHistory } from 'react-router-dom';
-import { getProductDetails, editProduct } from '../actions/productActions';
-import { getCategories } from '../actions/categoryActions';
-import { getSpecifications } from '../actions/specifcationActions';
-import uploadImageFile from '../utils/uploadImageFile';
+import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getCategories } from '../../../actions/categoryActions';
+import { getSpecifications } from '../../../actions/specifcationActions';
+import { addProduct } from '../../../actions/productActions';
+import uploadImageFile from '../../../utils/uploadImageFile';
 
-import ProductSpecificationManager from '../components/products/ProductSpecificationManager';
-import Spinner from '../components/layout/Spinner';
+import ProductSpecificationManager from '../../../components/products/ProductSpecificationManager';
+import Spinner from '../../../components/layout/Spinner';
 
-const EditProductScreen = () => {
+const AddProductScreen = () => {
   const history = useHistory();
 
   const dispatch = useDispatch();
-
-  const { id } = useParams();
-
-  const { productDetails, loading } = useSelector((state) => state.product);
-
-  const { categoryList } = useSelector((state) => state.category);
-
-  const { specificationList } = useSelector((state) => state.specification);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -30,41 +22,24 @@ const EditProductScreen = () => {
     category: undefined,
     specifications: [],
   });
+
   const [imageUploading, setImageUploading] = useState(false);
 
-  useEffect(() => {
-    dispatch(getSpecifications());
-    dispatch(getCategories());
-    dispatch(getProductDetails(id));
-  }, [dispatch, id]);
+  const { categoryList } = useSelector((state) => state.category);
+
+  const { specificationList } = useSelector((state) => state.specification);
 
   useEffect(() => {
-    const {
-      name,
-      imageFileName,
-      price,
-      quantity,
-      categoryId,
-      ProductsXSpecifications: productSpecifications,
-    } = productDetails;
-    // Map product specifications
-    let specifications = [];
-    if (productSpecifications) {
-      specifications = productSpecifications.map((spec) => ({
-        id: spec.specificationId,
-        value: spec.value,
-      }));
+    dispatch(getCategories());
+    dispatch(getSpecifications());
+  }, [dispatch]);
+
+  useEffect(() => {
+    // Update default category when fetching category list
+    if (categoryList.length > 0) {
+      setFormData((f) => ({ ...f, category: categoryList[0].id }));
     }
-    setFormData({
-      name,
-      imageFileName,
-      price: parseInt(price),
-      category: categoryId,
-      quantity,
-      specifications,
-      imageName: imageFileName,
-    });
-  }, [productDetails]);
+  }, [categoryList]);
 
   const onInputChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -104,7 +79,7 @@ const EditProductScreen = () => {
     const { name, price, quantity, category, specifications, imageFileName } =
       formData;
     dispatch(
-      editProduct(
+      addProduct(
         {
           name,
           price: parseFloat(price),
@@ -113,7 +88,6 @@ const EditProductScreen = () => {
           specifications,
           imageName: imageFileName,
         },
-        id,
         history
       )
     );
@@ -121,15 +95,13 @@ const EditProductScreen = () => {
 
   const { name, price, quantity, category, specifications } = formData;
 
-  return loading ? (
-    <Spinner />
-  ) : (
+  return (
     <Row>
       <Col md="6" className="mx-auto">
         <Card>
           <Card.Body>
             <h4 className="text-center mt-3 mb-4">
-              <i className="fa fa-pen"></i> Editar producto
+              <i className="fa fa-plus"></i> Crear producto nuevo
             </h4>
             <form onSubmit={onFormSubmit}>
               {/* Name */}
@@ -206,7 +178,7 @@ const EditProductScreen = () => {
                 className="btn-block btn-primary mt-4"
                 type="submit"
               >
-                <i className="fa fa-pencil"></i> Editar producto
+                <i className="fa fa-plus"></i> Crear producto
               </Button>
             </form>
           </Card.Body>
@@ -216,4 +188,4 @@ const EditProductScreen = () => {
   );
 };
 
-export default EditProductScreen;
+export default AddProductScreen;

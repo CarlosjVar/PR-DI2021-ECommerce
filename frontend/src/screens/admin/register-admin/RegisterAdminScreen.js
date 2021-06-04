@@ -9,8 +9,8 @@ import {
   FormControl,
   Button,
 } from 'react-bootstrap';
-import { showAlert } from '../actions/alertActions';
-import { registerAdmin } from '../actions/adminActions';
+import { showAlert } from '../../../actions/alertActions';
+import { registerAdmin } from '../../../actions/adminActions';
 
 const RegisterAdminScreen = () => {
   const history = useHistory();
