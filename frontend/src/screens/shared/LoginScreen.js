@@ -21,7 +21,7 @@ const LoginScreen = () => {
 
   const [formData, setFormData] = useState({ email: '', password: '' });
 
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated, isAdmin } = useSelector((state) => state.auth);
 
   const onInputChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -30,6 +30,10 @@ const LoginScreen = () => {
     e.preventDefault();
     dispatch(authenticateUser(formData, history));
   };
+
+  if (isAdmin) {
+    return <Redirect to="/dashboard" />;
+  }
 
   if (isAuthenticated) {
     return <Redirect to="/" />;

@@ -26,25 +26,25 @@ const Routes = () => {
         <Route path="/products" component={SearchProductsResultsScreen} exact />
         <Route path="/login" component={LoginScreen} exact />
         <Route path="/register" component={RegisterScreen} exact />
-        <Route
-          path="/products/:id"
-          component={ClientProductDetailsScreen}
-          exact
-        />
         <ClientRoute path="/cart" component={ShoppingCartScreen} exact />
         <ClientRoute path="/my-orders" component={OrdersScreen} exact />
         <AdminRoute path="/dashboard" component={DashboardScreen} exact />
         <AdminRoute path="/admins" component={AdminsScreen} exact />
         <AdminRoute path="/admins/add" component={RegisterAdminScreen} exact />
         <AdminRoute path="/products/add" component={AddProductScreen} exact />
-        <AdminRoute
-          path="/admin/products/:id"
-          component={AdminProductDetailsScreen}
+        <Route
+          path="/products/:id"
+          component={ClientProductDetailsScreen}
           exact
         />
         <AdminRoute
-          path="/products/:id/edit"
+          path="/admin/products/:id/edit"
           component={EditProductScreen}
+          exact
+        />
+        <AdminRoute
+          path="/admin/products/:id"
+          component={AdminProductDetailsScreen}
           exact
         />
       </Switch>

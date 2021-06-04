@@ -11,7 +11,7 @@ const ShowcaseProductItem = ({ productInfo }) => {
   return (
     <Card className="my-3 p-4">
       <Link
-        className="img-product-link bg-dark-grey p-3"
+        className="img-product-link bg-light-grey p-3"
         to={`/products/${id}`}
       >
         <Card.Img src={`/api/utils/image/${imageFileName}`} variant="top" />

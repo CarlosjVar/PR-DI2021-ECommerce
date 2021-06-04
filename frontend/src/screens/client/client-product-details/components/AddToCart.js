@@ -62,7 +62,11 @@ const AddToCart = ({ productInfo }) => {
         </Form.Group>
       </ListGroup.Item>
       <ListGroup.Item>
-        <Button onClick={onAddToCartClick} className="btn-secondary btn-block">
+        <Button
+          disabled={quantity === 0}
+          onClick={onAddToCartClick}
+          className="btn-secondary btn-block"
+        >
           <i className="fas fa-cart-plus"></i> Agregar al carrito
         </Button>
       </ListGroup.Item>

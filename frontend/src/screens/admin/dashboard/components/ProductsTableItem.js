@@ -31,12 +31,12 @@ const ProductsTableItem = ({ product }) => {
       </td>
       <td>{quantity}</td>
       <td>
-        <Link className="link" to={`/products/${id}`}>
+        <Link className="link" to={`/admin/products/${id}`}>
           Detalles
         </Link>
       </td>
       <td>
-        <Link className="link" to={`/products/${id}/edit`}>
+        <Link className="link" to={`/admin/products/${id}/edit`}>
           Editar
         </Link>
       </td>

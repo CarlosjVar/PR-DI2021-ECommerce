@@ -64,7 +64,7 @@ const AdminProductDetailsScreen = () => {
               <i className="fas fa-question fa-9x"></i>
             ) : (
               <Image
-                style={{ height: '100%', width: '100%' }}
+                style={{ maxHeight: '380px' }}
                 src={`/api/utils/image/${imageFileName}`}
                 fluid
               />

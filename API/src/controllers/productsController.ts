@@ -22,8 +22,11 @@ export const findProducts = async (req: Request, res: Response) => {
             contains: productName,
           },
         },
+        include: {
+          Categories: true,
+        },
         orderBy: {
-          createdAt: 'asc',
+          createdAt: 'desc',
         },
       });
       res.json({ products: products });
@@ -41,6 +44,9 @@ export const findProducts = async (req: Request, res: Response) => {
             },
           },
         },
+        orderBy: {
+          createdAt: 'desc',
+        },
         include: {
           Categories: true,
         },
@@ -57,6 +63,9 @@ export const findProducts = async (req: Request, res: Response) => {
             },
           },
         },
+        orderBy: {
+          createdAt: 'desc',
+        },
         include: {
           Categories: true,
         },
@@ -65,7 +74,11 @@ export const findProducts = async (req: Request, res: Response) => {
     }
     //No category and no name
     else {
-      const products = await prismaController.products.findMany({});
+      const products = await prismaController.products.findMany({
+        orderBy: {
+          createdAt: 'desc',
+        },
+      });
       res.json({ products: products });
     }
   } catch (err) {
