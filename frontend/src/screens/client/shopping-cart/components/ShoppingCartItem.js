@@ -1,11 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Card, Image, Row, Col, Form, Button } from 'react-bootstrap';
+import { updateCartProductQuantity } from '../../../../actions/cartActions';
 import NumberFormat from 'react-number-format';
 import PropTypes from 'prop-types';
 
 const ShoppingCartItem = ({ productInfo }) => {
-  const { id, name, imageFileName, price } = productInfo;
+  const { id, name, imageFileName, price, quantity, numberOfItems } =
+    productInfo;
+
+  const dispatch = useDispatch();
+
+  const [selectedNumberOfItems, setSelectedNumberOfItems] = useState('1');
+
+  useEffect(() => {
+    setSelectedNumberOfItems(numberOfItems.toString());
+  }, [numberOfItems]);
+
+  // Create dropdown for product quantities
+  let quantityOptions = [];
+  for (let i = 1; i <= quantity; i++) {
+    quantityOptions.push(
+      <option key={i} value={i}>
+        {i}
+      </option>
+    );
+  }
+
+  const onNumberOfItemsChange = (selectedNumber) => {
+    dispatch(updateCartProductQuantity(id, parseInt(selectedNumber)));
+    setSelectedNumberOfItems(selectedNumber);
+  };
+
+  // Calculate price for product
+  const itemPrice = parseInt(selectedNumberOfItems) * parseInt(price);
 
   return (
     <Card className="mb-4">
@@ -27,11 +56,11 @@ const ShoppingCartItem = ({ productInfo }) => {
                 <p className="mt-2" style={{ marginBottom: '0' }}>
                   Precio:{' '}
                   <NumberFormat
-                    value={price}
+                    value={itemPrice}
                     displayType={'text'}
                     thousandSeparator={'.'}
                     decimalSeparator={','}
-                    isNumericString={true}
+                    isNumericString={false}
                     prefix={'₡'}
                   />
                 </p>
@@ -42,10 +71,13 @@ const ShoppingCartItem = ({ productInfo }) => {
                     Cantidad:
                   </Form.Label>
                   <Col sm={5}>
-                    <Form.Control name="quantity" as="select">
-                      <option value="1">1</option>
-                      <option value="1">1</option>
-                      <option value="1">1</option>
+                    <Form.Control
+                      name="quantity"
+                      value={selectedNumberOfItems}
+                      onChange={(e) => onNumberOfItemsChange(e.target.value)}
+                      as="select"
+                    >
+                      {quantityOptions}
                     </Form.Control>
                   </Col>
                 </Form.Group>

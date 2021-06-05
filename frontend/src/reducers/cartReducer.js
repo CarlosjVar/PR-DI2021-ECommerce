@@ -2,6 +2,7 @@ import {
   ADD_PRODUCT_TO_CART,
   SET_CART_LOADING,
   SET_CART_PRODUCTS,
+  UPDATE_PRODUCT_QUANTITY,
 } from '../constants/cartConstants';
 
 const initialState = {
@@ -25,6 +26,18 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         products: [payload, ...state.products],
+      };
+    case UPDATE_PRODUCT_QUANTITY:
+      const { id, numberOfItems } = payload;
+      let newProducts = state.products;
+      newProducts.forEach((product, index) => {
+        if (product.id === id) {
+          newProducts[index].numberOfItems = numberOfItems;
+        }
+      });
+      return {
+        ...state,
+        products: newProducts,
       };
     default:
       return state;

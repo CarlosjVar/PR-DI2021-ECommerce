@@ -20,7 +20,7 @@ const AddToCart = ({ productInfo }) => {
 
   // Create dropdown for product quantities
   let quantityOptions = [];
-  for (let i = 1; i < quantity; i++) {
+  for (let i = 1; i <= quantity; i++) {
     quantityOptions.push(
       <option key={i} value={i}>
         {i}
