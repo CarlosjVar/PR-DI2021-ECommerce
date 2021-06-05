@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, useHistory } from 'react-router-dom';
 import setAuthenticationToken from './utils/setAuthenticationToken';
 import { logoutUser, loadUser } from './actions/authActions';
+import { loadCartProducts } from './actions/cartActions';
 import store from './store';
 
 import MainNavbar from './components/layout/MainNavbar';
@@ -10,6 +11,13 @@ import Routes from './components/routing/Routes';
 
 const App = () => {
   const history = useHistory();
+
+  useEffect(() => {
+    if (localStorage.cart) {
+      let productIds = JSON.parse(localStorage.getItem('cart'));
+      store.dispatch(loadCartProducts(productIds));
+    }
+  }, []);
 
   useEffect(() => {
     if (localStorage.token) {
