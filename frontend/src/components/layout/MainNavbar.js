@@ -23,7 +23,7 @@ const MainNavbar = () => {
         </Link>
       </Nav.Item>
       <Nav.Item className="mx-2">
-        <Link to="/" className="nav-link">
+        <Link to="/cart" className="nav-link">
           <i className="fas fa-shopping-cart"></i> Carrito
         </Link>
       </Nav.Item>
