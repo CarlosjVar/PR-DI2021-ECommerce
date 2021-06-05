@@ -9,6 +9,7 @@ import adminReducer from './reducers/adminReducer';
 import productReducer from './reducers/productReducer';
 import categoryReducer from './reducers/categoryReducer';
 import specificationReducer from './reducers/specificationReducer';
+import cartReducer from './reducers/cartReducer';
 
 const reducer = combineReducers({
   auth: authReducer,
@@ -17,6 +18,7 @@ const reducer = combineReducers({
   product: productReducer,
   category: categoryReducer,
   specification: specificationReducer,
+  cart: cartReducer,
 });
 
 const initialState = {};
