@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Card, Image, Row, Col, Form, Button } from 'react-bootstrap';
-import { updateCartProductQuantity } from '../../../../actions/cartActions';
+import {
+  updateCartProductQuantity,
+  removeProductFromCart,
+} from '../../../../actions/cartActions';
 import NumberFormat from 'react-number-format';
 import PropTypes from 'prop-types';
 
@@ -32,6 +35,8 @@ const ShoppingCartItem = ({ productInfo }) => {
     dispatch(updateCartProductQuantity(id, parseInt(selectedNumber)));
     setSelectedNumberOfItems(selectedNumber);
   };
+
+  const onRemoveClick = () => dispatch(removeProductFromCart(id));
 
   // Calculate price for product
   const itemPrice = parseInt(selectedNumberOfItems) * parseInt(price);
@@ -92,7 +97,12 @@ const ShoppingCartItem = ({ productInfo }) => {
                 </p>
               </Col>
               <Col md="4">
-                <Button className="btn-danger btn-block">Eliminar</Button>
+                <Button
+                  onClick={onRemoveClick}
+                  className="btn-danger btn-block"
+                >
+                  Eliminar
+                </Button>
               </Col>
             </Row>
           </Col>

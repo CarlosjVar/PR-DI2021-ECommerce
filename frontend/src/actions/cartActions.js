@@ -3,6 +3,7 @@ import {
   SET_CART_LOADING,
   SET_CART_PRODUCTS,
   UPDATE_PRODUCT_QUANTITY,
+  REMOVE_PRODUCT_FROM_CART,
 } from '../constants/cartConstants';
 import api from '../utils/api';
 
@@ -87,3 +88,17 @@ export const updateCartProductQuantity =
     }
     localStorage.setItem('cart', JSON.stringify(cartProducts));
   };
+
+/**
+ * Removes a product from the cart
+ * @param {number} productId The id of the product to remove
+ */
+export const removeProductFromCart = (productId) => async (dispatch) => {
+  dispatch({ type: REMOVE_PRODUCT_FROM_CART, payload: productId });
+  let cartProducts = JSON.parse(localStorage.getItem('cart'));
+  // Filter product from cart
+  const newProducts = cartProducts.filter(
+    (product) => product.id !== productId
+  );
+  localStorage.setItem('cart', JSON.stringify(newProducts));
+};

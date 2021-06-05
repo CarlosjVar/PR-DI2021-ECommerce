@@ -3,6 +3,7 @@ import {
   SET_CART_LOADING,
   SET_CART_PRODUCTS,
   UPDATE_PRODUCT_QUANTITY,
+  REMOVE_PRODUCT_FROM_CART,
 } from '../constants/cartConstants';
 
 const initialState = {
@@ -38,6 +39,11 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         products: newProducts,
+      };
+    case REMOVE_PRODUCT_FROM_CART:
+      return {
+        ...state,
+        products: state.products.filter((product) => product.id !== payload),
       };
     default:
       return state;
