@@ -6,34 +6,46 @@ import {
 import api from '../utils/api';
 
 /**
- * Adds a product to the cart
- * @param {object} cartData The cart data
+ * Adds a new product to the cart
+ * @param {object} productData The data of the product
+ * @param {number} numberOfItems Number of items of the products
  */
-export const addProductToCart = (productData) => async (dispatch) => {
-  dispatch({ type: ADD_PRODUCT_TO_CART, payload: productData });
-  if (localStorage.getItem('cart')) {
-    // Add product to cart in local storage
-    let cartStorage = JSON.parse(localStorage.getItem('cart'));
-    cartStorage = [productData.id, ...cartStorage];
-    localStorage.setItem('cart', JSON.stringify(cartStorage));
-  } else {
-    // Create cart storage
-    localStorage.setItem('cart', JSON.stringify([productData.id]));
-  }
-};
+export const addProductToCart =
+  (productData, numberOfItems = 1) =>
+  async (dispatch) => {
+    dispatch({
+      type: ADD_PRODUCT_TO_CART,
+      payload: { ...productData, numberOfItems },
+    });
+    if (localStorage.getItem('cart')) {
+      // Add product to cart in local storage
+      let cartStorage = JSON.parse(localStorage.getItem('cart'));
+      cartStorage = [{ id: productData.id, numberOfItems }, ...cartStorage];
+      localStorage.setItem('cart', JSON.stringify(cartStorage));
+    } else {
+      // Create cart storage
+      localStorage.setItem(
+        'cart',
+        JSON.stringify([{ id: productData.id, numberOfItems }])
+      );
+    }
+  };
 
 /**
  * Loads all of the products to cart in the store
- * @param {array} productIds An array of product ids
+ * @param {array} cartItems An array of cart items
  */
-export const loadCartProducts = (productIds) => async (dispatch) => {
+export const loadCartProducts = (cartItems) => async (dispatch) => {
   try {
     dispatch({ type: SET_CART_LOADING });
     let cartProducts = [];
     // Load product data
-    for (let productId of productIds) {
-      const { data } = await api.get(`/api/products/get/${productId}`);
-      cartProducts.push(data.product);
+    for (let cartItem of cartItems) {
+      const { data } = await api.get(`/api/products/get/${cartItem.id}`);
+      cartProducts.push({
+        ...data.product,
+        numberOfItems: cartItem.numberOfItems,
+      });
     }
     dispatch({ type: SET_CART_PRODUCTS, payload: cartProducts });
     dispatch({ type: SET_CART_LOADING });

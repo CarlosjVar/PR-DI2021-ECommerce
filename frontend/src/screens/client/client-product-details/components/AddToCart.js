@@ -37,7 +37,7 @@ const AddToCart = ({ productInfo }) => {
   }
 
   const onAddToCartClick = () => {
-    dispatch(addProductToCart(productInfo));
+    dispatch(addProductToCart(productInfo, parseInt(productQuantity)));
   };
 
   const estimatedPrice = parseInt(productQuantity) * parseFloat(price);

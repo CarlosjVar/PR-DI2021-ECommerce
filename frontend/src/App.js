@@ -12,10 +12,11 @@ import Routes from './components/routing/Routes';
 const App = () => {
   const history = useHistory();
 
+  // Load cart
   useEffect(() => {
     if (localStorage.cart) {
-      let productIds = JSON.parse(localStorage.getItem('cart'));
-      store.dispatch(loadCartProducts(productIds));
+      let cartProducts = JSON.parse(localStorage.getItem('cart'));
+      store.dispatch(loadCartProducts(cartProducts));
     }
   }, []);
 

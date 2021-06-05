@@ -4,6 +4,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { loadCartProducts } from '../../../actions/cartActions';
 
 import Spinner from '../../../components/layout/Spinner';
+import ShoppingCartItem from './components/ShoppingCartItem';
 
 const ShoppingCartScreen = () => {
   const dispatch = useDispatch();
@@ -29,12 +30,12 @@ const ShoppingCartScreen = () => {
         <Spinner />
       ) : (
         <Row>
-          <Col md="8">
+          <Col md="9">
             {products.map((product) => (
-              <p>{product.name}</p>
+              <ShoppingCartItem productInfo={product} />
             ))}
           </Col>
-          <Col md="4"></Col>
+          <Col md="3"></Col>
         </Row>
       )}
     </Container>
