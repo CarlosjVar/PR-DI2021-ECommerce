@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, useHistory } from 'react-router-dom';
 import setAuthenticationToken from './utils/setAuthenticationToken';
 import { logoutUser, loadUser } from './actions/authActions';
 import store from './store';
@@ -9,17 +9,19 @@ import MainFooter from './components/layout/MainFooter';
 import Routes from './components/routing/Routes';
 
 const App = () => {
+  const history = useHistory();
+
   useEffect(() => {
     if (localStorage.token) {
       setAuthenticationToken(localStorage.token);
     }
-    store.dispatch(loadUser());
+    store.dispatch(loadUser(history));
     window.addEventListener('storage', () => {
       if (!localStorage.token) {
         store.dispatch(logoutUser());
       }
     });
-  }, []);
+  }, [history]);
 
   return (
     <Router>
