@@ -11,7 +11,7 @@ import Spinner from '../layout/Spinner';
 const ShowcaseProductItem = ({ productInfo }) => {
   const dispatch = useDispatch();
 
-  const { imageFileName, name, price, id } = productInfo;
+  const { imageFileName, name, price, id, quantity } = productInfo;
 
   const { products: cartProducts, loading } = useSelector(
     (state) => state.cart
@@ -55,7 +55,7 @@ const ShowcaseProductItem = ({ productInfo }) => {
           <Spinner />
         ) : (
           <Button
-            disabled={productInCart}
+            disabled={productInCart || quantity < 1}
             onClick={onAddClick}
             className="btn-secondary btn-block"
           >

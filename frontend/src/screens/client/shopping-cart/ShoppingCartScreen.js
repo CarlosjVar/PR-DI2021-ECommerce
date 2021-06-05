@@ -5,6 +5,7 @@ import { loadCartProducts } from '../../../actions/cartActions';
 
 import Spinner from '../../../components/layout/Spinner';
 import ShoppingCartItem from './components/ShoppingCartItem';
+import ShoppingCartInfo from './components/ShoppingCartInfo';
 
 const ShoppingCartScreen = () => {
   const dispatch = useDispatch();
@@ -29,13 +30,15 @@ const ShoppingCartScreen = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <Row className="mt-5">
+        <Row className="mt-4">
           <Col md="9">
             {products.map((product) => (
               <ShoppingCartItem key={product.id} productInfo={product} />
             ))}
           </Col>
-          <Col md="3"></Col>
+          <Col md="3">
+            <ShoppingCartInfo cartProducts={products} />
+          </Col>
         </Row>
       )}
     </Container>

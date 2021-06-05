@@ -39,7 +39,7 @@ const ShoppingCartItem = ({ productInfo }) => {
   const onRemoveClick = () => dispatch(removeProductFromCart(id));
 
   // Calculate price for product
-  const itemPrice = parseInt(selectedNumberOfItems) * parseInt(price);
+  const itemPrice = parseInt(selectedNumberOfItems) * parseFloat(price);
 
   return (
     <Card className="mb-4">
