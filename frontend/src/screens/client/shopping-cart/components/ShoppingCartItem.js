@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Card, Image, Row, Col } from 'react-bootstrap';
+import { Card, Image, Row, Col, Form, Button } from 'react-bootstrap';
 import NumberFormat from 'react-number-format';
 import PropTypes from 'prop-types';
 
@@ -22,23 +22,47 @@ const ShoppingCartItem = ({ productInfo }) => {
           </Col>
           <Col md="9">
             <h5>{name}</h5>
-            <p className="mt-3">'categoria</p>
-            <p>
-              Precio:{' '}
-              <NumberFormat
-                value={price}
-                displayType={'text'}
-                thousandSeparator={'.'}
-                decimalSeparator={','}
-                isNumericString={true}
-                prefix={'₡'}
-              />
-            </p>
-            <p style={{ marginBottom: '0' }}>
-              <Link className="link" to={`/products/${id}`}>
-                Informacion del producto
-              </Link>
-            </p>
+            <Row className="mt-4">
+              <Col md="4">
+                <p className="mt-2" style={{ marginBottom: '0' }}>
+                  Precio:{' '}
+                  <NumberFormat
+                    value={price}
+                    displayType={'text'}
+                    thousandSeparator={'.'}
+                    decimalSeparator={','}
+                    isNumericString={true}
+                    prefix={'₡'}
+                  />
+                </p>
+              </Col>
+              <Col md="8">
+                <Form.Group as={Row} controlId="quantity">
+                  <Form.Label column sm={4}>
+                    Cantidad:
+                  </Form.Label>
+                  <Col sm={5}>
+                    <Form.Control name="quantity" as="select">
+                      <option value="1">1</option>
+                      <option value="1">1</option>
+                      <option value="1">1</option>
+                    </Form.Control>
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col className="d-flex align-items-center" md="5">
+                <p style={{ marginBottom: '0' }}>
+                  <Link className="link" to={`/products/${id}`}>
+                    Informacion del producto
+                  </Link>
+                </p>
+              </Col>
+              <Col md="4">
+                <Button className="btn-danger btn-block">Eliminar</Button>
+              </Col>
+            </Row>
           </Col>
         </Row>
       </Card.Body>

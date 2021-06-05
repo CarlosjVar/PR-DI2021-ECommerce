@@ -29,10 +29,10 @@ const ShoppingCartScreen = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <Row>
+        <Row className="mt-5">
           <Col md="9">
             {products.map((product) => (
-              <ShoppingCartItem productInfo={product} />
+              <ShoppingCartItem key={product.id} productInfo={product} />
             ))}
           </Col>
           <Col md="3"></Col>
