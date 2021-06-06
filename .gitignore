@@ -4,5 +4,9 @@ frontend/node_modules/
 API/.env
 
 API/dist/
-
+.node_modukes/
 .vscode/
+
+node_modules/
+
+API/images/
