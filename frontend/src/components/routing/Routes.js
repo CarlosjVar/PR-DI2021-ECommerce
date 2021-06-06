@@ -26,8 +26,8 @@ const Routes = () => {
         <Route path="/products" component={SearchProductsResultsScreen} exact />
         <Route path="/login" component={LoginScreen} exact />
         <Route path="/register" component={RegisterScreen} exact />
-        <ClientRoute path="/cart" component={ShoppingCartScreen} exact />
-        <ClientRoute path="/my-orders" component={OrdersScreen} exact />
+        <Route path="/cart" component={ShoppingCartScreen} exact />
+        <ClientRoute path="/orders/mine" component={OrdersScreen} exact />
         <AdminRoute path="/dashboard" component={DashboardScreen} exact />
         <AdminRoute path="/admins" component={AdminsScreen} exact />
         <AdminRoute path="/admins/add" component={RegisterAdminScreen} exact />

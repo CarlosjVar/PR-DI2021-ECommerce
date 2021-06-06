@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { ListGroup, Form, Col, Button, Row } from 'react-bootstrap';
+import { addProductToCart } from '../../../../actions/cartActions';
 import NumberFormat from 'react-number-format';
 import PropTypes from 'prop-types';
 
 const AddToCart = ({ productInfo }) => {
+  const dispatch = useDispatch();
+
   const { price, quantity } = productInfo;
 
   const [productQuantity, setProductQuantity] = useState('1');
+
+  const { products: cartProducts } = useSelector((state) => state.cart);
 
   useEffect(() => {
     setProductQuantity(quantity === '0' ? '0' : '1');
@@ -14,7 +20,7 @@ const AddToCart = ({ productInfo }) => {
 
   // Create dropdown for product quantities
   let quantityOptions = [];
-  for (let i = 1; i < quantity; i++) {
+  for (let i = 1; i <= quantity; i++) {
     quantityOptions.push(
       <option key={i} value={i}>
         {i}
@@ -22,8 +28,16 @@ const AddToCart = ({ productInfo }) => {
     );
   }
 
+  // Checks if product is in cart
+  let productInCart = false;
+  for (let product of cartProducts) {
+    if (product.id === productInfo.id) {
+      productInCart = true;
+    }
+  }
+
   const onAddToCartClick = () => {
-    console.log('adding to cart...');
+    dispatch(addProductToCart(productInfo, parseInt(productQuantity)));
   };
 
   const estimatedPrice = parseInt(productQuantity) * parseFloat(price);
@@ -63,7 +77,7 @@ const AddToCart = ({ productInfo }) => {
       </ListGroup.Item>
       <ListGroup.Item>
         <Button
-          disabled={quantity === 0}
+          disabled={quantity === 0 || productInCart}
           onClick={onAddToCartClick}
           className="btn-secondary btn-block"
         >
