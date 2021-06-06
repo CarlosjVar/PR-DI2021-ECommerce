@@ -41,6 +41,7 @@ const isAuthenticated = async (
         req.isAdmin = false;
         delete user.Admins;
       }
+
       next();
     } catch (err) {
       res.status(401).json({ message: "No autorizado" });
