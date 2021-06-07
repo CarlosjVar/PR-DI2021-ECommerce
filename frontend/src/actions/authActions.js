@@ -48,7 +48,7 @@ export const loadUser = (history) => async (dispatch) => {
     if (data.isAdmin) {
       history.push('/dashboard');
     } else {
-      history.push('/');
+      history.push('/cart');
     }
   } catch (error) {}
 };
