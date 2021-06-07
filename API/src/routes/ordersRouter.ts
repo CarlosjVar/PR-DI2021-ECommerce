@@ -7,6 +7,7 @@ import {
   getOrder,
   getOrdersAdmin,
   getOrdersClient,
+  updateStatus,
 } from "../controllers/ordersController";
 import isAuthenticatedAdmin from "../middleware/isAuthenticatedAdmin";
 
@@ -64,4 +65,8 @@ ordersRouter
     ],
     addSale
   );
+
+ordersRouter
+  .route("/updateStatus/:id")
+  .put([isAuthenticatedAdmin], updateStatus);
 export default ordersRouter;

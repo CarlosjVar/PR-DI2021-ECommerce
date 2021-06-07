@@ -1,8 +1,9 @@
 import prismaController from "../config/Database";
 import { Request, Response } from "express";
-import { validationResult } from "express-validator";
+import { body, validationResult } from "express-validator";
 import { resolve } from "path/posix";
 import { rejects } from "assert/strict";
+import ordersRouter from "src/routes/ordersRouter";
 
 // @route   POST - /api/orders/createSale
 // @desc    Creates a Sale based on the cart products and paypal confirmation data
@@ -298,6 +299,45 @@ export const getOrder = async (req: Request, res: Response) => {
     }
     return res.json(order);
   } catch (err) {
+    res.status(500).json({ msg: "Internal server error" });
+  }
+};
+
+export const updateStatus = async (req: Request, res: Response) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const orderId = parseInt(req.params.id);
+
+    if (req.body.entregado) {
+      console.log("entregado proceso");
+      await prismaController.orders.update({
+        data: { delivered: req.body.entregado },
+        where: { id: orderId },
+      });
+    }
+
+    if (req.body.pagado) {
+      console.log("pagado proceso");
+      const order = await prismaController.orders.findFirst({
+        where: { id: orderId },
+        include: { Preorders: true },
+      });
+      if (order.Preorders) {
+        await prismaController.preorders.update({
+          data: { isCancelled: req.body.pagado },
+          where: {
+            orderId: orderId,
+          },
+        });
+      }
+    }
+    res.json({ msg: "Estado actualizado correctamente" });
+  } catch (err) {
+    console.log(err);
+
     res.status(500).json({ msg: "Internal server error" });
   }
 };
