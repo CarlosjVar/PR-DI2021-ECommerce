@@ -35,9 +35,13 @@ const ShoppingCartScreen = () => {
       ) : (
         <Row className="mt-4">
           <Col md="9">
-            {products.map((product) => (
-              <ShoppingCartItem key={product.id} productInfo={product} />
-            ))}
+            {products.length === 0 ? (
+              <h4>No hay productos agregados al carrito</h4>
+            ) : (
+              products.map((product) => (
+                <ShoppingCartItem key={product.id} productInfo={product} />
+              ))
+            )}
           </Col>
           <Col md="3">
             <ShoppingCartInfo cartProducts={products} />

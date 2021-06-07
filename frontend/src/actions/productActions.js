@@ -45,7 +45,6 @@ export const getProductsByNameAndCategory =
         `/api/products/getAll?category=${categoryName}&productName=${name}`
       );
       const { products } = data;
-      console.log(products);
       dispatch({ type: GET_PRODUCTS, payload: products });
       dispatch({ type: SET_PRODUCT_LIST_LOADING });
     } catch (error) {
