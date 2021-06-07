@@ -3,11 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { Row, Col } from 'react-bootstrap';
 import NumberFormat from 'react-number-format';
-import getCurrentExchange from '../../../utils/getCurrentExchange';
 import { PayPalButton } from 'react-paypal-button-v2';
 import { createSale } from '../../../actions/orderActions';
-import api from '../../../utils/api';
-import axios from 'axios';
+import getCurrentExchange from '../../../utils/getCurrentExchange';
+import getPayPalClientId from '../../../utils/getPayPalClientId';
 
 import Spinner from '../../../components/layout/Spinner';
 
@@ -33,37 +32,24 @@ const ProcessOrderScreen = () => {
 
   useEffect(() => {
     let isMounted = true;
-    const source = axios.CancelToken.source();
 
-    const getPayPalClientId = async () => {
-      try {
-        const { data } = await api.get('/api/config/paypal', {
-          cancelToken: source.token,
-        });
-        const { paypalClientId } = data;
-        if (isMounted) setPayPalClientId(paypalClientId);
-      } catch (error) {
-        isMounted = false;
-        source.cancel();
-      }
-    };
-    const getDollarValue = async () => {
-      if (isMounted) {
-        setDollarPriceReady(false);
-        const dollarValue = await getCurrentExchange(totalPrice);
-        setDollarAmount(parseFloat(dollarValue));
-        setDollarPriceReady(true);
-      }
-    };
+    // TODO: Find a better way of solving this
     const preparePaymentData = async () => {
-      await getDollarValue();
-      await getPayPalClientId();
+      // Calculate dollar price
+      if (isMounted) setDollarPriceReady(false);
+      const dollarValue = await getCurrentExchange(totalPrice);
+      if (isMounted) setDollarAmount(parseFloat(dollarValue));
+      if (isMounted) setDollarPriceReady(true);
+      // Get paypal client id
+      const clientId = await getPayPalClientId();
+      if (isMounted) setPayPalClientId(clientId);
     };
+
     preparePaymentData();
 
+    // Clean up component before unmounting
     return () => {
       isMounted = false;
-      source.cancel();
     };
   }, [totalPrice]);
 
