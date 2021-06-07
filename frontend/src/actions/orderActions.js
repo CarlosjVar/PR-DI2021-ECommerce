@@ -3,6 +3,7 @@ import {
   CREATE_ORDER_FAILURE,
 } from '../constants/orderConstants';
 import { showAlert } from './alertActions';
+import { clearCart } from './cartActions';
 import api from '../utils/api';
 
 /**
@@ -15,6 +16,7 @@ export const createPreorder = (preorderData, history) => async (dispatch) => {
     const { data } = await api.post('/api/orders/createPreorder', preorderData);
     const { prodsOrder, order, msg } = data;
     dispatch({ type: CREATE_ORDER_SUCCESS, payload: { prodsOrder, order } });
+    dispatch(clearCart());
     dispatch(showAlert({ message: msg, type: 'success' }));
     history.push('/cart');
   } catch (error) {

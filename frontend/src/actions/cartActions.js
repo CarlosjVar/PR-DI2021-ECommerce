@@ -56,7 +56,10 @@ export const loadCartProducts = (cartItems) => async (dispatch) => {
       if (data.product.quantity > 0) {
         cartProducts.push({
           ...data.product,
-          numberOfItems: cartItem.numberOfItems,
+          numberOfItems:
+            cartItem.numberOfItems > data.product.quantity
+              ? data.product.quantity
+              : cartItem.numberOfItems,
         });
       }
     }
