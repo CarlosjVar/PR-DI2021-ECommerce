@@ -4,26 +4,31 @@ import isAuthenticated from "../middleware/isAuthenticated";
 import {
   addPreOrder,
   addSale,
+  getOrder,
   getOrdersAdmin,
   getOrdersClient,
 } from "../controllers/ordersController";
-import isAuthenticatedAdmin from "src/middleware/isAuthenticatedAdmin";
+import isAuthenticatedAdmin from "../middleware/isAuthenticatedAdmin";
 
 const ordersRouter = express.Router();
 
+ordersRouter.route("/get/:id").get([isAuthenticated], getOrder);
+
+// @route   GET - /api/orders/getOrdersAdmin
+// @desc    get all orders in the system
+// @access  private
 ordersRouter
   .route("/getOrdersAdmin")
   .get([isAuthenticatedAdmin], getOrdersAdmin);
 
-ordersRouter.route("/").get((req, res) => {
-  res.json("RUTA SIRVE");
-});
-
 // @route   GET - /api/orders/getOrdersClient
 // @desc    get all orders in the system corresponding to a client
-// @access  Public
+// @access  private
 ordersRouter.route("/getOrdersClient").get([isAuthenticated], getOrdersClient);
 
+// @route   POST - /api/orders/createPreorder
+// @desc    Creates a preorder in the system based on the items inside the shopping cart
+// @access  private
 ordersRouter
   .route("/createPreorder")
   .post(
@@ -35,7 +40,9 @@ ordersRouter
     ],
     addPreOrder
   );
-
+// @route   POST - /api/orders/createSale
+// @desc    Creates a sale order in the system based on the items inside the shopping cart and the information given by paypal
+// @access  private
 ordersRouter
   .route("/createSale")
   .post(

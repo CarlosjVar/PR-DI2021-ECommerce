@@ -238,29 +238,66 @@ export const addPreOrder = async (req: Request, res: Response) => {
   }
 };
 export const getOrdersClient = async (req: Request, res: Response) => {
-  // Error validation
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
+  try {
+    // Error validation
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const user = req.user;
+
+    const orders = await prismaController.orders.findMany({
+      where: {
+        clientId: user.Clients.id,
+      },
+    });
+    return res.json({ msg: "Ordenes encontradas", orders: orders });
+  } catch (err) {
+    res.status(500).json({ msg: "Internal server error" });
   }
-
-  const user = req.user;
-
-  const orders = await prismaController.orders.findMany({
-    where: {
-      clientId: user.Clients.id,
-    },
-  });
-  return res.json({ msg: "Ordenes encontradas", orders: orders });
 };
 
 export const getOrdersAdmin = async (req: Request, res: Response) => {
-  // Error validation
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
+  try {
+    // Error validation
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-  const orders = await prismaController.orders.findMany({});
-  return res.json({ msg: "Ordenes encontradas", orders: orders });
+    const orders = await prismaController.orders.findMany({});
+    return res.json({ msg: "Ordenes encontradas", orders: orders });
+  } catch (err) {
+    res.status(500).json({ msg: "Internal server error" });
+  }
+};
+
+export const getOrder = async (req: Request, res: Response) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const orderId = parseInt(req.params.id);
+    const order = await prismaController.orders.findFirst({
+      where: { id: orderId },
+      include: { Sales: true, Preorders: true, OrderDetails: true },
+    });
+    if (req.user.Clients) {
+      if (req.user.Clients.id != order.clientId) {
+        return res
+          .status(400)
+          .json({ msg: "No autorizado para ver esta orden" });
+      }
+    }
+    if (!order.Preorders) {
+      delete order.Preorders;
+    } else {
+      delete order.Sales;
+    }
+    return res.json(order);
+  } catch (err) {
+    res.status(500).json({ msg: "Internal server error" });
+  }
 };
