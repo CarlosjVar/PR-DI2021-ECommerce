@@ -22,7 +22,7 @@ const CreateOrderForm = () => {
     if (orderType === 'preorder') {
       dispatch(createPreorder({ cartProducts }, history));
     } else {
-      // TODO: Create sale
+      history.push('/orders/process');
     }
   };
 
