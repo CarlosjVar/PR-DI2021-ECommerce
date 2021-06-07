@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Row, Col } from 'react-bootstrap';
 import NumberFormat from 'react-number-format';
 import getCurrentExchange from '../../../utils/getCurrentExchange';
+import { PayPalButton } from 'react-paypal-button-v2';
 
 const ProcessOrderScreen = () => {
   const [dollarAmount, setDollarAmount] = useState(0);
@@ -31,14 +32,14 @@ const ProcessOrderScreen = () => {
   return (
     <Row>
       <Col className="mx-auto" md="6">
-        <div style={{ border: '1px solid #333' }}>
-          <div style={{ borderBottom: '1px solid #333', padding: '0.8rem' }}>
+        <div className="process-order-card">
+          <div className="process-order-header">
             <Row className="mb-2">
               <Col md="6">
                 <h4>CompuHardware</h4>
               </Col>
               <Col md="6">
-                <h4 style={{ textAlign: 'right' }}>
+                <h4 className="price-display">
                   Total:{' '}
                   <NumberFormat
                     value={totalPrice}
@@ -56,6 +57,16 @@ const ProcessOrderScreen = () => {
                 Información de la orden
               </Link>
             </p>
+          </div>
+          <div className="process-order-payment">
+            <p>Seleccione uno de los métodos de pago disponibles:</p>
+            <PayPalButton
+              amount={dollarAmount}
+              onSuccess={(details, data) => {
+                console.log(details, data);
+              }}
+              shippingPreference="NO_SHIPPING"
+            />
           </div>
         </div>
       </Col>
