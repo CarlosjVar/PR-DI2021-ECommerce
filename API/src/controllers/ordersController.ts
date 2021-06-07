@@ -237,3 +237,30 @@ export const addPreOrder = async (req: Request, res: Response) => {
     res.status(500).json({ msg: "Internal server error" });
   }
 };
+export const getOrdersClient = async (req: Request, res: Response) => {
+  // Error validation
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const user = req.user;
+
+  const orders = await prismaController.orders.findMany({
+    where: {
+      clientId: user.Clients.id,
+    },
+  });
+  return res.json({ msg: "Ordenes encontradas", orders: orders });
+};
+
+export const getOrdersAdmin = async (req: Request, res: Response) => {
+  // Error validation
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const orders = await prismaController.orders.findMany({});
+  return res.json({ msg: "Ordenes encontradas", orders: orders });
+};

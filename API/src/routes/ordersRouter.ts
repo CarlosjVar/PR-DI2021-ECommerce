@@ -1,16 +1,28 @@
 import express from "express";
 import { body } from "express-validator";
 import isAuthenticated from "../middleware/isAuthenticated";
-import { addPreOrder, addSale } from "../controllers/ordersController";
+import {
+  addPreOrder,
+  addSale,
+  getOrdersAdmin,
+  getOrdersClient,
+} from "../controllers/ordersController";
+import isAuthenticatedAdmin from "src/middleware/isAuthenticatedAdmin";
 
 const ordersRouter = express.Router();
 
-// @route   GET - /api/orders/
-// @desc    get all orders in the system
-// @access  Public
-ordersRouter.route("/getOrders").get(() => {
-  console.log("Hola orders");
+ordersRouter
+  .route("/getOrdersAdmin")
+  .get([isAuthenticatedAdmin], getOrdersAdmin);
+
+ordersRouter.route("/").get((req, res) => {
+  res.json("RUTA SIRVE");
 });
+
+// @route   GET - /api/orders/getOrdersClient
+// @desc    get all orders in the system corresponding to a client
+// @access  Public
+ordersRouter.route("/getOrdersClient").get([isAuthenticated], getOrdersClient);
 
 ordersRouter
   .route("/createPreorder")
