@@ -6,6 +6,7 @@ import { loadCartProducts } from '../../../actions/cartActions';
 import Spinner from '../../../components/layout/Spinner';
 import ShoppingCartItem from './components/ShoppingCartItem';
 import ShoppingCartInfo from './components/ShoppingCartInfo';
+import CreateOrderForm from './components/CreateOrderForm';
 
 const ShoppingCartScreen = () => {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ const ShoppingCartScreen = () => {
           </Col>
           <Col md="3">
             <ShoppingCartInfo cartProducts={products} />
+            <CreateOrderForm />
           </Col>
         </Row>
       )}
