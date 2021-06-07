@@ -38,9 +38,6 @@ const ShoppingCartItem = ({ productInfo }) => {
 
   const onRemoveClick = () => dispatch(removeProductFromCart(id));
 
-  // Calculate price for product
-  const itemPrice = parseInt(selectedNumberOfItems) * parseFloat(price);
-
   return (
     <Card className="mb-4">
       <Card.Body>
@@ -65,11 +62,11 @@ const ShoppingCartItem = ({ productInfo }) => {
                 <p className="mt-2" style={{ marginBottom: '0' }}>
                   Precio:{' '}
                   <NumberFormat
-                    value={itemPrice}
+                    value={price}
                     displayType={'text'}
                     thousandSeparator={'.'}
                     decimalSeparator={','}
-                    isNumericString={false}
+                    isNumericString={true}
                     prefix={'₡'}
                   />
                 </p>

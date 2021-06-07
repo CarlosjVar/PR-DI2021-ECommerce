@@ -26,3 +26,24 @@ export const createPreorder = (preorderData, history) => async (dispatch) => {
     );
   }
 };
+
+/**
+ * Creates a new sale
+ * @param {object} saleData The data of the sale
+ * @param {object} history The history object of the router
+ */
+export const createSale = (saleData, history) => async (dispatch) => {
+  try {
+    const { data } = await api.post('/api/orders/createSale', saleData);
+    const { prodsOrder, order, msg } = data;
+    dispatch({ type: CREATE_ORDER_SUCCESS, payload: { prodsOrder, order } });
+    dispatch(clearCart());
+    dispatch(showAlert({ message: msg, type: 'success' }));
+    history.push('/cart');
+  } catch (error) {
+    dispatch({ type: CREATE_ORDER_FAILURE });
+    error.response.data.errors.forEach((error) =>
+      dispatch(showAlert({ message: error.msg, type: 'danger' }))
+    );
+  }
+};

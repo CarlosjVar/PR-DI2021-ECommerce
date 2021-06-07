@@ -1,13 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Row, Col } from 'react-bootstrap';
 import NumberFormat from 'react-number-format';
 import getCurrentExchange from '../../../utils/getCurrentExchange';
 import { PayPalButton } from 'react-paypal-button-v2';
+import { createSale } from '../../../actions/orderActions';
+import api from '../../../utils/api';
+import axios from 'axios';
+
+import Spinner from '../../../components/layout/Spinner';
 
 const ProcessOrderScreen = () => {
+  const dispatch = useDispatch();
+
+  const history = useHistory();
+
   const [dollarAmount, setDollarAmount] = useState(0);
+  const [dollarPriceReady, setDollarPriceReady] = useState(false);
+  const [paypalClientId, setPayPalClientId] = useState('');
 
   const { products } = useSelector((state) => state.cart);
 
@@ -21,13 +32,53 @@ const ProcessOrderScreen = () => {
   const totalPrice = subtotalPrice + taxes;
 
   useEffect(() => {
-    const getDollarValue = async () => {
-      const dollarValue = await getCurrentExchange(totalPrice);
-      setDollarAmount(parseFloat(dollarValue));
+    let isMounted = true;
+    const source = axios.CancelToken.source();
+
+    const getPayPalClientId = async () => {
+      try {
+        const { data } = await api.get('/api/config/paypal', {
+          cancelToken: source.token,
+        });
+        const { paypalClientId } = data;
+        if (isMounted) setPayPalClientId(paypalClientId);
+      } catch (error) {
+        isMounted = false;
+        source.cancel();
+      }
     };
-    // Fetch currency exchange values
-    getDollarValue();
+    const getDollarValue = async () => {
+      if (isMounted) {
+        setDollarPriceReady(false);
+        const dollarValue = await getCurrentExchange(totalPrice);
+        setDollarAmount(parseFloat(dollarValue));
+        setDollarPriceReady(true);
+      }
+    };
+    const preparePaymentData = async () => {
+      await getDollarValue();
+      await getPayPalClientId();
+    };
+    preparePaymentData();
+
+    return () => {
+      isMounted = false;
+      source.cancel();
+    };
   }, [totalPrice]);
+
+  const onPaymentSuccess = (details, data) => {
+    const { payerID, orderID } = data;
+    const orderData = {
+      paypalPayerId: payerID,
+      paypalOrderId: orderID,
+      cartProducts: products.map((product) => ({
+        id: product.id,
+        numberOfItems: product.numberOfItems,
+      })),
+    };
+    dispatch(createSale(orderData, history));
+  };
 
   return (
     <Row>
@@ -60,13 +111,18 @@ const ProcessOrderScreen = () => {
           </div>
           <div className="process-order-payment">
             <p>Seleccione uno de los métodos de pago disponibles:</p>
-            <PayPalButton
-              amount={dollarAmount}
-              onSuccess={(details, data) => {
-                console.log(details, data);
-              }}
-              shippingPreference="NO_SHIPPING"
-            />
+            {!dollarPriceReady || !paypalClientId ? (
+              <Spinner />
+            ) : (
+              <PayPalButton
+                amount={dollarAmount}
+                onSuccess={onPaymentSuccess}
+                options={{
+                  clientId: paypalClientId,
+                }}
+                shippingPreference="NO_SHIPPING"
+              />
+            )}
           </div>
         </div>
       </Col>
