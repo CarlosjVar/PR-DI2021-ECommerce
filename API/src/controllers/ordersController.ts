@@ -18,6 +18,9 @@ export const addSale = async (req: Request, res: Response) => {
     // Body data obtention
     const user = req.user;
     const body = req.body;
+    if (!user.Clients) {
+      return res.status(400).json({ msg: "User not registered as a client" });
+    }
 
     const cartProducts = body.cartProducts;
     const { paypalOrderId, paypalPayerId } = body;
@@ -81,9 +84,10 @@ export const addSale = async (req: Request, res: Response) => {
       }
 
       //Order Creation
+      total = total + total * 0.13;
       const order = await prismaController.orders.create({
         data: {
-          clientId: user.id,
+          clientId: user.Clients.id,
           totalPrice: total,
           createdAt: new Date(),
           delivered: false,
@@ -134,6 +138,10 @@ export const addPreOrder = async (req: Request, res: Response) => {
     // Body data obtention
     const user = req.user;
     const body = req.body;
+
+    if (!user.Clients) {
+      return res.status(400).json({ msg: "User not registered as a client" });
+    }
     const cartProducts = body.cartProducts;
     let dbProducts: any = [];
     let noStockProds: any = [];
@@ -193,9 +201,10 @@ export const addPreOrder = async (req: Request, res: Response) => {
       }
 
       //Order Creation
+      total = total + total * 0.13;
       const order = await prismaController.orders.create({
         data: {
-          clientId: user.id,
+          clientId: user.Clients.id,
           totalPrice: total,
           createdAt: new Date(),
           delivered: false,
