@@ -312,7 +312,6 @@ export const updateStatus = async (req: Request, res: Response) => {
     const orderId = parseInt(req.params.id);
 
     if (req.body.entregado) {
-      console.log("entregado proceso");
       await prismaController.orders.update({
         data: { delivered: req.body.entregado },
         where: { id: orderId },
@@ -320,7 +319,6 @@ export const updateStatus = async (req: Request, res: Response) => {
     }
 
     if (req.body.pagado) {
-      console.log("pagado proceso");
       const order = await prismaController.orders.findFirst({
         where: { id: orderId },
         include: { Preorders: true },
