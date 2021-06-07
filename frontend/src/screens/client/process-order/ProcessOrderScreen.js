@@ -5,6 +5,7 @@ import { Row, Col } from 'react-bootstrap';
 import NumberFormat from 'react-number-format';
 import { PayPalButton } from 'react-paypal-button-v2';
 import { createSale } from '../../../actions/orderActions';
+import { showAlert } from '../../../actions/alertActions';
 import getCurrentExchange from '../../../utils/getCurrentExchange';
 import getPayPalClientId from '../../../utils/getPayPalClientId';
 
@@ -66,6 +67,15 @@ const ProcessOrderScreen = () => {
     dispatch(createSale(orderData, history));
   };
 
+  const onPaymentError = () => {
+    dispatch(
+      showAlert({
+        message: 'Ocurrió un error al procesar su pago',
+        type: 'danger',
+      })
+    );
+  };
+
   return (
     <Row>
       <Col className="mx-auto" md="6">
@@ -106,6 +116,7 @@ const ProcessOrderScreen = () => {
                 options={{
                   clientId: paypalClientId,
                 }}
+                onError={onPaymentError}
                 shippingPreference="NO_SHIPPING"
               />
             )}
