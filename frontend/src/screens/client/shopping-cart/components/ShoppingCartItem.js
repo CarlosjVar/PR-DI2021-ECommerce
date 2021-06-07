@@ -49,7 +49,11 @@ const ShoppingCartItem = ({ productInfo }) => {
             <div className="product-card-img-container">
               <Image
                 style={{ maxHeight: '128px', maxWidth: '128px' }}
-                src={`/api/utils/image/${imageFileName}`}
+                src={
+                  imageFileName === 'default_img' || !imageFileName
+                    ? '/img/placeholder-image.jpg'
+                    : `/api/utils/image/${imageFileName}`
+                }
                 fluid
               />
             </div>

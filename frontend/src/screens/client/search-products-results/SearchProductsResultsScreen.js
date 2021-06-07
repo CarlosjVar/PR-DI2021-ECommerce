@@ -30,7 +30,12 @@ const SearchProductsResultsScreen = () => {
                     <div className="product-card-img-container">
                       <Image
                         style={{ maxHeight: '128px', maxWidth: '128px' }}
-                        src={`/api/utils/image/${product.imageFileName}`}
+                        src={
+                          product.imageFileName === 'default_img' ||
+                          !product.imageFileName
+                            ? '/img/placeholder-image.jpg'
+                            : `/api/utils/image/${product.imageFileName}`
+                        }
                         fluid
                       />
                     </div>

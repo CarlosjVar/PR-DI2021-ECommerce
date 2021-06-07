@@ -60,15 +60,15 @@ const AdminProductDetailsScreen = () => {
       <Row>
         <Col md="8">
           <div className="image-container mb-4">
-            {imageFileName === 'default_img' || !imageFileName ? (
-              <i className="fas fa-question fa-9x"></i>
-            ) : (
-              <Image
-                style={{ maxHeight: '380px' }}
-                src={`/api/utils/image/${imageFileName}`}
-                fluid
-              />
-            )}
+            <Image
+              style={{ maxHeight: '380px' }}
+              src={
+                imageFileName === 'default_img' || !imageFileName
+                  ? '/img/placeholder-image.jpg'
+                  : `/api/utils/image/${imageFileName}`
+              }
+              fluid
+            />
           </div>
         </Col>
         <Col md="4">
