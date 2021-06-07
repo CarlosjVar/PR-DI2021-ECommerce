@@ -7,6 +7,7 @@ import Spinner from '../../../components/layout/Spinner';
 import ShoppingCartItem from './components/ShoppingCartItem';
 import ShoppingCartInfo from './components/ShoppingCartInfo';
 import CreateOrderForm from './components/CreateOrderForm';
+import Alert from '../../../components/layout/Alert';
 
 const ShoppingCartScreen = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const ShoppingCartScreen = () => {
 
   return (
     <Container className="py-4">
+      <Alert />
       <h2>
         <i className="fas fa-shopping-cart"></i> Carrito
         {isAuthenticated ? ` de ${user.fullName}` : ''}

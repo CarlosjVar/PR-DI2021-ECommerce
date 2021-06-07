@@ -4,6 +4,7 @@ import {
   SET_CART_PRODUCTS,
   UPDATE_PRODUCT_QUANTITY,
   REMOVE_PRODUCT_FROM_CART,
+  CLEAR_CART,
 } from '../constants/cartConstants';
 
 const initialState = {
@@ -22,6 +23,11 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         products: payload,
+      };
+    case CLEAR_CART:
+      return {
+        ...state,
+        products: [],
       };
     case ADD_PRODUCT_TO_CART:
       return {
