@@ -32,7 +32,14 @@ export const getOrderDetails = (orderId) => async (dispatch) => {
   try {
     dispatch({ type: SET_ORDER_LOADING });
     const { data } = await api.get(`/api/orders/get/${orderId}`);
-    dispatch({ type: GET_ORDER_DETAILS, payload: data });
+    dispatch({
+      type: GET_ORDER_DETAILS,
+      payload: {
+        order: data.orden,
+        client: data.cliente,
+        products: data.detallesOrder,
+      },
+    });
     dispatch({ type: SET_ORDER_LOADING });
   } catch (error) {
     console.error(error);
