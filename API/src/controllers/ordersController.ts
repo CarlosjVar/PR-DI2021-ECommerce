@@ -268,7 +268,23 @@ export const getOrdersAdmin = async (req: Request, res: Response) => {
     }
 
     const orders = await prismaController.orders.findMany({});
-    return res.json({ msg: "Ordenes encontradas", orders: orders });
+    let ordersClient: any = [];
+    for (let orden of orders) {
+      const client: any = await prismaController.users.findFirst({
+        where: {
+          Clients: { id: orden.clientId },
+        },
+      });
+      const order = {
+        name: client.fullName,
+        orderId: orden.id,
+        fecha: orden.createdAt,
+        monto: orden.totalPrice,
+      };
+
+      ordersClient.push(order);
+    }
+    res.json({ msg: "Ordenes encontradas", ordenes: ordersClient });
   } catch (err) {
     res.status(500).json({ msg: "Internal server error" });
   }
