@@ -1,17 +1,35 @@
 import express from "express";
 import { body } from "express-validator";
 import isAuthenticated from "../middleware/isAuthenticated";
-import { addPreOrder, addSale } from "../controllers/ordersController";
+import {
+  addPreOrder,
+  addSale,
+  getOrder,
+  getOrdersAdmin,
+  getOrdersClient,
+  updateStatus,
+} from "../controllers/ordersController";
+import isAuthenticatedAdmin from "../middleware/isAuthenticatedAdmin";
 
 const ordersRouter = express.Router();
 
-// @route   GET - /api/orders/
-// @desc    get all orders in the system
-// @access  Public
-ordersRouter.route("/getOrders").get(() => {
-  console.log("Hola orders");
-});
+ordersRouter.route("/get/:id").get([isAuthenticated], getOrder);
 
+// @route   GET - /api/orders/getOrdersAdmin
+// @desc    get all orders in the system
+// @access  private
+ordersRouter
+  .route("/getOrdersAdmin")
+  .get([isAuthenticatedAdmin], getOrdersAdmin);
+
+// @route   GET - /api/orders/getOrdersClient
+// @desc    get all orders in the system corresponding to a client
+// @access  private
+ordersRouter.route("/getOrdersClient").get([isAuthenticated], getOrdersClient);
+
+// @route   POST - /api/orders/createPreorder
+// @desc    Creates a preorder in the system based on the items inside the shopping cart
+// @access  private
 ordersRouter
   .route("/createPreorder")
   .post(
@@ -23,7 +41,9 @@ ordersRouter
     ],
     addPreOrder
   );
-
+// @route   POST - /api/orders/createSale
+// @desc    Creates a sale order in the system based on the items inside the shopping cart and the information given by paypal
+// @access  private
 ordersRouter
   .route("/createSale")
   .post(
@@ -45,4 +65,8 @@ ordersRouter
     ],
     addSale
   );
+
+ordersRouter
+  .route("/updateStatus/:id")
+  .put([isAuthenticatedAdmin], updateStatus);
 export default ordersRouter;
