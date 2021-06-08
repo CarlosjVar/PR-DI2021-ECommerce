@@ -4,6 +4,7 @@ import { body, validationResult } from "express-validator";
 import { resolve } from "path/posix";
 import { rejects } from "assert/strict";
 import ordersRouter from "src/routes/ordersRouter";
+import productsRouter from "src/routes/productsRouter";
 
 // @route   POST - /api/orders/createSale
 // @desc    Creates a Sale based on the cart products and paypal confirmation data
@@ -196,11 +197,6 @@ export const addPreOrder = async (req: Request, res: Response) => {
           price: price,
         });
         total += price * quantity;
-        // Reducing available stock
-        await prismaController.products.update({
-          where: { id: prodId },
-          data: { quantity: prod.prod.quantity - quantity },
-        });
       }
 
       //Order Creation
@@ -314,6 +310,7 @@ export const getOrder = async (req: Request, res: Response) => {
       });
       const productInfo = {
         name: product.name,
+        productId: product.id,
         quantity: orderDetail.quantity,
         price: orderDetail.price,
         imageFileName: product.imageFileName,
@@ -367,9 +364,39 @@ export const updateStatus = async (req: Request, res: Response) => {
     if (req.body.pagado) {
       const order = await prismaController.orders.findFirst({
         where: { id: orderId },
-        include: { Preorders: true },
+        include: { Preorders: true, OrderDetails: true },
       });
+
       if (order.Preorders) {
+        //FOR VERIFICATION
+        if (order.Preorders.isCancelled) {
+          return res.json({ msg: "Esta orden ya se encuentra cancelada" });
+        }
+
+        //PRODUCT Stock REDUCTION
+        let products = [];
+        for (let orderDetail of order.OrderDetails) {
+          const product = await prismaController.products.findFirst({
+            where: { id: orderDetail.productId },
+          });
+          products.push(product);
+        }
+        //Pending for optimization
+        let contador = 0;
+        for (let orderDetail of order.OrderDetails) {
+          if (orderDetail.quantity > products[contador].quantity) {
+            return res.status(400).json({
+              msg: "No hay stock suficiente para responder a esta preorden",
+            });
+          }
+          contador++;
+        }
+        for (let orderDetail of order.OrderDetails) {
+          await prismaController.products.update({
+            where: { id: orderDetail.productId },
+            data: { quantity: { decrement: orderDetail.quantity } },
+          });
+        }
         await prismaController.preorders.update({
           data: { isCancelled: req.body.pagado },
           where: {
@@ -378,7 +405,8 @@ export const updateStatus = async (req: Request, res: Response) => {
         });
       }
     }
-    res.json({ msg: "Estado actualizado correctamente" });
+
+    return res.json({ msg: "Estado actualizado correctamente" });
   } catch (err) {
     console.log(err);
 
