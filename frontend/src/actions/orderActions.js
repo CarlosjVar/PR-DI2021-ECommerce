@@ -2,6 +2,7 @@ import {
   CREATE_ORDER_SUCCESS,
   CREATE_ORDER_FAILURE,
   GET_ORDERS,
+  GET_ORDER_DETAILS,
   SET_ORDER_LOADING,
 } from '../constants/orderConstants';
 import { showAlert } from './alertActions';
@@ -17,6 +18,21 @@ export const getAllOrders = () => async (dispatch) => {
     const { data } = await api.get('/api/orders/getOrdersAdmin');
     const { ordenes } = data;
     dispatch({ type: GET_ORDERS, payload: ordenes });
+    dispatch({ type: SET_ORDER_LOADING });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+/**
+ * Gets a single order
+ * @param {number} orderId The id of the order
+ */
+export const getOrderDetails = (orderId) => async (dispatch) => {
+  try {
+    dispatch({ type: SET_ORDER_LOADING });
+    const { data } = await api.get(`/api/orders/get/${orderId}`);
+    dispatch({ type: GET_ORDER_DETAILS, payload: data });
     dispatch({ type: SET_ORDER_LOADING });
   } catch (error) {
     console.error(error);

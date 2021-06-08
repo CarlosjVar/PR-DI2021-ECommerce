@@ -24,7 +24,7 @@ const AllOrdersTableItem = ({ order }) => {
         />
       </td>
       <td>
-        <Link className="link" to="/">
+        <Link className="link" to={`/admin/orders/${orderId}`}>
           Detalles
         </Link>
       </td>
