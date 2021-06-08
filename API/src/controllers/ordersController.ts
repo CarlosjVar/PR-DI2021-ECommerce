@@ -196,11 +196,6 @@ export const addPreOrder = async (req: Request, res: Response) => {
           price: price,
         });
         total += price * quantity;
-        // Reducing available stock
-        await prismaController.products.update({
-          where: { id: prodId },
-          data: { quantity: prod.prod.quantity - quantity },
-        });
       }
 
       //Order Creation
@@ -367,7 +362,7 @@ export const updateStatus = async (req: Request, res: Response) => {
     if (req.body.pagado) {
       const order = await prismaController.orders.findFirst({
         where: { id: orderId },
-        include: { Preorders: true },
+        include: { Preorders: true, OrderDetails: true },
       });
       if (order.Preorders) {
         await prismaController.preorders.update({
@@ -376,6 +371,17 @@ export const updateStatus = async (req: Request, res: Response) => {
             orderId: orderId,
           },
         });
+
+        //PRODUCT Stock REDUCTION
+        for (let orderDetail of order.OrderDetails) {
+          console.log(orderDetail);
+          const product = await prismaController.products.update({
+            where: { id: orderDetail.productId },
+            data: {
+              quantity: { increment: -orderDetail.quantity },
+            },
+          });
+        }
       }
     }
     res.json({ msg: "Estado actualizado correctamente" });
