@@ -10,6 +10,7 @@ import productReducer from './reducers/productReducer';
 import categoryReducer from './reducers/categoryReducer';
 import specificationReducer from './reducers/specificationReducer';
 import cartReducer from './reducers/cartReducer';
+import orderReducer from './reducers/orderReducer';
 
 const reducer = combineReducers({
   auth: authReducer,
@@ -19,6 +20,7 @@ const reducer = combineReducers({
   category: categoryReducer,
   specification: specificationReducer,
   cart: cartReducer,
+  order: orderReducer,
 });
 
 const initialState = {};

@@ -345,8 +345,9 @@ section.section#search-products-section h3 {
   margin-bottom: 1.3rem;
 }
 
-/* Shopping cart */
-.cart-information {
+/* Shopping cart & process order card */
+.cart-information,
+.process-order-card {
   border: 1px solid var(--dark-grey);
 }
 
@@ -354,6 +355,20 @@ section.section#search-products-section h3 {
   text-align: center;
   border-bottom: 2px solid var(--dark-grey);
   padding: 0.9rem;
+}
+
+.process-order-card .process-order-header {
+  border-bottom: 2px solid var(--dark-grey);
+  padding: 0.9rem;
+}
+
+.process-order-header h4.price-display {
+  font-weight: 400 !important;
+  text-align: right;
+}
+
+.process-order-card .process-order-payment {
+  padding: 1rem;
 }
 
 .cart-information .cart-information-header h5 {

@@ -38,11 +38,7 @@ const SearchProducts = () => {
       )
     );
     if (history.location.pathname === '/') {
-      history.push(
-        `/products?name=${searchedName}&category=${getCategoryNameById(
-          searchedCategory
-        )}`
-      );
+      history.push('/products');
     }
   };
 

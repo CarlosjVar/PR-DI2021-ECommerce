@@ -35,7 +35,15 @@ const ShowcaseProductItem = ({ productInfo }) => {
         className="img-product-link bg-light-grey p-3"
         to={`/products/${id}`}
       >
-        <Card.Img src={`/api/utils/image/${imageFileName}`} variant="top" />
+        <Card.Img
+          src={
+            imageFileName === 'default_img' || !imageFileName
+              ? '/img/placeholder-image.jpg'
+              : `/api/utils/image/${imageFileName}`
+          }
+          variant="top"
+          fluid="true"
+        />
       </Link>
       <Card.Body style={{ padding: '0' }}>
         <p className="mt-4">

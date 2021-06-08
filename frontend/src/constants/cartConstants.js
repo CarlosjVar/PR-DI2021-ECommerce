@@ -7,4 +7,6 @@ export const REMOVE_PRODUCT_FROM_CART = 'REMOVE_PRODUCT_FROM_CART';
 
 export const SET_CART_LOADING = 'SET_CART_LOADING';
 
+export const CLEAR_CART = 'CLEAR_CART';
+
 export const LOAD_CART_DATA = 'LOAD_CART_DATA';

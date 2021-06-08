@@ -14,12 +14,16 @@ const ProductCarousel = ({ products }) => {
       {products.map((product) => (
         <Carousel.Item key={product.id}>
           <Link to={`/products/${product.id}`}>
-            {/* TODO: Meter imagen placeholder */}
-            {product.imageFileName === 'default_img' ? (
-              <i className="fa fa-home"></i>
-            ) : (
-              <Image src={`/api/utils/image/${product.imageFileName}`} fluid />
-            )}
+            <Image
+              src={
+                product.imageFileName === 'default_img' ||
+                !product.imageFileName
+                  ? '/img/placeholder-image.jpg'
+                  : `/api/utils/image/${product.imageFileName}`
+              }
+              fluid
+            />
+
             <Carousel.Caption className="carousel-caption">
               <h4>
                 {product.name} (

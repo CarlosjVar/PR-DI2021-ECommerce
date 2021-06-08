@@ -4,6 +4,7 @@ import {
   SET_CART_PRODUCTS,
   UPDATE_PRODUCT_QUANTITY,
   REMOVE_PRODUCT_FROM_CART,
+  CLEAR_CART,
 } from '../constants/cartConstants';
 import api from '../utils/api';
 
@@ -34,6 +35,14 @@ export const addProductToCart =
   };
 
 /**
+ * Clears the cart
+ */
+export const clearCart = () => async (dispatch) => {
+  dispatch({ type: CLEAR_CART });
+  localStorage.removeItem('cart');
+};
+
+/**
  * Loads all of the products to cart in the store
  * @param {array} cartItems An array of cart items
  */
@@ -47,7 +56,10 @@ export const loadCartProducts = (cartItems) => async (dispatch) => {
       if (data.product.quantity > 0) {
         cartProducts.push({
           ...data.product,
-          numberOfItems: cartItem.numberOfItems,
+          numberOfItems:
+            cartItem.numberOfItems > data.product.quantity
+              ? data.product.quantity
+              : cartItem.numberOfItems,
         });
       }
     }
