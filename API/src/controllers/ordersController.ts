@@ -54,6 +54,8 @@ export const addSale = async (req: Request, res: Response) => {
     }).then(async (result: any) => {
       const dbProducts = result.onStock;
       const noStockProducts = result.noStock;
+      console.log(dbProducts);
+      console.log(noStockProducts);
 
       // If there is at least one product lacking stock the request ends and the order creation is aborted
       if (Object.keys(noStockProducts).length > 0) {
@@ -301,6 +303,24 @@ export const getOrder = async (req: Request, res: Response) => {
       where: { id: orderId },
       include: { Sales: true, Preorders: true, OrderDetails: true },
     });
+
+    let productsInfo = [];
+    for (let orderDetail of order.OrderDetails) {
+      console.log(orderDetail);
+      const product = await prismaController.products.findFirst({
+        where: {
+          id: orderDetail.productId,
+        },
+      });
+      const productInfo = {
+        name: product.name,
+        quantity: orderDetail.quantity,
+        price: orderDetail.price,
+        imageFileName: product.imageFileName,
+      };
+      productsInfo.push(productInfo);
+    }
+
     if (req.user.Clients) {
       if (req.user.Clients.id != order.clientId) {
         return res
@@ -313,7 +333,17 @@ export const getOrder = async (req: Request, res: Response) => {
     } else {
       delete order.Sales;
     }
-    return res.json(order);
+    delete order.OrderDetails;
+    const user = await prismaController.users.findFirst({
+      where: { Clients: { id: order.clientId } },
+    });
+    //Nombre cliente
+    return res.json({
+      msg: "Detalles de orden encontrados",
+      cliente: { name: user.fullName },
+      orden: order,
+      detallesOrder: productsInfo,
+    });
   } catch (err) {
     res.status(500).json({ msg: "Internal server error" });
   }
