@@ -1,8 +1,9 @@
 import prismaController from "../config/Database";
 import { Request, Response } from "express";
-import { validationResult } from "express-validator";
+import { body, validationResult } from "express-validator";
 import { resolve } from "path/posix";
 import { rejects } from "assert/strict";
+import ordersRouter from "src/routes/ordersRouter";
 
 // @route   POST - /api/orders/createSale
 // @desc    Creates a Sale based on the cart products and paypal confirmation data
@@ -234,6 +235,107 @@ export const addPreOrder = async (req: Request, res: Response) => {
       });
     });
   } catch (err) {
+    res.status(500).json({ msg: "Internal server error" });
+  }
+};
+export const getOrdersClient = async (req: Request, res: Response) => {
+  try {
+    // Error validation
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const user = req.user;
+
+    const orders = await prismaController.orders.findMany({
+      where: {
+        clientId: user.Clients.id,
+      },
+    });
+    return res.json({ msg: "Ordenes encontradas", orders: orders });
+  } catch (err) {
+    res.status(500).json({ msg: "Internal server error" });
+  }
+};
+
+export const getOrdersAdmin = async (req: Request, res: Response) => {
+  try {
+    // Error validation
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const orders = await prismaController.orders.findMany({});
+    return res.json({ msg: "Ordenes encontradas", orders: orders });
+  } catch (err) {
+    res.status(500).json({ msg: "Internal server error" });
+  }
+};
+
+export const getOrder = async (req: Request, res: Response) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const orderId = parseInt(req.params.id);
+    const order = await prismaController.orders.findFirst({
+      where: { id: orderId },
+      include: { Sales: true, Preorders: true, OrderDetails: true },
+    });
+    if (req.user.Clients) {
+      if (req.user.Clients.id != order.clientId) {
+        return res
+          .status(400)
+          .json({ msg: "No autorizado para ver esta orden" });
+      }
+    }
+    if (!order.Preorders) {
+      delete order.Preorders;
+    } else {
+      delete order.Sales;
+    }
+    return res.json(order);
+  } catch (err) {
+    res.status(500).json({ msg: "Internal server error" });
+  }
+};
+
+export const updateStatus = async (req: Request, res: Response) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const orderId = parseInt(req.params.id);
+
+    if (req.body.entregado) {
+      await prismaController.orders.update({
+        data: { delivered: req.body.entregado },
+        where: { id: orderId },
+      });
+    }
+
+    if (req.body.pagado) {
+      const order = await prismaController.orders.findFirst({
+        where: { id: orderId },
+        include: { Preorders: true },
+      });
+      if (order.Preorders) {
+        await prismaController.preorders.update({
+          data: { isCancelled: req.body.pagado },
+          where: {
+            orderId: orderId,
+          },
+        });
+      }
+    }
+    res.json({ msg: "Estado actualizado correctamente" });
+  } catch (err) {
+    console.log(err);
+
     res.status(500).json({ msg: "Internal server error" });
   }
 };

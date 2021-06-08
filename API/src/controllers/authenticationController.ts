@@ -32,7 +32,6 @@ export const authUser = async (req: Request, res: Response) => {
       password,
       userWithEmail.password as string
     );
-    console.log(isPassword);
 
     if (!isPassword) {
       return res.status(400).json({ errors: [{ msg: "Contraseña errónea" }] });
