@@ -36,7 +36,7 @@ const Routes = () => {
           component={AdminOrderDetailsScreen}
           exact
         />
-        <ClientRoute path="/orders/mine" component={OrdersScreen} exact />
+        <ClientRoute path="/orders/personal" component={OrdersScreen} exact />
         <ClientRoute
           path="/orders/process"
           component={ProcessOrderScreen}

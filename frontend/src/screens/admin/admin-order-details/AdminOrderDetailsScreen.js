@@ -15,8 +15,6 @@ const AdminOrderDetailsScreen = () => {
     dispatch(getOrderDetails(id));
   }, [dispatch, id]);
 
-  const {} = orderDetails;
-
   return (
     <>
       <h3>Orden de Test ({id})</h3>

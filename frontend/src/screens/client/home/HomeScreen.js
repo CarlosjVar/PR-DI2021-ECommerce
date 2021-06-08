@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProducts } from '../../../actions/productActions';
@@ -13,9 +13,15 @@ const HomeScreen = () => {
 
   const { productList } = useSelector((state) => state.product);
 
+  const { isAdmin } = useSelector((state) => state.auth);
+
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
+
+  if (isAdmin) {
+    return <Redirect to="/dashboard" />;
+  }
 
   return (
     <>

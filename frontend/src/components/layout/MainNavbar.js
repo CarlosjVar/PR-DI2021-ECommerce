@@ -53,7 +53,7 @@ const MainNavbar = () => {
         </Link>
       </Nav.Item>
       <Nav.Item className="mx-2">
-        <Link to="/my-orders" className="nav-link">
+        <Link to="/orders/personal" className="nav-link">
           <i className="fas fa-clipboard-list"></i> Órdenes
         </Link>
       </Nav.Item>

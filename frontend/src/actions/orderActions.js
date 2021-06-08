@@ -40,6 +40,21 @@ export const getOrderDetails = (orderId) => async (dispatch) => {
 };
 
 /**
+ * Gets the list of orders of a single client
+ */
+export const getClientOrders = () => async (dispatch) => {
+  try {
+    dispatch({ type: SET_ORDER_LOADING });
+    const { data } = await api.get('/api/orders/getOrdersClient');
+    const { orders } = data;
+    dispatch({ type: GET_ORDERS, payload: orders });
+    dispatch({ type: SET_ORDER_LOADING });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+/**
  * Creates a new preorder
  * @param {object} preorderData The data of the preorder
  * @param {object} history The history object of the router
