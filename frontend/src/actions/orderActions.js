@@ -15,8 +15,8 @@ export const getAllOrders = () => async (dispatch) => {
   try {
     dispatch({ type: SET_ORDER_LOADING });
     const { data } = await api.get('/api/orders/getOrdersAdmin');
-    const { orders } = data;
-    dispatch({ type: GET_ORDERS, payload: orders });
+    const { ordenes } = data;
+    dispatch({ type: GET_ORDERS, payload: ordenes });
     dispatch({ type: SET_ORDER_LOADING });
   } catch (error) {
     console.error(error);
