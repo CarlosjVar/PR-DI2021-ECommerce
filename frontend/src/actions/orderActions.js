@@ -1,10 +1,27 @@
 import {
   CREATE_ORDER_SUCCESS,
   CREATE_ORDER_FAILURE,
+  GET_ORDERS,
+  SET_ORDER_LOADING,
 } from '../constants/orderConstants';
 import { showAlert } from './alertActions';
 import { clearCart } from './cartActions';
 import api from '../utils/api';
+
+/**
+ * Gets all of the registered orders
+ */
+export const getAllOrders = () => async (dispatch) => {
+  try {
+    dispatch({ type: SET_ORDER_LOADING });
+    const { data } = await api.get('/api/orders/getOrdersAdmin');
+    const { orders } = data;
+    dispatch({ type: GET_ORDERS, payload: orders });
+    dispatch({ type: SET_ORDER_LOADING });
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 /**
  * Creates a new preorder
