@@ -246,3 +246,24 @@ export const findProduct = async (req: Request, res: Response) => {
     res.json({ msg: [{ errors: "Internal server error" }] });
   }
 };
+
+export const getTopProducts = async (req: Request, res: Response) => {
+  try {
+    const errors: Result = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const prodLimit = 8;
+    const prods = await prismaController.$queryRaw(
+      " SELECT t.* from (Select count(*) as count , Products.name, Products.id FROM Orders" +
+        " INNER JOIN OrderDetails on (Orders.id = OrderDetails.orderId) " +
+        "INNER JOIN Products on (OrderDetails.productId = Products.id) group by name) t order by (t.count ) desc limit " +
+        prodLimit
+    );
+    res.json({ prods: prods });
+  } catch (err) {
+    console.log(err);
+
+    res.status(500).json({ msg: "Internal server error" });
+  }
+};

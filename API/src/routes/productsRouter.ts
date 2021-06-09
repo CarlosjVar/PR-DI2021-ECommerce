@@ -6,6 +6,7 @@ import {
   deleteProducts,
   updateProduct,
   findProduct,
+  getTopProducts,
 } from "../controllers/productsController";
 import isAuthenticatedAdmin from "../middleware/isAuthenticatedAdmin";
 import expressValidator, { body, validationResult } from "express-validator";
@@ -73,5 +74,9 @@ productsRouter
   );
 
 productsRouter.route("/get/:id").get([], findProduct);
+
+productsRouter
+  .route("/getTopProducts")
+  .get([isAuthenticatedAdmin], getTopProducts);
 
 export default productsRouter;

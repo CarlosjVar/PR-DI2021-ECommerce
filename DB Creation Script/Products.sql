@@ -10,3 +10,5 @@ CREATE TABLE Products(
     CONSTRAINT PK_Products PRIMARY KEY(id),
     CONSTRAINT FK_Categories_Products FOREIGN KEY(categoryId) REFERENCES Categories(id)
 );
+ALTER TABLE Products DROP COLUMN imageFileName;
+ALTER TABLE Products ADD COLUMN imageFileName NVARCHAR(120) default 'default_img';
