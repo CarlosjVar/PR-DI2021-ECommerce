@@ -2,22 +2,23 @@ import React, { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getProducts } from '../../../actions/productActions';
+import { getProducts, getTopProducts } from '../../../actions/productActions';
 
 import ProductsTable from './components/ProductsTable';
+import TopProductsTable from './components/TopProductsTable';
 import Spinner from '../../../components/layout/Spinner';
 
 const DashboardScreen = () => {
   const dispatch = useDispatch();
 
-  const { productList, productListLoading } = useSelector(
-    (state) => state.product
-  );
+  const { productList, productListLoading, topProducts, topProductsLoading } =
+    useSelector((state) => state.product);
 
   const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(getProducts());
+    dispatch(getTopProducts());
   }, [dispatch]);
 
   return (
@@ -36,6 +37,16 @@ const DashboardScreen = () => {
             <i className="fa fa-plus"></i> Agregar producto nuevo
           </Link>
         </Col>
+      </Row>
+      <Row className="my-5">
+        <Col lg="6">
+          {topProductsLoading ? (
+            <Spinner />
+          ) : (
+            <TopProductsTable products={topProducts} />
+          )}
+        </Col>
+        <Col lg="6"></Col>
       </Row>
     </>
   );
