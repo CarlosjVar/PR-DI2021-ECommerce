@@ -6,6 +6,7 @@ import { getProducts, getTopProducts } from '../../../actions/productActions';
 
 import ProductsTable from './components/ProductsTable';
 import TopProductsTable from './components/TopProductsTable';
+import TopProductsChart from './components/TopProductsChart';
 import Spinner from '../../../components/layout/Spinner';
 
 const DashboardScreen = () => {
@@ -38,16 +39,18 @@ const DashboardScreen = () => {
           </Link>
         </Col>
       </Row>
-      <Row className="my-5">
-        <Col lg="6">
-          {topProductsLoading ? (
-            <Spinner />
-          ) : (
+      {topProductsLoading ? (
+        <Spinner />
+      ) : (
+        <Row className="my-5">
+          <Col lg="6">
             <TopProductsTable products={topProducts} />
-          )}
-        </Col>
-        <Col lg="6"></Col>
-      </Row>
+          </Col>
+          <Col lg="6">
+            <TopProductsChart products={topProducts} />
+          </Col>
+        </Row>
+      )}
     </>
   );
 };
