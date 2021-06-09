@@ -5,7 +5,7 @@ import { Col, Row } from 'react-bootstrap';
 import { getOrderDetails } from '../../../actions/orderActions';
 
 import OrderProductCard from '../../../components/products/OrderProductCard';
-import OrderPriceInfo from './components/OrderPriceInfo';
+import OrderPriceInfo from '../../../components/orders/OrderPriceInfo';
 import Spinner from '../../../components/layout/Spinner';
 
 const AdminOrderDetailsScreen = () => {
