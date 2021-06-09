@@ -4,6 +4,8 @@ import {
   CREATE_ORDER_SUCCESS,
   CREATE_ORDER_FAILURE,
   SET_ORDER_LOADING,
+  UPDATE_ORDER_STATUS_SUCCESS,
+  UPDATE_ORDER_STATUS_FAILURE,
 } from '../constants/orderConstants';
 
 const initialState = {
@@ -36,6 +38,8 @@ const orderReducer = (state = initialState, action) => {
         orderList: [payload, ...state.orderList],
       };
     case CREATE_ORDER_FAILURE:
+    case UPDATE_ORDER_STATUS_SUCCESS:
+    case UPDATE_ORDER_STATUS_FAILURE:
     default:
       return state;
   }

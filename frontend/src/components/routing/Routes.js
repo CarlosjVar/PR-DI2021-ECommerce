@@ -18,6 +18,10 @@ import EditProductScreen from '../../screens/admin/edit-product/EditProductScree
 import SearchProductsResultsScreen from '../../screens/client/search-products-results/SearchProductsResultsScreen';
 import ClientProductDetailsScreen from '../../screens/client/client-product-details/ProductDetailsScreen';
 import ProcessOrderScreen from '../../screens/client/process-order/ProcessOrderScreen';
+import AdminOrdersScreen from '../../screens/admin/admin-orders/AdminOrdersScreen';
+import AdminOrderDetailsScreen from '../../screens/admin/admin-order-details/AdminOrderDetailsScreen';
+import ClientOrderDetailsScreen from '../../screens/client/client-order-details/ClientOrderDetailsScreen';
+import UpdateOrderStatusScreen from '../../screens/admin/update-order-status/UpdateOrderStatusScreen';
 
 const Routes = () => {
   return (
@@ -28,7 +32,23 @@ const Routes = () => {
         <Route path="/login" component={LoginScreen} exact />
         <Route path="/register" component={RegisterScreen} exact />
         <Route path="/cart" component={ShoppingCartScreen} exact />
-        <ClientRoute path="/orders/mine" component={OrdersScreen} exact />
+        <AdminRoute path="/orders" component={AdminOrdersScreen} exact />
+        <AdminRoute
+          path="/admin/orders/:id"
+          component={AdminOrderDetailsScreen}
+          exact
+        />
+        <AdminRoute
+          path="/admin/orders/:id/update-status"
+          component={UpdateOrderStatusScreen}
+          exact
+        />
+        <ClientRoute path="/orders/personal" component={OrdersScreen} exact />
+        <ClientRoute
+          path="/orders/:id"
+          component={ClientOrderDetailsScreen}
+          exact
+        />
         <ClientRoute
           path="/orders/process"
           component={ProcessOrderScreen}
