@@ -24,7 +24,7 @@ const AdminOrdersScreen = () => {
       ) : orderList.length === 0 ? (
         <h4>No hay órdenes registradas</h4>
       ) : (
-        <AllOrdersTable orders={orderList.reverse()} />
+        <AllOrdersTable orders={orderList} />
       )}
     </>
   );

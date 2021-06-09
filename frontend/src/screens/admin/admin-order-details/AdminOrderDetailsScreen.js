@@ -67,7 +67,7 @@ const AdminOrderDetailsScreen = () => {
                 <>
                   <OrderPriceInfo products={products} order={order} />
                   <Link
-                    to={`/orders/${order.id}/edit`}
+                    to={`/admin/orders/${order.id}/update-status`}
                     className="btn btn-secondary btn-block mt-3"
                   >
                     <i className="fa fa-pen"></i> Editar estado

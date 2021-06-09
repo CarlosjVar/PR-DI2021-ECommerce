@@ -4,6 +4,8 @@ import {
   GET_ORDERS,
   GET_ORDER_DETAILS,
   SET_ORDER_LOADING,
+  UPDATE_ORDER_STATUS_FAILURE,
+  UPDATE_ORDER_STATUS_SUCCESS,
 } from '../constants/orderConstants';
 import { showAlert } from './alertActions';
 import { clearCart } from './cartActions';
@@ -102,3 +104,28 @@ export const createSale = (saleData, history) => async (dispatch) => {
     );
   }
 };
+
+/**
+ * Updates the order status
+ * @param {object} orderData The current data of the order
+ * @param {object} orderStatus The new status of the order
+ * @param {object} history The router history object
+ */
+export const updateOrderStatus =
+  (orderData, orderStatus, history) => async (dispatch) => {
+    try {
+      const { id } = orderData;
+      await api.put(`/api/orders/updateStatus/${id}`, orderStatus);
+      dispatch({ type: UPDATE_ORDER_STATUS_SUCCESS });
+      dispatch(
+        showAlert({
+          message: 'El estado de la orden fue actuailizado correctamente',
+          type: 'success',
+        })
+      );
+      history.push(`/admin/orders/${id}`);
+    } catch (error) {
+      dispatch({ type: UPDATE_ORDER_STATUS_FAILURE });
+      dispatch(showAlert({ message: error.response.data.msg, type: 'danger' }));
+    }
+  };

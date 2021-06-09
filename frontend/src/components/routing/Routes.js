@@ -21,6 +21,7 @@ import ProcessOrderScreen from '../../screens/client/process-order/ProcessOrderS
 import AdminOrdersScreen from '../../screens/admin/admin-orders/AdminOrdersScreen';
 import AdminOrderDetailsScreen from '../../screens/admin/admin-order-details/AdminOrderDetailsScreen';
 import ClientOrderDetailsScreen from '../../screens/client/client-order-details/ClientOrderDetailsScreen';
+import UpdateOrderStatusScreen from '../../screens/admin/update-order-status/UpdateOrderStatusScreen';
 
 const Routes = () => {
   return (
@@ -35,6 +36,11 @@ const Routes = () => {
         <AdminRoute
           path="/admin/orders/:id"
           component={AdminOrderDetailsScreen}
+          exact
+        />
+        <AdminRoute
+          path="/admin/orders/:id/update-status"
+          component={UpdateOrderStatusScreen}
           exact
         />
         <ClientRoute path="/orders/personal" component={OrdersScreen} exact />
