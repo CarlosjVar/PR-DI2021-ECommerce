@@ -5,7 +5,7 @@ import NumberFormat from 'react-number-format';
 import PropTypes from 'prop-types';
 
 const ClientOrdersTableItem = ({ order }) => {
-  const { createdAt, totalPrice } = order;
+  const { id, createdAt, totalPrice } = order;
 
   return (
     <tr>
@@ -23,7 +23,7 @@ const ClientOrdersTableItem = ({ order }) => {
         />
       </td>
       <td>
-        <Link className="link" to="/">
+        <Link className="link" to={`/orders/${id}`}>
           Detalles
         </Link>
       </td>
