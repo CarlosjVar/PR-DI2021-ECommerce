@@ -5,7 +5,7 @@ import NumberFormat from 'react-number-format';
 import PropTypes from 'prop-types';
 
 const ClientOrdersTableItem = ({ order }) => {
-  const { createdAt, totalPrice, id } = order;
+  const { createdAt, totalPrice } = order;
 
   return (
     <tr>

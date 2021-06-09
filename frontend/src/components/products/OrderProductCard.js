@@ -1,17 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { Card, Image, Row, Col } from 'react-bootstrap';
 import NumberFormat from 'react-number-format';
 import PropTypes from 'prop-types';
 
 const OrderProductCard = ({ product }) => {
-  const { imageFileName, price, name, quantity, id } = product;
+  const { isAdmin } = useSelector((state) => state.auth);
+
+  const { imageFileName, price, name, quantity, productId } = product;
 
   return (
     <Card className="mb-4">
       <Card.Body>
         <Row>
-          <Col md="3">
+          <Col lg="3">
             <div className="product-card-img-container">
               <Image
                 style={{ maxHeight: '128px', maxWidth: '128px' }}
@@ -24,8 +27,8 @@ const OrderProductCard = ({ product }) => {
               />
             </div>
           </Col>
-          <Col md="9">
-            <h5>{name}</h5>
+          <Col lg="9">
+            <h4>{name}</h4>
             <Row className="mt-4">
               <Col md="4">
                 <p className="mt-2" style={{ marginBottom: '0' }}>
@@ -47,7 +50,14 @@ const OrderProductCard = ({ product }) => {
               </Col>
             </Row>
             <p className="mt-4" style={{ marginBottom: '0' }}>
-              <Link className="link" to={`/products/${id}`}>
+              <Link
+                className="link"
+                to={
+                  isAdmin
+                    ? `/admin/products/${productId}`
+                    : `/products/${productId}`
+                }
+              >
                 Informacion del producto
               </Link>
             </p>
