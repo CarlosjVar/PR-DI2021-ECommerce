@@ -19,7 +19,10 @@ const TopProductsTable = ({ products }) => {
               <td>{product.name}</td>
               <td>{product.count}</td>
               <td>
-                <Link className="link" to="/">
+                <Link
+                  className="link"
+                  to={`/admin/products/${product.id}/discount`}
+                >
                   Realizar descuento
                 </Link>
               </td>

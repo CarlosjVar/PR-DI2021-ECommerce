@@ -22,6 +22,7 @@ import AdminOrdersScreen from '../../screens/admin/admin-orders/AdminOrdersScree
 import AdminOrderDetailsScreen from '../../screens/admin/admin-order-details/AdminOrderDetailsScreen';
 import ClientOrderDetailsScreen from '../../screens/client/client-order-details/ClientOrderDetailsScreen';
 import UpdateOrderStatusScreen from '../../screens/admin/update-order-status/UpdateOrderStatusScreen';
+import ApplyDiscountScreen from '../../screens/admin/apply-discount/ApplyDiscountScreen';
 
 const Routes = () => {
   return (
@@ -67,6 +68,11 @@ const Routes = () => {
         <AdminRoute
           path="/admin/products/:id/edit"
           component={EditProductScreen}
+          exact
+        />
+        <AdminRoute
+          path="/admin/products/:id/discount"
+          component={ApplyDiscountScreen}
           exact
         />
         <AdminRoute
