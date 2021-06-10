@@ -267,3 +267,25 @@ export const getTopProducts = async (req: Request, res: Response) => {
     res.status(500).json({ msg: "Internal server error" });
   }
 };
+
+export const pcBuilderProdSearch = async (req: Request, res: Response) => {
+  try {
+    const idcategoria = parseInt(req.params.idcategoria);
+    const idSpecification = parseInt(req.params.idSpecification);
+    const value = req.params.value;
+    const products = await prismaController.productsXSpecifications.findMany({
+      where: {
+        specificationId: idSpecification,
+        value: value,
+        Products: { categoryId: idcategoria },
+      },
+
+      select: {
+        Products: true,
+      },
+    });
+    res.json({ prods: products });
+  } catch (err) {
+    res.status(500).json({ msg: "Internal server error" });
+  }
+};
