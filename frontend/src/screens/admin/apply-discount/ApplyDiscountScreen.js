@@ -38,7 +38,12 @@ const ApplyDiscountScreen = () => {
       const productData = {
         ...productDetails,
         price: newPrice,
-        specifications: productDetails.ProductsXSpecifications,
+        specifications: productDetails.ProductsXSpecifications.map(
+          (specification) => ({
+            id: specification.specificationId,
+            value: specification.value,
+          })
+        ),
         category: productDetails.categoryId,
       };
       dispatch(editProduct(productData, id, history));
