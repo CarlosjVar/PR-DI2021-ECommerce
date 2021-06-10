@@ -7,6 +7,7 @@ import {
   updateProduct,
   findProduct,
   getTopProducts,
+  pcBuilderProdSearch,
 } from "../controllers/productsController";
 import isAuthenticatedAdmin from "../middleware/isAuthenticatedAdmin";
 import expressValidator, { body, validationResult } from "express-validator";
@@ -78,5 +79,9 @@ productsRouter.route("/get/:id").get([], findProduct);
 productsRouter
   .route("/getTopProducts")
   .get([isAuthenticatedAdmin], getTopProducts);
+
+productsRouter
+  .route("/pcBuilder/getProducts/:idcategoria/:idSpecification/:value")
+  .get(pcBuilderProdSearch);
 
 export default productsRouter;
