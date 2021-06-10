@@ -33,10 +33,6 @@ const orderReducer = (state = initialState, action) => {
         loading: !state.loading,
       };
     case CREATE_ORDER_SUCCESS:
-      return {
-        ...state,
-        orderList: [payload, ...state.orderList],
-      };
     case CREATE_ORDER_FAILURE:
     case UPDATE_ORDER_STATUS_SUCCESS:
     case UPDATE_ORDER_STATUS_FAILURE:

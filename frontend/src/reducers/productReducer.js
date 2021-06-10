@@ -11,14 +11,18 @@ import {
   CLEAR_PRODUCT_LIST,
   SET_SEARCHED_PRODUCT_NAME,
   SET_SEARCHED_PRODUCT_CATEGORY,
+  GET_TOP_PRODUCTS,
+  SET_TOP_PRODUCTS_LOADING,
 } from '../constants/productConstants';
 
 const initialState = {
   productList: [],
+  topProducts: [],
   searchedProductName: '',
   searchedCategoryName: 'All',
   productDetails: {},
   productListLoading: false,
+  topProductsLoading: false,
   productDetailsLoading: false,
 };
 
@@ -35,6 +39,11 @@ const productReducer = (state = initialState, action) => {
         ...state,
         productListLoading: !state.productListLoading,
       };
+    case SET_TOP_PRODUCTS_LOADING:
+      return {
+        ...state,
+        topProductsLoading: !state.topProductsLoading,
+      };
     case CLEAR_PRODUCT_LIST:
       return {
         ...state,
@@ -49,6 +58,11 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         productDetails: payload,
+      };
+    case GET_TOP_PRODUCTS:
+      return {
+        ...state,
+        topProducts: payload,
       };
     case ADD_PRODUCT_SUCCESS:
       return {
