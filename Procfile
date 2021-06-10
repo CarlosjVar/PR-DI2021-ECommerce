@@ -1,3 +1,4 @@
+
 "scripts": {
-  "start": "cd  API && npm run start"
+  "start": "node server.js"
 }
