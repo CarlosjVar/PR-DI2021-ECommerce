@@ -88,7 +88,7 @@ const findProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         }
     }
     catch (err) {
-        res.status(500).json({ message: "Internal server error" });
+        res.status(500).json({ message: "Internal server error", error: err });
     }
 });
 exports.findProducts = findProducts;
@@ -229,6 +229,13 @@ const findProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
                 ProductsXSpecifications: true,
             },
         });
+        if (!product) {
+            return res
+                .status(400)
+                .json({
+                msg: "No se encuentra un producto con concuerde con la información brindada",
+            });
+        }
         const categoria = yield Database_1.default.categories.findMany({
             where: {
                 id: product.categoryId,
@@ -238,7 +245,7 @@ const findProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
     catch (err) {
         console.log(err);
-        res.json({ msg: [{ errors: "Internal server error" }] });
+        res.json({ msg: [{ errors: "Internal server error", error: err }] });
     }
 });
 exports.findProduct = findProduct;
@@ -265,13 +272,18 @@ const pcBuilderProdSearch = (req, res) => __awaiter(void 0, void 0, void 0, func
     try {
         const idcategoria = parseInt(req.params.idcategoria);
         const idSpecification = parseInt(req.params.idSpecification);
+        const value = req.params.value;
         const products = yield Database_1.default.productsXSpecifications.findMany({
             where: {
                 specificationId: idSpecification,
+                value: value,
                 Products: { categoryId: idcategoria },
             },
-            include: { Products: true },
+            select: {
+                Products: true,
+            },
         });
+        res.json({ prods: products });
     }
     catch (err) {
         res.status(500).json({ msg: "Internal server error" });

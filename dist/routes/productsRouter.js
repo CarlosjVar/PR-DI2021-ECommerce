@@ -64,6 +64,6 @@ productsRouter
     .route("/getTopProducts")
     .get([isAuthenticatedAdmin_1.default], productsController_1.getTopProducts);
 productsRouter
-    .route("/pcBuilder/getProducts/:idcategoria/:idSpecification")
-    .get();
+    .route("/pcBuilder/getProducts/:idcategoria/:idSpecification/:value")
+    .get(productsController_1.pcBuilderProdSearch);
 exports.default = productsRouter;

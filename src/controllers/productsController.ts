@@ -233,7 +233,13 @@ export const findProduct = async (req: Request, res: Response) => {
         ProductsXSpecifications: true,
       },
     });
-
+    if (!product) {
+      return res
+        .status(400)
+        .json({
+          msg: "No se encuentra un producto con concuerde con la información brindada",
+        });
+    }
     const categoria = await prismaController.categories.findMany({
       where: {
         id: product.categoryId,
@@ -243,7 +249,7 @@ export const findProduct = async (req: Request, res: Response) => {
   } catch (err) {
     console.log(err);
 
-    res.json({ msg: [{ errors: "Internal server error" }] });
+    res.json({ msg: [{ errors: "Internal server error", error: err }] });
   }
 };
 
