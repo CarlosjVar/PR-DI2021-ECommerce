@@ -4,7 +4,7 @@
   "description": "Proyecto Diseño de Software S1 2021 \r ## About the project\r An full implementation of an E-Commerce based on MySql+Prisma as the database, NodeJs+ExpressJs as the Backend and React as the Frontend",
   "main": "index.js",
   "scripts": {
-    "heroku-prebuild": "API/npm install",
+    "heroku-prebuild": "cd API && npm install",
     "start": "cd API && npm run start"
   },
   "repository": {
