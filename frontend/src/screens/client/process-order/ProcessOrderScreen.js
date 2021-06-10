@@ -22,6 +22,8 @@ const ProcessOrderScreen = () => {
 
   const { products } = useSelector((state) => state.cart);
 
+  const { loading } = useSelector((state) => state.order);
+
   // Calculate subtotal
   let subtotalPrice = 0;
   products.forEach((product) => {
@@ -107,7 +109,7 @@ const ProcessOrderScreen = () => {
           </div>
           <div className="process-order-payment">
             <p>Seleccione uno de los métodos de pago disponibles:</p>
-            {!dollarPriceReady || !paypalClientId ? (
+            {!dollarPriceReady || !paypalClientId || loading ? (
               <Spinner />
             ) : (
               <PayPalButton

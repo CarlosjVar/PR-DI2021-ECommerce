@@ -7,6 +7,8 @@ import PropTypes from 'prop-types';
 const ClientOrdersTableItem = ({ order }) => {
   const { id, createdAt, totalPrice } = order;
 
+  // console.log(order);
+
   return (
     <tr>
       <td>

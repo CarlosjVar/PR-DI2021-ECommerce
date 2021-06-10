@@ -45,15 +45,16 @@ const Routes = () => {
         />
         <ClientRoute path="/orders/personal" component={OrdersScreen} exact />
         <ClientRoute
-          path="/orders/:id"
-          component={ClientOrderDetailsScreen}
-          exact
-        />
-        <ClientRoute
           path="/orders/process"
           component={ProcessOrderScreen}
           exact
         />
+        <ClientRoute
+          path="/orders/:id"
+          component={ClientOrderDetailsScreen}
+          exact
+        />
+
         <AdminRoute path="/dashboard" component={DashboardScreen} exact />
         <AdminRoute path="/admins" component={AdminsScreen} exact />
         <AdminRoute path="/admins/add" component={RegisterAdminScreen} exact />
