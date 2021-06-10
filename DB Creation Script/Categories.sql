@@ -1,6 +1,0 @@
-USE CompuHardware;
-CREATE TABLE Categories(
-	id INT NOT NULL AUTO_INCREMENT,
-    name NVARCHAR(20) NOT NULL,
-    CONSTRAINT PK_Categories PRIMARY KEY(id)
-    )

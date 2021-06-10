@@ -1,8 +1,0 @@
-USE CompuHardware;
-CREATE TABLE Admins(
-	id INT NOT NULL AUTO_INCREMENT,
-	userId INT NOT NULL,
-    CONSTRAINT PK_Admins PRIMARY KEY(id),
-    CONSTRAINT UQ_Admins_UserId UNIQUE(userId),
-    CONSTRAINT FK_Users_Admins FOREIGN KEY(userId) REFERENCES Users(id)
-)
