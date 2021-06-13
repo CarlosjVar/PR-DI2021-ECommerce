@@ -10,3 +10,5 @@ API/dist/
 node_modules/
 
 API/images/
+
+.env
