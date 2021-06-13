@@ -13,7 +13,7 @@ const HomeScreen = () => {
 
   const { productList } = useSelector((state) => state.product);
 
-  const { isAdmin } = useSelector((state) => state.auth);
+  const { isAdmin, isAuthenticated } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(getProducts());
@@ -49,8 +49,13 @@ const HomeScreen = () => {
             Nuestra página brinda un módulo incríble que facilita la
             construcción de computadores.
           </p>
-          <Link className="btn btn-secondary btn-block" to="/">
-            Construir computador
+          <Link
+            className="btn btn-secondary btn-block"
+            to={isAuthenticated ? '/pc-builder' : '/login'}
+          >
+            {isAuthenticated
+              ? 'Construir computador'
+              : 'Inicie sesión para construir su computador'}
           </Link>
         </Container>
       </section>

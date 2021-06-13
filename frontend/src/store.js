@@ -11,6 +11,7 @@ import categoryReducer from './reducers/categoryReducer';
 import specificationReducer from './reducers/specificationReducer';
 import cartReducer from './reducers/cartReducer';
 import orderReducer from './reducers/orderReducer';
+import pcBuilderReducer from './reducers/pcBuilderReducer';
 
 const reducer = combineReducers({
   auth: authReducer,
@@ -21,6 +22,7 @@ const reducer = combineReducers({
   specification: specificationReducer,
   cart: cartReducer,
   order: orderReducer,
+  pcBuilder: pcBuilderReducer,
 });
 
 const initialState = {};
