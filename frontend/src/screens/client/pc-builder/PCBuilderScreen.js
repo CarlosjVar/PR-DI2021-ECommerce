@@ -15,8 +15,30 @@ const PCBuilderScreen = () => {
 
   return (
     <>
-      <h1>PC Builder Screen</h1>
-      {loading ? <Spinner /> : <p>Rasengan</p>}
+      <h2>
+        <i className="fas fa-laptop"></i> Constructor de computadores
+      </h2>
+      <p>
+        Seleccione los componentes que desee, el sistema se encargará de
+        recomendar aquellos componentes que sean compatibles
+      </p>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <div className="table-responsive mt-5">
+          <table className="table">
+            <thead className="thead-dark">
+              <tr>
+                <th scope="col">Categoria</th>
+                <th scope="col">Componente</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      )}
     </>
   );
 };
