@@ -6,15 +6,16 @@ import expressValidator, {
   validationResult,
 } from "express-validator";
 import { Decimal } from "@prisma/client/runtime";
+import { Products } from "@prisma/client";
 
 export const findProducts = async (req: Request, res: Response) => {
   try {
     const category = req.query.category as string;
     const productName = req.query.productName as string;
-
+    let productsBase;
     //No category but has name
     if (category == "All" && productName != null) {
-      const products = await prismaController.products.findMany({
+      productsBase = await prismaController.products.findMany({
         where: {
           name: {
             contains: productName,
@@ -22,16 +23,18 @@ export const findProducts = async (req: Request, res: Response) => {
         },
         include: {
           Categories: true,
+          ProductsXSpecifications: {
+            include: { Specifications: true },
+          },
         },
         orderBy: {
           createdAt: "desc",
         },
       });
-      res.json({ products: products });
     }
     //Has Category and has name
     else if (category != "All" && productName != null) {
-      const products = await prismaController.products.findMany({
+      productsBase = await prismaController.products.findMany({
         where: {
           name: {
             contains: productName,
@@ -47,13 +50,15 @@ export const findProducts = async (req: Request, res: Response) => {
         },
         include: {
           Categories: true,
+          ProductsXSpecifications: {
+            include: { Specifications: true },
+          },
         },
       });
-      res.json({ products: products });
     }
     // Has cateogry but does not has name
     else if (category != "All" && productName == null) {
-      const products = await prismaController.products.findMany({
+      productsBase = await prismaController.products.findMany({
         where: {
           Categories: {
             name: {
@@ -66,19 +71,44 @@ export const findProducts = async (req: Request, res: Response) => {
         },
         include: {
           Categories: true,
+          ProductsXSpecifications: {
+            include: { Specifications: true },
+          },
         },
       });
-      res.json({ products: products });
     }
     //No category and no name
     else {
-      const products = await prismaController.products.findMany({
+      productsBase = await prismaController.products.findMany({
+        include: {
+          Categories: true,
+          ProductsXSpecifications: {
+            include: { Specifications: true },
+          },
+        },
         orderBy: {
           createdAt: "desc",
         },
       });
-      res.json({ products: products });
     }
+    let products: any = [];
+    for (let product of productsBase) {
+      const specs: any = [];
+
+      let prod = {
+        id: product.id,
+        name: product.name,
+        quantity: product.quantity,
+        price: product.price,
+        categoryId: product.categoryId,
+        imageFileName: product.imageFileName,
+        createdAt: product.createdAt,
+        Categories: product.Categories,
+        Specifications: specs,
+      };
+      products.push(prod);
+    }
+    res.json({ products: products });
   } catch (err) {
     res.status(500).json({ message: "Internal server error" });
   }
@@ -286,9 +316,39 @@ export const pcBuilderProdSearch = async (req: Request, res: Response) => {
 
       select: {
         Products: true,
+        value: true,
+        Specifications: true,
       },
     });
-    res.json({ prods: products });
+    let cleanedProducts: any = [];
+    for (let prod of products) {
+      const specification =
+        await prismaController.productsXSpecifications.findMany({
+          where: { productId: prod.Products.id },
+          include: { Specifications: true },
+        });
+      let specs = [];
+      for (let spec of specification) {
+        let spect = await {
+          id: spec.id,
+          name: spec.Specifications.name,
+          value: spec.value,
+        };
+        specs.push(spect);
+      }
+      const product = {
+        id: prod.Products.id,
+        name: prod.Products.name,
+        quantity: prod.Products.quantity,
+        price: prod.Products.quantity,
+        categoryId: prod.Products.categoryId,
+        imageFileName: prod.Products.imageFileName,
+        createdAt: prod.Products.createdAt,
+        specs: specs,
+      };
+      cleanedProducts.push(product);
+    }
+    res.json({ prods: cleanedProducts });
   } catch (err) {
     res.status(500).json({ msg: "Internal server error" });
   }
