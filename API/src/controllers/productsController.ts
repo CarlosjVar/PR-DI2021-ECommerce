@@ -94,14 +94,6 @@ export const findProducts = async (req: Request, res: Response) => {
     let products: any = [];
     for (let product of productsBase) {
       const specs: any = [];
-      for (let spec of product.ProductsXSpecifications) {
-        let spect = await {
-          id: spec.id,
-          name: spec.Specifications.name,
-          value: spec.value,
-        };
-        specs.push(spect);
-      }
 
       let prod = {
         id: product.id,
@@ -325,10 +317,38 @@ export const pcBuilderProdSearch = async (req: Request, res: Response) => {
       select: {
         Products: true,
         value: true,
-        specificationId: true,
+        Specifications: true,
       },
     });
-    res.json({ prods: products });
+    let cleanedProducts: any = [];
+    for (let prod of products) {
+      const specification =
+        await prismaController.productsXSpecifications.findMany({
+          where: { productId: prod.Products.id },
+          include: { Specifications: true },
+        });
+      let specs = [];
+      for (let spec of specification) {
+        let spect = await {
+          id: spec.id,
+          name: spec.Specifications.name,
+          value: spec.value,
+        };
+        specs.push(spect);
+      }
+      const product = {
+        id: prod.Products.id,
+        name: prod.Products.name,
+        quantity: prod.Products.quantity,
+        price: prod.Products.quantity,
+        categoryId: prod.Products.categoryId,
+        imageFileName: prod.Products.imageFileName,
+        createdAt: prod.Products.createdAt,
+        specs: specs,
+      };
+      cleanedProducts.push(product);
+    }
+    res.json({ prods: cleanedProducts });
   } catch (err) {
     res.status(500).json({ msg: "Internal server error" });
   }
