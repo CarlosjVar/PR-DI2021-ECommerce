@@ -2,10 +2,13 @@ import {
   GET_INITIAL_PRODUCTS,
   ADD_SELECTED_PRODUCT,
   REMOVE_SELECTED_PRODUCT,
+  SET_PC_BUILDER_LOADING,
 } from '../constants/pcBuilderConstants';
 
 const initialState = {
+  products: {},
   selectedProducts: [],
+  loading: false,
 };
 
 const pcBuilderReducer = (state = initialState, action) => {
@@ -14,7 +17,12 @@ const pcBuilderReducer = (state = initialState, action) => {
     case GET_INITIAL_PRODUCTS:
       return {
         ...state,
-        ...payload,
+        products: { ...payload },
+      };
+    case SET_PC_BUILDER_LOADING:
+      return {
+        ...state,
+        loading: !state.loading,
       };
     case ADD_SELECTED_PRODUCT:
       return {
