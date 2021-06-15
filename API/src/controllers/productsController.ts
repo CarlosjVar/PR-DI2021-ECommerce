@@ -356,7 +356,7 @@ export const pcBuilderProdSearch = async (req: Request, res: Response) => {
         id: prod.Products.id,
         name: prod.Products.name,
         quantity: prod.Products.quantity,
-        price: prod.Products.quantity,
+        price: prod.Products.price,
         categoryId: prod.Products.categoryId,
         Categories: category,
         imageFileName: prod.Products.imageFileName,

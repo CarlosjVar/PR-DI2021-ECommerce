@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Form, Button } from 'react-bootstrap';
+import { createPCBuilderPreorder } from '../../../../actions/orderActions';
 import PropTypes from 'prop-types';
 
 import NumberFormat from 'react-number-format';
 
 const PCBuilderCheckout = ({ selectedProducts }) => {
   const dispatch = useDispatch();
+
+  const history = useHistory();
 
   const [orderType, setOrderType] = useState('sale');
 
@@ -18,6 +22,17 @@ const PCBuilderCheckout = ({ selectedProducts }) => {
   // Calculate total price
   const taxes = subtotalPrice * 0.13;
   const totalPrice = subtotalPrice + taxes;
+
+  const onCheckoutClick = () => {
+    const pcItems = selectedProducts.map((product) => ({
+      id: product.id,
+      numberOfItems: 1,
+    }));
+    if (orderType === 'preorder') {
+      console.log(pcItems);
+      dispatch(createPCBuilderPreorder({ cartProducts: pcItems }, history));
+    }
+  };
 
   return (
     <>
@@ -47,6 +62,7 @@ const PCBuilderCheckout = ({ selectedProducts }) => {
       </Form.Control>
       <Button
         disabled={selectedProducts.length < 8}
+        onClick={onCheckoutClick}
         className="btn-primary btn-block"
       >
         Continuar y procesar orden
