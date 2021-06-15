@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getInitialProducts } from '../../../actions/pcBuilderActions';
+import {
+  clearPCBuilderProducts,
+  getInitialProducts,
+} from '../../../actions/pcBuilderActions';
 
 import PCComponentSelection from './components/PCComponentSelection';
 import Spinner from '../../../components/layout/Spinner';
@@ -22,6 +25,7 @@ const PCBuilderScreen = () => {
   const { products, loading } = useSelector((state) => state.pcBuilder);
 
   useEffect(() => {
+    dispatch(clearPCBuilderProducts());
     dispatch(getInitialProducts(componentCategories));
   }, [dispatch]);
 
@@ -33,7 +37,7 @@ const PCBuilderScreen = () => {
         key={componentName}
         categoryKey={componentName}
         categoryName={componentCategories[componentName]}
-        products={products[componentName]}
+        products={products[componentName] ? products[componentName] : []}
       />
     );
   }

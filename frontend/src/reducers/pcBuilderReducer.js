@@ -3,6 +3,10 @@ import {
   ADD_SELECTED_PRODUCT,
   REMOVE_SELECTED_PRODUCT,
   SET_PC_BUILDER_LOADING,
+  CLEAR_PC_BUILDER_PRODUCTS,
+  GET_SUGGESTED_MOTHERBOARD,
+  GET_SUGGESTED_MEMORY,
+  GET_SUGGESTED_COOLER,
 } from '../constants/pcBuilderConstants';
 
 const initialState = {
@@ -18,6 +22,27 @@ const pcBuilderReducer = (state = initialState, action) => {
       return {
         ...state,
         products: { ...payload },
+      };
+    case CLEAR_PC_BUILDER_PRODUCTS:
+      return {
+        ...state,
+        products: {},
+        selectedProducts: [],
+      };
+    case GET_SUGGESTED_MOTHERBOARD:
+      return {
+        ...state,
+        products: { ...state.products, motherboard: payload },
+      };
+    case GET_SUGGESTED_MEMORY:
+      return {
+        ...state,
+        products: { ...state.products, memory: payload },
+      };
+    case GET_SUGGESTED_COOLER:
+      return {
+        ...state,
+        products: { ...state.products, cooler: payload },
       };
     case SET_PC_BUILDER_LOADING:
       return {
