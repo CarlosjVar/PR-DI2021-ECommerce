@@ -29,8 +29,9 @@ const PCBuilderCheckout = ({ selectedProducts }) => {
       numberOfItems: 1,
     }));
     if (orderType === 'preorder') {
-      console.log(pcItems);
       dispatch(createPCBuilderPreorder({ cartProducts: pcItems }, history));
+    } else {
+      history.push('/pc-builder/process-order');
     }
   };
 

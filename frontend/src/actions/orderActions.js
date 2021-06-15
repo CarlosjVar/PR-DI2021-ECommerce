@@ -9,6 +9,7 @@ import {
 } from '../constants/orderConstants';
 import { showAlert } from './alertActions';
 import { clearCart } from './cartActions';
+import { clearPCBuilderProducts } from './pcBuilderActions';
 import api from '../utils/api';
 
 /**
@@ -96,6 +97,7 @@ export const createPCBuilderPreorder =
       );
       const { msg } = data;
       dispatch({ type: CREATE_ORDER_SUCCESS });
+      dispatch(clearPCBuilderProducts());
       dispatch(showAlert({ message: msg, type: 'success' }));
       dispatch({ type: SET_ORDER_LOADING });
       history.push('/cart');
@@ -135,6 +137,7 @@ export const createPCBuilderSale = (saleData, history) => async (dispatch) => {
     const { data } = await api.post('/api/orders/createSale', saleData);
     const { msg } = data;
     dispatch({ type: CREATE_ORDER_SUCCESS });
+    dispatch(clearPCBuilderProducts());
     dispatch(showAlert({ message: msg, type: 'success' }));
     dispatch({ type: SET_ORDER_LOADING });
     history.push('/cart');
