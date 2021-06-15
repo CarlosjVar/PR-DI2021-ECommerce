@@ -23,7 +23,7 @@ const MainNavbar = () => {
         </Link>
       </Nav.Item>
       <Nav.Item className="mx-2">
-        <Link to="/" className="nav-link">
+        <Link to="/cart" className="nav-link">
           <i className="fas fa-shopping-cart"></i> Carrito
         </Link>
       </Nav.Item>
@@ -53,7 +53,7 @@ const MainNavbar = () => {
         </Link>
       </Nav.Item>
       <Nav.Item className="mx-2">
-        <Link to="/my-orders" className="nav-link">
+        <Link to="/orders/personal" className="nav-link">
           <i className="fas fa-clipboard-list"></i> Órdenes
         </Link>
       </Nav.Item>
@@ -76,7 +76,7 @@ const MainNavbar = () => {
         </Link>
       </Nav.Item>
       <Nav.Item className="mx-2">
-        <Link to="/" className="nav-link">
+        <Link to="/orders" className="nav-link">
           <i className="fas fa-clipboard-list"></i> Órdenes
         </Link>
       </Nav.Item>

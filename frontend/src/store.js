@@ -9,6 +9,9 @@ import adminReducer from './reducers/adminReducer';
 import productReducer from './reducers/productReducer';
 import categoryReducer from './reducers/categoryReducer';
 import specificationReducer from './reducers/specificationReducer';
+import cartReducer from './reducers/cartReducer';
+import orderReducer from './reducers/orderReducer';
+import pcBuilderReducer from './reducers/pcBuilderReducer';
 
 const reducer = combineReducers({
   auth: authReducer,
@@ -17,6 +20,9 @@ const reducer = combineReducers({
   product: productReducer,
   category: categoryReducer,
   specification: specificationReducer,
+  cart: cartReducer,
+  order: orderReducer,
+  pcBuilder: pcBuilderReducer,
 });
 
 const initialState = {};

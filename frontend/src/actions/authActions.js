@@ -18,7 +18,6 @@ export const logoutUser = () => async (dispatch) => {
  * Registers a new client
  * @param {object} clientData Data of the client to register
  * @param {object} history React router history
- * @returns
  */
 export const registerClient = (clientData, history) => async (dispatch) => {
   try {
@@ -35,10 +34,10 @@ export const registerClient = (clientData, history) => async (dispatch) => {
 };
 
 /**
- * Loads a user data
- * @returns
+ * Loads the user data
+ * @param {object} history The history object
  */
-export const loadUser = () => async (dispatch) => {
+export const loadUser = (history) => async (dispatch) => {
   try {
     dispatch({ type: LOAD_USER });
     const { data } = await api.get('/api/users/current');
@@ -46,6 +45,11 @@ export const loadUser = () => async (dispatch) => {
       type: LOAD_USER_SUCCESS,
       payload: data,
     });
+    if (data.isAdmin) {
+      history.push('/dashboard');
+    } else {
+      history.push('/cart');
+    }
   } catch (error) {}
 };
 
@@ -53,7 +57,6 @@ export const loadUser = () => async (dispatch) => {
  * Authenticates a user
  * @param {object} authData Authentication data
  * @param {object} history React router history
- * @returns
  */
 export const authenticateUser = (authData, history) => async (dispatch) => {
   try {
@@ -62,9 +65,8 @@ export const authenticateUser = (authData, history) => async (dispatch) => {
       type: AUTH_USER_SUCCESS,
       payload: data.token,
     });
-    dispatch(loadUser());
+    dispatch(loadUser(history));
     dispatch(showAlert({ message: 'Ha ingresado con éxito', type: 'success' }));
-
     history.push('/');
   } catch (error) {
     error.response.data.errors.forEach((error) =>

@@ -80,7 +80,11 @@ const ProductDetailsScreen = () => {
           <div className="image-container">
             <Image
               style={{ maxHeight: '380px' }}
-              src={`/api/utils/image/${imageFileName}`}
+              src={
+                imageFileName === 'default_img' || !imageFileName
+                  ? '/img/placeholder-image.jpg'
+                  : `/api/utils/image/${imageFileName}`
+              }
               fluid
             />
           </div>

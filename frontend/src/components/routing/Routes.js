@@ -17,6 +17,14 @@ import AdminProductDetailsScreen from '../../screens/admin/admin-product-details
 import EditProductScreen from '../../screens/admin/edit-product/EditProductScreen';
 import SearchProductsResultsScreen from '../../screens/client/search-products-results/SearchProductsResultsScreen';
 import ClientProductDetailsScreen from '../../screens/client/client-product-details/ProductDetailsScreen';
+import ProcessOrderScreen from '../../screens/client/process-order/ProcessOrderScreen';
+import ProcessPCOrderScreen from '../../screens/client/process-pc-order/ProcessPCOrderScreen';
+import AdminOrdersScreen from '../../screens/admin/admin-orders/AdminOrdersScreen';
+import AdminOrderDetailsScreen from '../../screens/admin/admin-order-details/AdminOrderDetailsScreen';
+import ClientOrderDetailsScreen from '../../screens/client/client-order-details/ClientOrderDetailsScreen';
+import UpdateOrderStatusScreen from '../../screens/admin/update-order-status/UpdateOrderStatusScreen';
+import ApplyDiscountScreen from '../../screens/admin/apply-discount/ApplyDiscountScreen';
+import PCBuilderScreen from '../../screens/client/pc-builder/PCBuilderScreen';
 
 const Routes = () => {
   return (
@@ -26,8 +34,36 @@ const Routes = () => {
         <Route path="/products" component={SearchProductsResultsScreen} exact />
         <Route path="/login" component={LoginScreen} exact />
         <Route path="/register" component={RegisterScreen} exact />
-        <ClientRoute path="/cart" component={ShoppingCartScreen} exact />
-        <ClientRoute path="/my-orders" component={OrdersScreen} exact />
+        <Route path="/cart" component={ShoppingCartScreen} exact />
+        <ClientRoute path="/pc-builder" component={PCBuilderScreen} exact />
+        <ClientRoute
+          path="/pc-builder/process-order"
+          component={ProcessPCOrderScreen}
+          exact
+        />
+        <AdminRoute path="/orders" component={AdminOrdersScreen} exact />
+        <AdminRoute
+          path="/admin/orders/:id"
+          component={AdminOrderDetailsScreen}
+          exact
+        />
+        <AdminRoute
+          path="/admin/orders/:id/update-status"
+          component={UpdateOrderStatusScreen}
+          exact
+        />
+        <ClientRoute path="/orders/personal" component={OrdersScreen} exact />
+        <ClientRoute
+          path="/orders/process"
+          component={ProcessOrderScreen}
+          exact
+        />
+        <ClientRoute
+          path="/orders/:id"
+          component={ClientOrderDetailsScreen}
+          exact
+        />
+
         <AdminRoute path="/dashboard" component={DashboardScreen} exact />
         <AdminRoute path="/admins" component={AdminsScreen} exact />
         <AdminRoute path="/admins/add" component={RegisterAdminScreen} exact />
@@ -40,6 +76,11 @@ const Routes = () => {
         <AdminRoute
           path="/admin/products/:id/edit"
           component={EditProductScreen}
+          exact
+        />
+        <AdminRoute
+          path="/admin/products/:id/discount"
+          component={ApplyDiscountScreen}
           exact
         />
         <AdminRoute

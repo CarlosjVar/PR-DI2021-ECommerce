@@ -1,12 +1,12 @@
-import prismaController from "../config/Database";
-import { Request, Response } from "express";
+import prismaController from '../config/Database';
+import { Request, Response } from 'express';
 import expressValidator, {
   Result,
   ValidationError,
   validationResult,
-} from "express-validator";
-import { Decimal } from "@prisma/client/runtime";
-import { Products } from "@prisma/client";
+} from 'express-validator';
+import { Decimal } from '@prisma/client/runtime';
+import { Products } from '@prisma/client';
 
 export const findProducts = async (req: Request, res: Response) => {
   try {
@@ -14,7 +14,7 @@ export const findProducts = async (req: Request, res: Response) => {
     const productName = req.query.productName as string;
     let productsBase;
     //No category but has name
-    if (category == "All" && productName != null) {
+    if (category == 'All' && productName != null) {
       productsBase = await prismaController.products.findMany({
         where: {
           name: {
@@ -28,12 +28,12 @@ export const findProducts = async (req: Request, res: Response) => {
           },
         },
         orderBy: {
-          createdAt: "desc",
+          createdAt: 'desc',
         },
       });
     }
     //Has Category and has name
-    else if (category != "All" && productName != null) {
+    else if (category != 'All' && productName != null) {
       productsBase = await prismaController.products.findMany({
         where: {
           name: {
@@ -46,7 +46,7 @@ export const findProducts = async (req: Request, res: Response) => {
           },
         },
         orderBy: {
-          createdAt: "desc",
+          createdAt: 'desc',
         },
         include: {
           Categories: true,
@@ -57,7 +57,7 @@ export const findProducts = async (req: Request, res: Response) => {
       });
     }
     // Has cateogry but does not has name
-    else if (category != "All" && productName == null) {
+    else if (category != 'All' && productName == null) {
       productsBase = await prismaController.products.findMany({
         where: {
           Categories: {
@@ -67,7 +67,7 @@ export const findProducts = async (req: Request, res: Response) => {
           },
         },
         orderBy: {
-          createdAt: "desc",
+          createdAt: 'desc',
         },
         include: {
           Categories: true,
@@ -87,7 +87,7 @@ export const findProducts = async (req: Request, res: Response) => {
           },
         },
         orderBy: {
-          createdAt: "desc",
+          createdAt: 'desc',
         },
       });
     }
@@ -122,7 +122,7 @@ export const findProducts = async (req: Request, res: Response) => {
     }
     res.json({ products: products });
   } catch (err) {
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
 
@@ -159,13 +159,13 @@ export const createProduct = async (req: Request, res: Response) => {
 
     product.price = price as Decimal;
     return res.json({
-      msg: "Producto añadido correctamente",
+      msg: 'Producto añadido correctamente',
       productInfo: product,
     });
   } catch (err) {
     console.log(err);
 
-    return res.status(500).json({ msg: [{ errors: "Internal server error" }] });
+    return res.status(500).json({ msg: [{ errors: 'Internal server error' }] });
   }
 };
 
@@ -176,7 +176,7 @@ export const deleteProducts = async (req: Request, res: Response) => {
     if (prodId == null) {
       return res
         .status(400)
-        .json({ msg: [{ errors: "No se encontró el producto" }] });
+        .json({ msg: [{ errors: 'No se encontró el producto' }] });
     }
 
     await prismaController.productsXSpecifications.deleteMany({
@@ -191,11 +191,11 @@ export const deleteProducts = async (req: Request, res: Response) => {
       },
     });
     res.json({
-      msg: "El producto se ha eliminado correctamente",
+      msg: 'El producto se ha eliminado correctamente',
       productInfo: product,
     });
   } catch (err) {
-    res.status(500).json({ msg: [{ errors: "Internal server error" }] });
+    res.status(500).json({ msg: [{ errors: 'Internal server error' }] });
   }
 };
 
@@ -209,7 +209,7 @@ export const updateProduct = async (req: Request, res: Response) => {
     if (!prodId) {
       return res
         .status(400)
-        .json({ msg: [{ errors: "Error en el id del producto" }] });
+        .json({ msg: [{ errors: 'Error en el id del producto' }] });
     }
     const { name, quantity, price, category, specifications, imageName } =
       req.body;
@@ -248,13 +248,13 @@ export const updateProduct = async (req: Request, res: Response) => {
     });
 
     return res.json({
-      msg: "Se ha actualizado el producto correctamente",
+      msg: 'Se ha actualizado el producto correctamente',
       productInfo: product,
     });
   } catch (err) {
     console.log(err);
 
-    res.json({ msg: [{ errors: "Internal server error" }] });
+    res.json({ msg: [{ errors: 'Internal server error' }] });
   }
 };
 
@@ -264,7 +264,7 @@ export const findProduct = async (req: Request, res: Response) => {
     if (!productId) {
       return res
         .status(400)
-        .json({ msg: [{ errors: "Error en el id del producto" }] });
+        .json({ msg: [{ errors: 'Error en el id del producto' }] });
     }
 
     const product = await prismaController.products.findFirst({
@@ -277,7 +277,7 @@ export const findProduct = async (req: Request, res: Response) => {
     });
     if (!product) {
       return res.status(400).json({
-        msg: "No se encuentra un producto con concuerde con la información brindada",
+        msg: 'No se encuentra un producto con concuerde con la información brindada',
       });
     }
     const categoria = await prismaController.categories.findMany({
@@ -289,7 +289,7 @@ export const findProduct = async (req: Request, res: Response) => {
   } catch (err) {
     console.log(err);
 
-    res.json({ msg: [{ errors: "Internal server error" }] });
+    res.json({ msg: [{ errors: 'Internal server error' }] });
   }
 };
 
@@ -299,18 +299,18 @@ export const getTopProducts = async (req: Request, res: Response) => {
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const prodLimit = 8;
+    const prodLimit = 5;
     const prods = await prismaController.$queryRaw(
-      " SELECT t.* from (Select count(*) as count , Products.name, Products.id FROM Orders" +
-        " INNER JOIN OrderDetails on (Orders.id = OrderDetails.orderId) " +
-        "INNER JOIN Products on (OrderDetails.productId = Products.id) group by name) t order by (t.count ) desc limit " +
+      ' SELECT t.* from (Select count(*) as count , Products.name, Products.id FROM Orders' +
+        ' INNER JOIN OrderDetails on (Orders.id = OrderDetails.orderId) ' +
+        'INNER JOIN Products on (OrderDetails.productId = Products.id) group by name) t order by (t.count ) desc limit ' +
         prodLimit
     );
     res.json({ prods: prods });
   } catch (err) {
     console.log(err);
 
-    res.status(500).json({ msg: "Internal server error" });
+    res.status(500).json({ msg: 'Internal server error' });
   }
 };
 
@@ -319,6 +319,7 @@ export const pcBuilderProdSearch = async (req: Request, res: Response) => {
     const idcategoria = parseInt(req.params.idcategoria);
     const idSpecification = parseInt(req.params.idSpecification);
     const value = req.params.value;
+
     const products = await prismaController.productsXSpecifications.findMany({
       where: {
         specificationId: idSpecification,
@@ -339,6 +340,9 @@ export const pcBuilderProdSearch = async (req: Request, res: Response) => {
           where: { productId: prod.Products.id },
           include: { Specifications: true },
         });
+      const category = await prismaController.categories.findUnique({
+        where: { id: prod.Products.categoryId },
+      });
       let specs = [];
       for (let spec of specification) {
         let spect = await {
@@ -352,16 +356,17 @@ export const pcBuilderProdSearch = async (req: Request, res: Response) => {
         id: prod.Products.id,
         name: prod.Products.name,
         quantity: prod.Products.quantity,
-        price: prod.Products.quantity,
+        price: prod.Products.price,
         categoryId: prod.Products.categoryId,
+        Categories: category,
         imageFileName: prod.Products.imageFileName,
         createdAt: prod.Products.createdAt,
-        specs: specs,
+        Specifications: specs,
       };
       cleanedProducts.push(product);
     }
     res.json({ prods: cleanedProducts });
   } catch (err) {
-    res.status(500).json({ msg: "Internal server error" });
+    res.status(500).json({ msg: 'Internal server error' });
   }
 };

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProducts } from '../../../actions/productActions';
@@ -13,9 +13,15 @@ const HomeScreen = () => {
 
   const { productList } = useSelector((state) => state.product);
 
+  const { isAdmin, isAuthenticated } = useSelector((state) => state.auth);
+
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
+
+  if (isAdmin) {
+    return <Redirect to="/dashboard" />;
+  }
 
   return (
     <>
@@ -43,8 +49,13 @@ const HomeScreen = () => {
             Nuestra página brinda un módulo incríble que facilita la
             construcción de computadores.
           </p>
-          <Link className="btn btn-secondary btn-block" to="/">
-            Construir computador
+          <Link
+            className="btn btn-secondary btn-block"
+            to={isAuthenticated ? '/pc-builder' : '/login'}
+          >
+            {isAuthenticated
+              ? 'Construir computador'
+              : 'Inicie sesión para construir su computador'}
           </Link>
         </Container>
       </section>

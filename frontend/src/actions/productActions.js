@@ -12,6 +12,8 @@ import {
   CLEAR_PRODUCT_LIST,
   SET_SEARCHED_PRODUCT_NAME,
   SET_SEARCHED_PRODUCT_CATEGORY,
+  SET_TOP_PRODUCTS_LOADING,
+  GET_TOP_PRODUCTS,
 } from '../constants/productConstants';
 import { showAlert } from './alertActions';
 
@@ -45,13 +47,26 @@ export const getProductsByNameAndCategory =
         `/api/products/getAll?category=${categoryName}&productName=${name}`
       );
       const { products } = data;
-      console.log(products);
       dispatch({ type: GET_PRODUCTS, payload: products });
       dispatch({ type: SET_PRODUCT_LIST_LOADING });
     } catch (error) {
       console.error(error);
     }
   };
+
+/**
+ * Gets the top products of the store
+ */
+export const getTopProducts = () => async (dispatch) => {
+  try {
+    dispatch({ type: SET_TOP_PRODUCTS_LOADING });
+    const { data } = await api.get('/api/products/getTopProducts');
+    dispatch({ type: GET_TOP_PRODUCTS, payload: data.prods });
+    dispatch({ type: SET_TOP_PRODUCTS_LOADING });
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 /**
  * Gets products by name and category

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Card, Image, Row, Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
@@ -8,8 +8,6 @@ import SearchProducts from '../../../components/products/SearchProducts';
 import Spinner from '../../../components/layout/Spinner';
 
 const SearchProductsResultsScreen = () => {
-  useEffect(() => {}, []);
-
   const { productList, searchedProductName, productListLoading } = useSelector(
     (state) => state.product
   );
@@ -17,10 +15,12 @@ const SearchProductsResultsScreen = () => {
   return (
     <>
       <SearchProducts />
-      <Container>
-        <h2 className="my-5">Resultados para "{searchedProductName}"</h2>
+      <Container className="py-5">
+        <h2 className="mb-5">Resultados para "{searchedProductName}"</h2>
         {productListLoading ? (
           <Spinner />
+        ) : productList.length === 0 ? (
+          <h4>No se encontraron resultados</h4>
         ) : (
           productList.map((product) => (
             <Card key={product.id} className="mb-4">
@@ -30,7 +30,12 @@ const SearchProductsResultsScreen = () => {
                     <div className="product-card-img-container">
                       <Image
                         style={{ maxHeight: '128px', maxWidth: '128px' }}
-                        src={`/api/utils/image/${product.imageFileName}`}
+                        src={
+                          product.imageFileName === 'default_img' ||
+                          !product.imageFileName
+                            ? '/img/placeholder-image.jpg'
+                            : `/api/utils/image/${product.imageFileName}`
+                        }
                         fluid
                       />
                     </div>
