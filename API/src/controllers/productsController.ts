@@ -101,7 +101,7 @@ export const findProducts = async (req: Request, res: Response) => {
         });
       for (let spec of specification) {
         let spect = await {
-          id: spec.id,
+          id: spec.Specifications.id,
           name: spec.Specifications.name,
           value: spec.value,
         };
