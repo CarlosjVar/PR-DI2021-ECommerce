@@ -93,8 +93,20 @@ export const findProducts = async (req: Request, res: Response) => {
     }
     let products: any = [];
     for (let product of productsBase) {
-      const specs: any = [];
-
+      let specs: any = [];
+      const specification =
+        await prismaController.productsXSpecifications.findMany({
+          where: { productId: product.id },
+          include: { Specifications: true },
+        });
+      for (let spec of specification) {
+        let spect = await {
+          id: spec.id,
+          name: spec.Specifications.name,
+          value: spec.value,
+        };
+        specs.push(spect);
+      }
       let prod = {
         id: product.id,
         name: product.name,
