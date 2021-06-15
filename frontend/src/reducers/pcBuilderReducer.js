@@ -7,6 +7,7 @@ import {
   GET_SUGGESTED_MOTHERBOARD,
   GET_SUGGESTED_MEMORY,
   GET_SUGGESTED_COOLER,
+  GET_ALL_CATEGORY_PRODUCTS,
 } from '../constants/pcBuilderConstants';
 
 const initialState = {
@@ -28,6 +29,14 @@ const pcBuilderReducer = (state = initialState, action) => {
         ...state,
         products: {},
         selectedProducts: [],
+      };
+    case GET_ALL_CATEGORY_PRODUCTS:
+      return {
+        ...state,
+        products: {
+          ...state.products,
+          [payload.categoryKey]: payload.products,
+        },
       };
     case GET_SUGGESTED_MOTHERBOARD:
       return {

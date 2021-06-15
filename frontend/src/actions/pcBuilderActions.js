@@ -5,8 +5,7 @@ import {
   REMOVE_SELECTED_PRODUCT,
   CLEAR_PC_BUILDER_PRODUCTS,
   GET_SUGGESTED_MOTHERBOARD,
-  GET_SUGGESTED_MEMORY,
-  GET_SUGGESTED_COOLER,
+  GET_ALL_CATEGORY_PRODUCTS,
 } from '../constants/pcBuilderConstants';
 import api from '../utils/api';
 
@@ -31,13 +30,26 @@ export const getInitialProducts = (componentCategories) => async (dispatch) => {
   }
 };
 
-export const getAllMotherboards = () => async (dispatch) => {
-  dispatch({ type: SET_PC_BUILDER_LOADING });
-};
+export const getAllCategoryProducts =
+  (categoryKey, categoryName) => async (dispatch) => {
+    try {
+      dispatch({ type: SET_PC_BUILDER_LOADING });
+      const { data } = await api.get(
+        `/api/products/getAll?category=${categoryName}`
+      );
+      dispatch({
+        type: GET_ALL_CATEGORY_PRODUCTS,
+        payload: { products: data.products, categoryKey },
+      });
+      dispatch({ type: SET_PC_BUILDER_LOADING });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-export const getSuggestedMotherboard = (specValue) => async (dispatch) => {
-  dispatch({ type: SET_PC_BUILDER_LOADING });
+export const getSuggestedMotherboards = (specValue) => async (dispatch) => {
   try {
+    dispatch({ type: SET_PC_BUILDER_LOADING });
     const { data } = await api.get(
       `/api/products/pcBuilder/getProducts/4/2/${specValue}`
     );

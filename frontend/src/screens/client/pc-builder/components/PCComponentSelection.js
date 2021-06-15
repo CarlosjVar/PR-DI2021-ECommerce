@@ -4,7 +4,8 @@ import { Form, Button } from 'react-bootstrap';
 import {
   addPCBuilderProduct,
   removePCBuilderProduct,
-  getSuggestedMotherboard,
+  getSuggestedMotherboards,
+  getAllCategoryProducts,
 } from '../../../../actions/pcBuilderActions';
 import PropTypes from 'prop-types';
 
@@ -43,7 +44,9 @@ const PCComponentSelection = ({ categoryKey, categoryName, products }) => {
       ) {
         const specValue = getSpecValue(productsWithId[0].Specifications, 2);
         if (specValue) {
-          dispatch(getSuggestedMotherboard(specValue));
+          dispatch(getSuggestedMotherboards(specValue));
+        } else {
+          dispatch(getAllCategoryProducts('motherboard', 'Tarjeta Madre'));
         }
       } else if (categoryKey === 'motherboard') {
         console.log('motherboard');
