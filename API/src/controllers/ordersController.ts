@@ -5,6 +5,7 @@ import { resolve } from "path/posix";
 import { rejects } from "assert/strict";
 import ordersRouter from "src/routes/ordersRouter";
 import productsRouter from "src/routes/productsRouter";
+import { Cache } from "../utils/cache";
 
 // @route   POST - /api/orders/createSale
 // @desc    Creates a Sale based on the cart products and paypal confirmation data
@@ -264,7 +265,11 @@ export const getOrdersAdmin = async (req: Request, res: Response) => {
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-
+    const cacheResult = await Cache.getInstance().redisGet("Adminorders");
+    if (cacheResult) {
+      const ordenes = JSON.parse(cacheResult as string);
+      return res.json({ msg: "Ordenes encontradas", ordenes });
+    }
     const orders = await prismaController.orders.findMany({});
     let ordersClient: any = [];
     for (let orden of orders) {
@@ -282,6 +287,7 @@ export const getOrdersAdmin = async (req: Request, res: Response) => {
 
       ordersClient.push(order);
     }
+    Cache.getInstance().redisSet("Adminorders", JSON.stringify(ordersClient));
     res.json({ msg: "Ordenes encontradas", ordenes: ordersClient });
   } catch (err) {
     res.status(500).json({ msg: "Internal server error" });

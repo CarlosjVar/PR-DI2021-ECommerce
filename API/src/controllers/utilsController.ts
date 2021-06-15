@@ -4,6 +4,7 @@ import fs, { PathLike } from "fs";
 import path from "path";
 import axios from "axios";
 import dotenv from "dotenv";
+import { Cache } from "../utils/cache";
 
 const encode64 = (path: PathLike) => {
   // read binary data
@@ -18,7 +19,14 @@ export const findSpecs = async (req: Request, res: Response) => {
 };
 
 export const findCategories = async (req: Request, res: Response) => {
+  const cacheResult = await Cache.getInstance().redisGet("cats");
+  if (cacheResult) {
+    const categories = { categories: JSON.parse(cacheResult as string) };
+    return res.json(categories);
+  }
   const catgs = await prismaController.categories.findMany({});
+
+  Cache.getInstance().redisSet("cats", JSON.stringify(catgs));
   return res.json({ categories: catgs });
 };
 

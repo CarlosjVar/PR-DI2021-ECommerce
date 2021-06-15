@@ -43,7 +43,7 @@ export class Cache {
   // Se podría meter a un try-catch para ver que esté funcionando
   public async redisSet(key: string, value: string) {
     (await this.tedisCache).set(key, value);
-    this.tedisCache.pexpire(key, 6000 * 10 * 5);
+    this.tedisCache.pexpire(key, 1000 * 5);
   }
 }
 
