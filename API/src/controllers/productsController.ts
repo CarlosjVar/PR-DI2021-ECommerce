@@ -101,7 +101,7 @@ export const findProducts = async (req: Request, res: Response) => {
         });
       for (let spec of specification) {
         let spect = await {
-          id: spec.id,
+          id: spec.Specifications.id,
           name: spec.Specifications.name,
           value: spec.value,
         };
@@ -342,7 +342,7 @@ export const pcBuilderProdSearch = async (req: Request, res: Response) => {
       let specs = [];
       for (let spec of specification) {
         let spect = await {
-          id: spec.id,
+          id: spec.Specifications.id,
           name: spec.Specifications.name,
           value: spec.value,
         };
