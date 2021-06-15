@@ -5,7 +5,7 @@ import {
   addPCBuilderProduct,
   removePCBuilderProduct,
   getSuggestedMotherboards,
-  getAllCategoryProducts,
+  clearPCBuilderCategory,
   getSuggestedCoolers,
   getSuggestedMemories,
 } from '../../../../actions/pcBuilderActions';
@@ -60,8 +60,8 @@ const PCComponentSelection = ({ categoryKey, categoryName, products }) => {
           dispatch(getSuggestedMotherboards(specValue));
           dispatch(getSuggestedCoolers(specValue));
         } else {
-          dispatch(getAllCategoryProducts('motherboard', 'Tarjeta Madre'));
-          dispatch(getAllCategoryProducts('cooler', 'CPU Cooler'));
+          dispatch(clearPCBuilderCategory('motherboard'));
+          dispatch(clearPCBuilderCategory('cooler'));
         }
       } else if (
         categoryKey === 'motherboard' &&
@@ -73,7 +73,7 @@ const PCComponentSelection = ({ categoryKey, categoryName, products }) => {
         if (specValue) {
           dispatch(getSuggestedMemories(specValue));
         } else {
-          dispatch(getAllCategoryProducts('memory', 'Memoria RAM'));
+          dispatch(clearPCBuilderCategory('memory'));
         }
       }
     }

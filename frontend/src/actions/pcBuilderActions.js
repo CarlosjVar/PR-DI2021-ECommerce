@@ -8,6 +8,7 @@ import {
   GET_ALL_CATEGORY_PRODUCTS,
   GET_SUGGESTED_COOLER,
   GET_SUGGESTED_MEMORY,
+  CLEAR_CATEGORY,
 } from '../constants/pcBuilderConstants';
 import api from '../utils/api';
 
@@ -86,6 +87,10 @@ export const getSuggestedCoolers = (specValue) => async (dispatch) => {
   } catch (error) {
     console.error(error);
   }
+};
+
+export const clearPCBuilderCategory = (categoryKey) => async (dispatch) => {
+  dispatch({ type: CLEAR_CATEGORY, payload: categoryKey });
 };
 
 export const clearPCBuilderProducts = () => async (dispatch) => {
