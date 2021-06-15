@@ -35,7 +35,6 @@ const ProcessOrderScreen = () => {
 
   useEffect(() => {
     let isMounted = true;
-
     // TODO: Find a better way of solving this
     const preparePaymentData = async () => {
       // Calculate dollar price
@@ -47,9 +46,7 @@ const ProcessOrderScreen = () => {
       const clientId = await getPayPalClientId();
       if (isMounted) setPayPalClientId(clientId);
     };
-
     preparePaymentData();
-
     // Clean up component before unmounting
     return () => {
       isMounted = false;

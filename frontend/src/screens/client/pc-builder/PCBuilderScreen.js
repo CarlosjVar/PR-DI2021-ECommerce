@@ -6,14 +6,15 @@ import {
 } from '../../../actions/pcBuilderActions';
 
 import PCComponentSelection from './components/PCComponentSelection';
+import PCBuilderCheckout from './components/PCBuilderCheckout';
 import Spinner from '../../../components/layout/Spinner';
 
 let componentCategories = {
   processor: 'Procesador',
-  graphicsCard: 'Tarjeta Gráfica',
-  memory: 'Memoria RAM',
   motherboard: 'Tarjeta Madre',
   cooler: 'CPU Cooler',
+  graphicsCard: 'Tarjeta Gráfica',
+  memory: 'Memoria RAM',
   storage: 'Almacenamiento ',
   case: 'Case',
   powerSupply: 'Fuente de poder',
@@ -22,7 +23,9 @@ let componentCategories = {
 const PCBuilderScreen = () => {
   const dispatch = useDispatch();
 
-  const { products, loading } = useSelector((state) => state.pcBuilder);
+  const { products, selectedProducts, loading } = useSelector(
+    (state) => state.pcBuilder
+  );
 
   useEffect(() => {
     dispatch(clearPCBuilderProducts());
@@ -72,6 +75,7 @@ const PCBuilderScreen = () => {
           </table>
         </div>
       )}
+      <PCBuilderCheckout selectedProducts={selectedProducts} />
     </>
   );
 };

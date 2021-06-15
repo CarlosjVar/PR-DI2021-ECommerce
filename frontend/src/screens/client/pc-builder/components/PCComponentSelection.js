@@ -30,6 +30,16 @@ const PCComponentSelection = ({ categoryKey, categoryName, products }) => {
 
   const { selectedProducts } = useSelector((state) => state.pcBuilder);
 
+  useEffect(() => {
+    selectedProducts.forEach((product) => {
+      // Set current selected product
+      if (product.Categories.name === categoryName) {
+        setSelectedProduct(product);
+        setIsProductSelected(true);
+      }
+    });
+  }, [selectedProducts, categoryName]);
+
   const onProductChange = (productId) => {
     if (productId !== 'ninguno') {
       const productsWithId = products.filter(
@@ -44,6 +54,7 @@ const PCComponentSelection = ({ categoryKey, categoryName, products }) => {
         productsWithId[0] &&
         productsWithId[0].Specifications
       ) {
+        // Get suggested motherboards and coolers
         const specValue = getSpecValue(productsWithId[0].Specifications, 2);
         if (specValue) {
           dispatch(getSuggestedMotherboards(specValue));
@@ -57,6 +68,7 @@ const PCComponentSelection = ({ categoryKey, categoryName, products }) => {
         productsWithId[0] &&
         productsWithId[0].Specifications
       ) {
+        // Get suggested memories
         const specValue = getSpecValue(productsWithId[0].Specifications, 3);
         if (specValue) {
           dispatch(getSuggestedMemories(specValue));
@@ -66,17 +78,6 @@ const PCComponentSelection = ({ categoryKey, categoryName, products }) => {
       }
     }
   };
-
-  useEffect(() => {
-    if (selectedProducts.length > 0) {
-      selectedProducts.forEach((product) => {
-        if (product.Categories.name === categoryName) {
-          setSelectedProduct(product);
-          setIsProductSelected(true);
-        }
-      });
-    }
-  }, [selectedProducts]);
 
   const onProductRemoved = () => {
     setSelectedProduct({});
