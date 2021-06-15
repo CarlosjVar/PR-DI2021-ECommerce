@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Row, Col } from 'react-bootstrap';
 import NumberFormat from 'react-number-format';
 import { PayPalButton } from 'react-paypal-button-v2';
-import { createSale } from '../../../actions/orderActions';
+import { createPCBuilderSale } from '../../../actions/orderActions';
 import { showAlert } from '../../../actions/alertActions';
 import getCurrentExchange from '../../../utils/getCurrentExchange';
 import getPayPalClientId from '../../../utils/getPayPalClientId';
 
 import Spinner from '../../../components/layout/Spinner';
 
-const ProcessOrderScreen = () => {
+const ProcessPCOrderScreen = () => {
   const dispatch = useDispatch();
 
   const history = useHistory();
@@ -20,14 +20,14 @@ const ProcessOrderScreen = () => {
   const [dollarPriceReady, setDollarPriceReady] = useState(false);
   const [paypalClientId, setPayPalClientId] = useState('');
 
-  const { products } = useSelector((state) => state.cart);
+  const { selectedProducts } = useSelector((state) => state.pcBuilder);
 
   const { loading } = useSelector((state) => state.order);
 
   // Calculate subtotal
   let subtotalPrice = 0;
-  products.forEach((product) => {
-    subtotalPrice += parseFloat(product.price) * product.numberOfItems;
+  selectedProducts.forEach((product) => {
+    subtotalPrice += parseFloat(product.price);
   });
   // Calculate total price
   const taxes = subtotalPrice * 0.13;
@@ -58,12 +58,12 @@ const ProcessOrderScreen = () => {
     const orderData = {
       paypalPayerId: payerID,
       paypalOrderId: orderID,
-      cartProducts: products.map((product) => ({
+      cartProducts: selectedProducts.map((product) => ({
         id: product.id,
-        numberOfItems: product.numberOfItems,
+        numberOfItems: 1,
       })),
     };
-    dispatch(createSale(orderData, history));
+    dispatch(createPCBuilderSale(orderData, history));
   };
 
   const onPaymentError = () => {
@@ -98,11 +98,6 @@ const ProcessOrderScreen = () => {
                 </h4>
               </Col>
             </Row>
-            <p style={{ margin: '0', textAlign: 'right' }}>
-              <Link className="link" to="/cart">
-                Información de la orden
-              </Link>
-            </p>
           </div>
           <div className="process-order-payment">
             <p>Seleccione uno de los métodos de pago disponibles:</p>
@@ -126,4 +121,4 @@ const ProcessOrderScreen = () => {
   );
 };
 
-export default ProcessOrderScreen;
+export default ProcessPCOrderScreen;

@@ -13,7 +13,7 @@ const ClientRoute = ({ component: Component, ...rest }) => {
       {...rest}
       render={(props) =>
         isAuthenticated && !isAdmin ? (
-          <Container className="pt-4">
+          <Container className="py-4">
             <Alert />
             <Component {...props} />
           </Container>

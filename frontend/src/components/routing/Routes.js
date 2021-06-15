@@ -18,11 +18,13 @@ import EditProductScreen from '../../screens/admin/edit-product/EditProductScree
 import SearchProductsResultsScreen from '../../screens/client/search-products-results/SearchProductsResultsScreen';
 import ClientProductDetailsScreen from '../../screens/client/client-product-details/ProductDetailsScreen';
 import ProcessOrderScreen from '../../screens/client/process-order/ProcessOrderScreen';
+import ProcessPCOrderScreen from '../../screens/client/process-pc-order/ProcessPCOrderScreen';
 import AdminOrdersScreen from '../../screens/admin/admin-orders/AdminOrdersScreen';
 import AdminOrderDetailsScreen from '../../screens/admin/admin-order-details/AdminOrderDetailsScreen';
 import ClientOrderDetailsScreen from '../../screens/client/client-order-details/ClientOrderDetailsScreen';
 import UpdateOrderStatusScreen from '../../screens/admin/update-order-status/UpdateOrderStatusScreen';
 import ApplyDiscountScreen from '../../screens/admin/apply-discount/ApplyDiscountScreen';
+import PCBuilderScreen from '../../screens/client/pc-builder/PCBuilderScreen';
 
 const Routes = () => {
   return (
@@ -33,6 +35,12 @@ const Routes = () => {
         <Route path="/login" component={LoginScreen} exact />
         <Route path="/register" component={RegisterScreen} exact />
         <Route path="/cart" component={ShoppingCartScreen} exact />
+        <ClientRoute path="/pc-builder" component={PCBuilderScreen} exact />
+        <ClientRoute
+          path="/pc-builder/process-order"
+          component={ProcessPCOrderScreen}
+          exact
+        />
         <AdminRoute path="/orders" component={AdminOrdersScreen} exact />
         <AdminRoute
           path="/admin/orders/:id"

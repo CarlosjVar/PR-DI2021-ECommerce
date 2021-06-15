@@ -9,6 +9,7 @@ import {
 } from '../constants/orderConstants';
 import { showAlert } from './alertActions';
 import { clearCart } from './cartActions';
+import { clearPCBuilderProducts } from './pcBuilderActions';
 import api from '../utils/api';
 
 /**
@@ -86,6 +87,27 @@ export const createPreorder = (preorderData, history) => async (dispatch) => {
   }
 };
 
+export const createPCBuilderPreorder =
+  (preorderData, history) => async (dispatch) => {
+    try {
+      dispatch({ type: SET_ORDER_LOADING });
+      const { data } = await api.post(
+        '/api/orders/createPreorder',
+        preorderData
+      );
+      const { msg } = data;
+      dispatch({ type: CREATE_ORDER_SUCCESS });
+      dispatch(clearPCBuilderProducts());
+      dispatch(showAlert({ message: msg, type: 'success' }));
+      dispatch({ type: SET_ORDER_LOADING });
+      history.push('/cart');
+    } catch (error) {
+      dispatch({ type: CREATE_ORDER_FAILURE });
+      error.response.data.errors.forEach((error) =>
+        dispatch(showAlert({ message: error.msg, type: 'danger' }))
+      );
+    }
+  };
 /**
  * Creates a new sale
  * @param {object} saleData The data of the sale
@@ -98,6 +120,24 @@ export const createSale = (saleData, history) => async (dispatch) => {
     const { msg } = data;
     dispatch({ type: CREATE_ORDER_SUCCESS });
     dispatch(clearCart());
+    dispatch(showAlert({ message: msg, type: 'success' }));
+    dispatch({ type: SET_ORDER_LOADING });
+    history.push('/cart');
+  } catch (error) {
+    dispatch({ type: CREATE_ORDER_FAILURE });
+    error.response.data.errors.forEach((error) =>
+      dispatch(showAlert({ message: error.msg, type: 'danger' }))
+    );
+  }
+};
+
+export const createPCBuilderSale = (saleData, history) => async (dispatch) => {
+  try {
+    dispatch({ type: SET_ORDER_LOADING });
+    const { data } = await api.post('/api/orders/createSale', saleData);
+    const { msg } = data;
+    dispatch({ type: CREATE_ORDER_SUCCESS });
+    dispatch(clearPCBuilderProducts());
     dispatch(showAlert({ message: msg, type: 'success' }));
     dispatch({ type: SET_ORDER_LOADING });
     history.push('/cart');
