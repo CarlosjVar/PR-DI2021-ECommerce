@@ -1,6 +1,8 @@
 import {
   GET_INITIAL_PRODUCTS,
   SET_PC_BUILDER_LOADING,
+  ADD_SELECTED_PRODUCT,
+  REMOVE_SELECTED_PRODUCT,
 } from '../constants/pcBuilderConstants';
 import api from '../utils/api';
 
@@ -23,4 +25,12 @@ export const getInitialProducts = (componentCategories) => async (dispatch) => {
   } catch (error) {
     console.error(error);
   }
+};
+
+export const addPCBuilderProduct = (product) => async (dispatch) => {
+  dispatch({ type: ADD_SELECTED_PRODUCT, payload: product });
+};
+
+export const removePCBuilderProduct = (productId) => async (dispatch) => {
+  dispatch({ type: REMOVE_SELECTED_PRODUCT, payload: productId });
 };

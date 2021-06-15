@@ -1,29 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Form, Button } from 'react-bootstrap';
+import {
+  addPCBuilderProduct,
+  removePCBuilderProduct,
+} from '../../../../actions/pcBuilderActions';
+
 import NumberFormat from 'react-number-format';
 
 const PCComponentSelection = ({ categoryKey, categoryName, products }) => {
+  const dispatch = useDispatch();
+
   const [isProductSelected, setIsProductSelected] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState({});
 
-  useEffect(() => {
-    if (products) {
-      setSelectedProduct(products[0]);
-    }
-  }, [products]);
-
   const onProductChange = (productId) => {
-    const productsWithId = products.filter(
-      (product) => product.id === parseInt(productId)
-    );
-    setSelectedProduct(productsWithId[0]);
-    // TODO: Set selected product in store
-    setIsProductSelected(true);
+    if (productId !== 'ninguno') {
+      const productsWithId = products.filter(
+        (product) => product.id === parseInt(productId)
+      );
+      setSelectedProduct(productsWithId[0]);
+      dispatch(addPCBuilderProduct(productsWithId[0]));
+      setIsProductSelected(true);
+    }
   };
 
   const onProductRemoved = () => {
+    setSelectedProduct({});
     setIsProductSelected(false);
-    // TODO: Remove selected product from store
+    dispatch(removePCBuilderProduct(selectedProduct.id));
   };
 
   return (
@@ -36,6 +41,7 @@ const PCComponentSelection = ({ categoryKey, categoryName, products }) => {
             onChange={(e) => onProductChange(e.target.value)}
             as="select"
           >
+            <option value="ninguno">Ningun producto seleccionado</option>
             {products &&
               products.map((product) => (
                 <option key={product.id} value={product.id}>
@@ -49,7 +55,7 @@ const PCComponentSelection = ({ categoryKey, categoryName, products }) => {
       </td>
       <td>
         <NumberFormat
-          value={selectedProduct.price}
+          value={isProductSelected ? selectedProduct.price : '0'}
           displayType={'text'}
           thousandSeparator={'.'}
           decimalSeparator={','}
@@ -58,9 +64,11 @@ const PCComponentSelection = ({ categoryKey, categoryName, products }) => {
         />
       </td>
       <td>
-        <Button onClick={onProductRemoved} className="btn-danger">
-          Eliminar
-        </Button>
+        {isProductSelected && (
+          <Button onClick={onProductRemoved} className="btn-danger">
+            Eliminar
+          </Button>
+        )}
       </td>
     </tr>
   );
