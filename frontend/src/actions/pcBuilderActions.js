@@ -2,24 +2,19 @@ import {
   GET_INITIAL_PRODUCTS,
   SET_PC_BUILDER_LOADING,
 } from '../constants/pcBuilderConstants';
-import { getCategories } from './categoryActions';
 import api from '../utils/api';
 
 /**
- * Gets the initial products for pc builder
+ * Gets the initial products for the pc builder
+ * @param {object} componentCategories The component categories and their names
  */
-export const getInitialProducts = () => async (dispatch, getState) => {
+export const getInitialProducts = (componentCategories) => async (dispatch) => {
   dispatch({ type: SET_PC_BUILDER_LOADING });
-  await dispatch(getCategories());
-  const categoryNames = getState().category.categoryList.map(
-    (category) => category.name
-  );
   try {
     let initialProducts = {};
-    // TODO: Change this after backend fix
-    for (let categoryName of categoryNames) {
+    for (let categoryName in componentCategories) {
       const { data } = await api.get(
-        `/api/products/getAll?category=${categoryName}`
+        `/api/products/getAll?category=${componentCategories[categoryName]}`
       );
       initialProducts[categoryName] = data.products;
     }
