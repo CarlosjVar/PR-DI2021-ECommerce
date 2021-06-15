@@ -6,7 +6,8 @@
   "scripts": {
     "start": "tsc -p . & node ./dist/app.js",
     "dev": "nodemon --files src/app.ts",
-    "dev-ts": "ts-node-dev --files src/app.ts"
+    "dev-ts": "ts-node-dev --files src/app.ts",
+    "postinstall": "yarn prisma generate"
   },
   "keywords": [],
   "author": "",
@@ -32,7 +33,7 @@
     "@types/multer": "^1.4.5",
     "@types/node": "^15.3.0",
     "nodemon": "^2.0.7",
-    "prisma": "^2.25.0",
+    "prisma": "^2.24.1",
     "ts-node": "^9.1.1",
     "ts-node-dev": "^1.1.6",
     "typescript": "^4.2.4"
