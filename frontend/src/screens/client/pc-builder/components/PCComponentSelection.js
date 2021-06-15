@@ -6,6 +6,8 @@ import {
   removePCBuilderProduct,
   getSuggestedMotherboards,
   getAllCategoryProducts,
+  getSuggestedCoolers,
+  getSuggestedMemories,
 } from '../../../../actions/pcBuilderActions';
 import PropTypes from 'prop-types';
 
@@ -45,11 +47,22 @@ const PCComponentSelection = ({ categoryKey, categoryName, products }) => {
         const specValue = getSpecValue(productsWithId[0].Specifications, 2);
         if (specValue) {
           dispatch(getSuggestedMotherboards(specValue));
+          dispatch(getSuggestedCoolers(specValue));
         } else {
           dispatch(getAllCategoryProducts('motherboard', 'Tarjeta Madre'));
+          dispatch(getAllCategoryProducts('cooler', 'CPU Cooler'));
         }
-      } else if (categoryKey === 'motherboard') {
-        console.log('motherboard');
+      } else if (
+        categoryKey === 'motherboard' &&
+        productsWithId[0] &&
+        productsWithId[0].Specifications
+      ) {
+        const specValue = getSpecValue(productsWithId[0].Specifications, 3);
+        if (specValue) {
+          dispatch(getSuggestedMemories(specValue));
+        } else {
+          dispatch(getAllCategoryProducts('memory', 'Memoria RAM'));
+        }
       }
     }
   };

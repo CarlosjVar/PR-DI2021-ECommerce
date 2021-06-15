@@ -319,6 +319,7 @@ export const pcBuilderProdSearch = async (req: Request, res: Response) => {
     const idcategoria = parseInt(req.params.idcategoria);
     const idSpecification = parseInt(req.params.idSpecification);
     const value = req.params.value;
+
     const products = await prismaController.productsXSpecifications.findMany({
       where: {
         specificationId: idSpecification,
@@ -339,6 +340,9 @@ export const pcBuilderProdSearch = async (req: Request, res: Response) => {
           where: { productId: prod.Products.id },
           include: { Specifications: true },
         });
+      const category = await prismaController.categories.findUnique({
+        where: { id: prod.Products.categoryId },
+      });
       let specs = [];
       for (let spec of specification) {
         let spect = await {
@@ -354,6 +358,7 @@ export const pcBuilderProdSearch = async (req: Request, res: Response) => {
         quantity: prod.Products.quantity,
         price: prod.Products.quantity,
         categoryId: prod.Products.categoryId,
+        Categories: category,
         imageFileName: prod.Products.imageFileName,
         createdAt: prod.Products.createdAt,
         Specifications: specs,

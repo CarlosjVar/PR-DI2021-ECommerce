@@ -6,6 +6,8 @@ import {
   CLEAR_PC_BUILDER_PRODUCTS,
   GET_SUGGESTED_MOTHERBOARD,
   GET_ALL_CATEGORY_PRODUCTS,
+  GET_SUGGESTED_COOLER,
+  GET_SUGGESTED_MEMORY,
 } from '../constants/pcBuilderConstants';
 import api from '../utils/api';
 
@@ -54,6 +56,32 @@ export const getSuggestedMotherboards = (specValue) => async (dispatch) => {
       `/api/products/pcBuilder/getProducts/4/2/${specValue}`
     );
     dispatch({ type: GET_SUGGESTED_MOTHERBOARD, payload: data.prods });
+    dispatch({ type: SET_PC_BUILDER_LOADING });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getSuggestedMemories = (specValue) => async (dispatch) => {
+  try {
+    dispatch({ type: SET_PC_BUILDER_LOADING });
+    const { data } = await api.get(
+      `/api/products/pcBuilder/getProducts/3/3/${specValue}`
+    );
+    dispatch({ type: GET_SUGGESTED_MEMORY, payload: data.prods });
+    dispatch({ type: SET_PC_BUILDER_LOADING });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getSuggestedCoolers = (specValue) => async (dispatch) => {
+  try {
+    dispatch({ type: SET_PC_BUILDER_LOADING });
+    const { data } = await api.get(
+      `/api/products/pcBuilder/getProducts/5/2/${specValue}`
+    );
+    dispatch({ type: GET_SUGGESTED_COOLER, payload: data.prods });
     dispatch({ type: SET_PC_BUILDER_LOADING });
   } catch (error) {
     console.error(error);

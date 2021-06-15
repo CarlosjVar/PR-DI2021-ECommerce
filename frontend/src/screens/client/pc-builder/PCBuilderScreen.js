@@ -14,7 +14,7 @@ let componentCategories = {
   memory: 'Memoria RAM',
   motherboard: 'Tarjeta Madre',
   cooler: 'CPU Cooler',
-  storage: 'Almacenamiento',
+  storage: 'Almacenamiento ',
   case: 'Case',
   powerSupply: 'Fuente de poder',
 };
@@ -37,7 +37,11 @@ const PCBuilderScreen = () => {
         key={componentName}
         categoryKey={componentName}
         categoryName={componentCategories[componentName]}
-        products={products[componentName] ? products[componentName] : []}
+        products={
+          products[componentName]
+            ? products[componentName].filter((product) => product.quantity > 0)
+            : []
+        }
       />
     );
   }
