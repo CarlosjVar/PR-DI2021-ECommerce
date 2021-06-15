@@ -6,14 +6,13 @@
   "scripts": {
     "start": "tsc -p . & node ./dist/app.js",
     "dev": "nodemon --files src/app.ts",
-    "dev-ts": "ts-node-dev --files src/app.ts",
-    "build": "tsc -p && npx prisma generate ."
+    "dev-ts": "ts-node-dev --files src/app.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^2.24.1",
+    "@prisma/client": "^2.25.0",
     "axios": "^0.21.1",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
@@ -33,7 +32,7 @@
     "@types/multer": "^1.4.5",
     "@types/node": "^15.3.0",
     "nodemon": "^2.0.7",
-    "prisma": "^2.22.1",
+    "prisma": "^2.25.0",
     "ts-node": "^9.1.1",
     "ts-node-dev": "^1.1.6",
     "typescript": "^4.2.4"
