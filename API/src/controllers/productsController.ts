@@ -299,7 +299,7 @@ export const getTopProducts = async (req: Request, res: Response) => {
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const prodLimit = 8;
+    const prodLimit = 5;
     const prods = await prismaController.$queryRaw(
       ' SELECT t.* from (Select count(*) as count , Products.name, Products.id FROM Orders' +
         ' INNER JOIN OrderDetails on (Orders.id = OrderDetails.orderId) ' +

@@ -42,14 +42,17 @@ const DashboardScreen = () => {
       {topProductsLoading ? (
         <Spinner />
       ) : (
-        <Row className="my-5">
-          <Col lg="6">
-            <TopProductsTable products={topProducts} />
-          </Col>
-          <Col lg="6">
-            <TopProductsChart products={topProducts} />
-          </Col>
-        </Row>
+        <div className="my-5">
+          <h2>Productos más vendidos</h2>
+          <Row>
+            <Col lg="6">
+              <TopProductsTable products={topProducts} />
+            </Col>
+            <Col lg="6">
+              <TopProductsChart products={topProducts} />
+            </Col>
+          </Row>
+        </div>
       )}
     </>
   );
