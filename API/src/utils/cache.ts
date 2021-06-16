@@ -23,9 +23,9 @@ export class Cache {
   public async redisGet(key: string) {
     let promise = new Promise((resolve, reject) => {
       this.tedisCache.exists(key).then((val) => {
-        if (val == 0) {
-          console.log("No existe");
+        console.log(val);
 
+        if (val == 0) {
           resolve(null);
         } else {
           resolve(
@@ -43,7 +43,7 @@ export class Cache {
   // Se podría meter a un try-catch para ver que esté funcionando
   public async redisSet(key: string, value: string) {
     (await this.tedisCache).set(key, value);
-    this.tedisCache.pexpire(key, 1000 * 5);
+    this.tedisCache.pexpire(key, 1000 * 60 * 5);
   }
 }
 
