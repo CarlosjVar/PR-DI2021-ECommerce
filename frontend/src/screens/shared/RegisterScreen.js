@@ -145,7 +145,7 @@ const RegisterScreen = () => {
                 <Form.Group controlId="acceptTermsAndConditions">
                   <Form.Check
                     type="checkbox"
-                    label="Acepto los terminos y condiciones"
+                    label="Acepto los términos y condiciones"
                     className="text-center my-4"
                     onChange={() =>
                       setAcceptTermsAndConditions(!acceptTermsAndConditions)

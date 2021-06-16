@@ -45,7 +45,7 @@ const HomeScreen = () => {
         <Container>
           <h3>¿Desea construir su propio PC?</h3>
           <p>
-            Nuestra página brinda un módulo incríble que facilita la
+            Nuestra página brinda un módulo increíble que facilita la
             construcción de computadores.
           </p>
           <Link
