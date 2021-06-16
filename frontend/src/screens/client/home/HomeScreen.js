@@ -34,11 +34,10 @@ const HomeScreen = () => {
         <Container>
           <h2>¿Quiénes somos?</h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic ipsum
-            mollitia temporibus alias aspernatur aut, corporis veniam deserunt
-            cumque illo ullam soluta odit modi incidunt doloribus reiciendis
-            blanditiis eveniet tempora consectetur. Corrupti vitae culpa
-            cupiditate modi saepe eos a numquam.
+            Somos una tienda de hardware que busca brindarle el mejor servicio a
+            sus clientes a través de componentes de excelente calidad y precio
+            accesible. Si necesita armar un computador nuevo o encontrar nuevos
+            componentes, puede confiar en nosotros.
           </p>
         </Container>
       </section>

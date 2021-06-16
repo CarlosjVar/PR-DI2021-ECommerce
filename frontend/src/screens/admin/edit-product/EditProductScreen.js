@@ -211,7 +211,7 @@ const EditProductScreen = () => {
                 className="btn-block btn-primary mt-4"
                 type="submit"
               >
-                <i className="fa fa-pencil"></i> Editar producto
+                <i className="fa fa-pen"></i> Editar producto
               </Button>
             </form>
           </Card.Body>

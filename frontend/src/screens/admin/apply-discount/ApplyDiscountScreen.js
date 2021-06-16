@@ -9,8 +9,6 @@ import {
 
 import Spinner from '../../../components/layout/Spinner';
 
-import './ApplyDiscountScreen.css';
-
 const ApplyDiscountScreen = () => {
   const { id } = useParams();
 
