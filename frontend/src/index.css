@@ -394,6 +394,24 @@ section.section#search-products-section h3 {
   padding: 1rem;
 }
 
+.discount-card {
+  border: 1px solid var(--dark-grey);
+}
+
+.discount-card-header {
+  text-align: center;
+  border-bottom: 1px solid var(--dark-grey);
+  padding: 1rem 0;
+}
+
+.discount-card-header h3 {
+  margin: 0;
+}
+
+.discount-card-body {
+  padding: 1.8rem;
+}
+
 /* Main footer */
 footer#main-footer {
   background-color: #424242;
